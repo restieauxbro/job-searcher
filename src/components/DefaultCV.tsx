@@ -127,14 +127,14 @@ const DefaultCV = ({ title, intro }: { title?: string; intro?: string }) => {
                 </div>
               </div>
               <div className="self-stretch text-neutral-700 text-[8px] font-normal  leading-[13px]">
-                Ownership of the customer's digital experience from ad channels
+                {`Ownership of the customer's digital experience from ad channels
                 to the website, from lead nurture through to conversion. My time
                 at Competenz was focused on building a micro-services
                 architecture to scale personalised experiences driven by data.
                 We automated nurture funnels that set unqualified learners up
                 with recruitment coaching that integrated with our digital
                 systems. We rebuilt content delivery systems to suit the
-                micro-campaign strategy of the organisation.{" "}
+                micro-campaign strategy of the organisation.`}
               </div>
             </div>
           </div>
@@ -164,13 +164,13 @@ const DefaultCV = ({ title, intro }: { title?: string; intro?: string }) => {
                 </div>
               </div>
               <div className="self-stretch text-neutral-700 text-[8px] font-normal  leading-[13px]">
-                All things digital marketing for New Zealand's largest Industry
+                {`All things digital marketing for New Zealand's largest Industry
                 Training Organisation – using data to maximise ad spend across
                 32 discreet industry sectors. We used behavioural metadata to
                 create distinct IDs and follow cross-channel engagement – the
                 kind of thing a CDP does out-of-the-box I set up through
                 semi-automated integrations with the technology we had
-                available.
+                available.`}
               </div>
             </div>
           </div>
