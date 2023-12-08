@@ -1,10 +1,13 @@
-import DefaultCV from '@/components/DefaultCV'
-import React from 'react'
+import DefaultCV from "@/components/DefaultCV";
+import { baseTemplate } from "@/cv-templates/base-template";
+import React from "react";
 
 const Page = () => {
   return (
-    <DefaultCV />
-  )
-}
+    <>
+      <DefaultCV cvTemplate={baseTemplate} />
+    </>
+  );
+};
 
-export default Page
+export default Page;
