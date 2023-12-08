@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 export async function GET(request: Request) {
   // Launch a new browser session.
   const browser = await puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
     headless: "new", // Opting in to use the new headless mode.
   });
 

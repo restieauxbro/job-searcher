@@ -5,11 +5,13 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment } = cvTemplate;
   const employmentArray = Object.entries(employment);
   return (
-    <div className="w-full max-w-[700px] px-10 py-[43px] bg-white flex-col justify-center items-center inline-flex">
+    <div className="w-full max-w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex">
       <div className="self-stretch grow shrink basis-0 flex-col justify-start items-start gap-8 inline-flex">
         <div className="self-stretch justify-start items-end gap-7 inline-flex">
           <div className="text-neutral-700 text-2xl font-extrabold leading-none">
-            Tim<br />Restieaux
+            Tim
+            <br />
+            Restieaux
           </div>
           <div className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px]">
             {title}

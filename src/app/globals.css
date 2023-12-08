@@ -25,3 +25,9 @@
     )
     rgb(var(--background-start-rgb));
 } */
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+  }
+}

@@ -5,7 +5,7 @@ import React from "react";
 const Page = () => {
   return (
     <>
-      <DefaultCV cvTemplate={baseTemplate} />
+        <DefaultCV cvTemplate={baseTemplate} />
     </>
   );
 };
