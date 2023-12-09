@@ -1,0 +1,37 @@
+.ellipsisLoader {
+  letter-spacing: -0.03em;
+  font-size: 3rem;
+  transform: translateY(-45%);
+  &.small {
+    font-size: 2rem;
+  }
+  .loaderDot {
+    display: inline-block;
+    animation: roll 1s ease-in-out infinite;
+    opacity: 0.5;
+    &::before {
+      content: ".";
+    }
+    &:nth-child(2) {
+      animation-delay: 0.1s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+  }
+}
+
+@keyframes roll {
+  0% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: translateY(-0.15em);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+}

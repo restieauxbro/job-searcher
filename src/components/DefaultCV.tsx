@@ -13,7 +13,10 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             <br />
             Restieaux
           </div>
-          <div className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px]">
+          <div
+            className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px] inline focus-visible:outline-none"
+            contentEditable
+          >
             {title}
           </div>
         </div>
@@ -48,11 +51,14 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               </div>
             </a>
           </div>
-          <div className="grow shrink basis-0 text-neutral-700 text-[8px] font-normal  leading-[13px]">
+          <div
+            className="grow shrink basis-0 text-neutral-700 text-[8px] font-normal leading-[13px] inline focus-visible:outline-none"
+            contentEditable
+          >
             {intro}
           </div>
         </div>
-        <div className="self-stretch  flex-col justify-start items-start gap-8 flex">
+        <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight">
               Employment
@@ -104,7 +110,10 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       ))}
                     </div>
                   </div>
-                  <div className="self-stretch text-neutral-700 text-[8px] font-normal  leading-[13px]">
+                  <div
+                    className="self-stretch text-neutral-700 text-[8px] font-normal  leading-[13px] inline focus-visible:outline-none"
+                    contentEditable
+                  >
                     {description}
                   </div>
                 </div>
