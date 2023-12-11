@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { baseTemplate } from "@/cv-templates/base-template";
+import { completeAndExtractJson, validParsedJson } from "@/lib/openai";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import Balancer from "react-wrap-balancer";
@@ -21,7 +22,7 @@ export default function Home() {
         role: "assistant",
         content: exampleSuggestions,
         id: "cv-customisation-ai-2",
-      }
+      },
     ],
   });
   return (
@@ -34,12 +35,31 @@ export default function Home() {
           <ul>
             {messages
               .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
-              .map((m, index) => (
-                <li key={index} className={cn("mb-8 p-8 rounded-md border-2 border-emerald-500 shadow")}>
-                  {m.role === "user" ? "User: " : "AI: "}
-                  {m.content.replace(/```json/g, "").replace(/```/g, "")}
-                </li>
-              ))}
+              .map((m, i) => {
+                const renderedContent = m.content;
+
+                // if this is the last message
+                if (i === messages.length - 2) {
+                  const extractedJsonString =
+                    completeAndExtractJson(renderedContent);
+                  const parsedJSON = validParsedJson(extractedJsonString);
+
+                  if (!!parsedJSON) {
+                    console.log(i, messages.length, parsedJSON);
+                  }
+                }
+                return (
+                  <li
+                    key={m.id}
+                    className={cn(
+                      "mb-8 p-8 rounded-md border-2 border-emerald-500 shadow"
+                    )}
+                  >
+                    {m.role === "user" ? "User: " : "AI: "}
+                    {renderedContent}
+                  </li>
+                );
+              })}
           </ul>
           <form onSubmit={handleSubmit}>
             <Textarea
@@ -56,7 +76,7 @@ export default function Home() {
         </div>
         <div className="xl:justify-self-start">
           <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border">
-            <DefaultCV cvTemplate={baseTemplate} />
+            {/* <DefaultCV cvTemplate={baseTemplate} /> */}
           </div>
         </div>
       </div>
@@ -113,8 +133,4 @@ employment: {
        }
 }`;
 
-const exampleSuggestions =
-  `Based on the key themes from the job advert, the focus areas for Tim's CV should include: 1. AI research and development 2. Implementation and optimization of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows:` +
-  "```" +
-  `json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimization of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Architect at Te Pūkenga, I led the development and implementation of large language models that enhanced user navigation. I collaborated with cross-functional teams to integrate our developed AI solutions into existing and novel software products for more efficient user experiences. Notably, I instituted a robust AI development framework that streamlined the steps from data processing to model training, evaluation, and deployment. Upholding ethical AI practices, compliance standards, and continuous innovation - I played a key part in mentoring junior engineers and presenting our progress to company stakeholders, facilitating informed decision-making." } } } ` +
-  '```';
+const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: 1. AI research and development 2. Implementation and optimization of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimization of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
