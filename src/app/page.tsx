@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { baseTemplate } from "@/cv-templates/base-template";
-import { completeAndExtractJson, validParsedJson } from "@/lib/openai";
+import { completeAndExtractJson, validParsedJson } from "@/lib/streaming";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import Balancer from "react-wrap-balancer";
@@ -37,7 +37,7 @@ export default function Home() {
               .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
               .map((m, i) => {
                 const renderedContent = m.content;
-
+                let json = null;
                 // if this is the last message
                 if (i === messages.length - 2) {
                   const extractedJsonString =
@@ -45,18 +45,25 @@ export default function Home() {
                   const parsedJSON = validParsedJson(extractedJsonString);
 
                   if (!!parsedJSON) {
-                    console.log(i, messages.length, parsedJSON);
+                    json = parsedJSON;
                   }
                 }
                 return (
                   <li
                     key={m.id}
                     className={cn(
-                      "mb-8 p-8 rounded-md border-2 border-emerald-500 shadow"
+                      "mb-8 p-8 rounded-md shadow-md"
                     )}
                   >
                     {m.role === "user" ? "User: " : "AI: "}
                     {renderedContent}
+                    {json && (
+                      <div className="mt-4">
+                        <div className="bg-neutral-100 p-4 rounded-md text-sm shadow">
+                          {json.intro}
+                        </div>
+                      </div>
+                    )}
                   </li>
                 );
               })}
