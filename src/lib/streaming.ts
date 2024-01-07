@@ -129,8 +129,8 @@ const input1 =
 const input2 =
   'The following CV would look like this: { "title": "Software Development Engineer" } How did I do?';
 
-// const output1 = parseMessageWithJson(input1);
+ const output1 = parseMessageWithJson(`{ "employment": { "tp-ai-architect": { "description": "In my role as an AI Architect at Te Pūkenga, I was responsible for architecting, designing, and developing sophisticated AI solutions that transformed the way users navigate the network. From conducting AI research, driving front end development, to creating scalable, modular applications, I focused on integrating real-time data in intelligent ways for ākonga and kaimahi. Leading the 'Intelligent Navigation' workstream, I developed agile solutions that minimized tech debt during transition, simplifying the user experience. In my experience, I have proven proficiency in large language models, their implementation, and optimization. I also served as a mentor to junior AI Engineers, nurturing a culture of continuous improvement within my team. I consistently engaged with stakeholders, presenting complex findings and progress clearly and effectively. My commitment to ethical AI practices and compliance standards was pivotal in every project I handled." } } }`);
 // const output2 = parseMessageWithJson(input2);
 
-// console.log(output1);
+ console.log(output1);
 // console.log(output2);
