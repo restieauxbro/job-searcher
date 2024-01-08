@@ -3,7 +3,7 @@ export type CVTemplate = {
   intro: string;
   employment: {
     [key: string]: Employment;
-  }
+  };
 };
 
 export type Employment = {
@@ -26,9 +26,9 @@ export const baseTemplate: CVTemplate = {
       position: "Artificial Intelligence Architect",
       startDate: "Oct 2021",
       endDate: "Present",
-      totalDuration: "2 years",
+      totalDuration: "2 years 3 months",
       description:
-        "Architecting, designing and developing intelligent ways for users to navigate the Te Pūkenga network. This involved everything from CX design to AI research and leading in-house front end development. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a CDP, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for ākonga and kaimahi. I led the workstream “Intelligent Navigation” which was guided by the principle of providing agile solutions that minimised tech debt during transition, easing the complexity of the network for our users.",
+        "Architecting, designing and developing intelligent ways for users to navigate the Te Pūkenga network. This involved everything from CX design to AI research and leading in-house front end development. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a CDP, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners. I led the workstream “Intelligent Navigation” which was guided by the principle of providing agile solutions that minimised tech debt during transition, easing the complexity of the network for our users.",
       hightlights: ["Full Stack Development"],
     },
     "cz-digital-experience-lead": {
@@ -59,7 +59,7 @@ export const baseTemplate: CVTemplate = {
       endDate: "Feb 2021",
       totalDuration: "1 year 5 months",
       description:
-        "Liaising with agencies, the design team and stakeholders to execute digital campaigns in alignment to the business marketing strategy. Tracking campaign success on key metrics.",
+        "As a Digital Marketing Executive, I collaborated with agencies and internal teams to execute strategically aligned digital campaigns. I tracked key metrics to measure campaign success and derive insights for potential improvements. My duties included managing social media, optimizing SEO, and developing digital marketing content. This role honed my skills in digital marketing and paved the way for my transition to the Digital Marketing Lead role.",
       hightlights: ["Marketing"],
     },
     "uxbridge-arts-culture": {
@@ -69,7 +69,7 @@ export const baseTemplate: CVTemplate = {
       endDate: "Aug 2019",
       totalDuration: "4 years 4 months",
       description:
-        "Multi-faceted role spanning the creative organisation; assisting the studios, gallery and events departments.",
+        "Providing essential assistance in coordinating and executing our organisations' studios, gallery, and event activities.",
       hightlights: ["Operations"],
     },
   },

@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Employment, baseTemplate } from "@/cv-templates/base-template";
-import {
-  parseMessageWithJson,
-} from "@/lib/streaming";
+import { parseMessageWithJson } from "@/lib/streaming";
 import { cn } from "@/lib/utils";
 import { useChat } from "ai/react";
 import { useState } from "react";
@@ -52,7 +50,7 @@ export default function Home() {
 
   return (
     <main className="">
-      <div className="grid min-h-screen place-items-center xl:grid-cols-2 gap-4 lg:gap-8 xl:gap-12 p-4 md:p-8">
+      <div className="grid min-h-screen xl:grid-cols-2 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
         <div className="w-full max-w-xl xl:justify-self-end">
           <h1 className="text-5xl lg:text-6xl font-extrabold max-w-lg leading-[0.8] text-neutral-800 mb-4 tracking-tight">
             <Balancer>Customise this CV</Balancer>
@@ -66,7 +64,12 @@ export default function Home() {
                   ({ type }) => type === "json"
                 )[0]?.content;
                 return (
-                  <li key={id} className={cn("mb-8 p-8 rounded-md shadow-md")}>
+                  <li
+                    key={id}
+                    className={cn(
+                      "my-8 p-6 rounded-md shadow-md bg-slate-100 border border-slate-200"
+                    )}
+                  >
                     {role === "user" ? "User: " : "AI: "}
                     {mArray.map(({ content, type }, i) => {
                       const contentArray = Object.entries(content);
@@ -77,6 +80,7 @@ export default function Home() {
                               className="mb-4"
                               dangerouslySetInnerHTML={{
                                 __html: content
+                                  .replace("```json", "")
                                   .replace("```", "")
                                   .replace(/\n/g, "<br />"),
                               }}
@@ -85,23 +89,40 @@ export default function Home() {
                             // Render JSON
                             <div className="mb-4">
                               {typeof content === "string" ? (
-                                <p>{content}</p>
+                                <p className="p-4 shadow-lg">{content}</p>
                               ) : (
                                 contentArray.map(([key, value], i) => {
                                   return (
-                                    <div key={i} className="mt-4">
+                                    <div
+                                      key={i}
+                                      className="mt-4 p-4 text-sm shadow-lg w-[110%] bg-white rounded-md border"
+                                    >
                                       <p className="font-bold">{key}</p>
                                       {typeof value === "string" ? (
                                         <p>{value}</p>
                                       ) : (
                                         <div>
-                                          {JSON.stringify(value, null, 2)}
+                                          {Object.entries(value).map(
+                                            ([key2, value2], i) => {
+                                              return (
+                                                <div key={i}>
+                                                  <p className="font-medium mt-2">
+                                                    {key2}
+                                                  </p>
+                                                  <p>
+                                                    {JSON.stringify(value2)}
+                                                  </p>
+                                                </div>
+                                              );
+                                            }
+                                          )}
                                         </div>
                                       )}
                                       <div className="mt-4 flex justify-end">
                                         <Button
                                           size={"sm"}
                                           variant="secondary"
+                                          className="text-xs"
                                           onClick={() => {
                                             handleEditCv({ [key]: value });
                                           }}
@@ -139,7 +160,7 @@ export default function Home() {
             <Textarea
               placeholder="Paste a job advert in here and have AI edit your CV"
               autoFocus
-              className="shadow-md mt-8 min-h-[124px]"
+              className="shadow-md mt-8"
               value={input}
               onChange={handleInputChange}
             />
@@ -148,9 +169,11 @@ export default function Home() {
             </div>
           </form>
         </div>
-        <div className="xl:justify-self-start xl:self-start xl:max-h-screen sticky top-16">
-          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border">
-            <DefaultCV cvTemplate={cv} />
+        <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
+          <div className="grid place-items-center">
+            <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border">
+              <DefaultCV cvTemplate={cv} />
+            </div>
           </div>
         </div>
       </div>

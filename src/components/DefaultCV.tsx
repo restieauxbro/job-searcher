@@ -94,7 +94,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                     <div className="w-[165px] h-[18px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
                       {position}
                     </div>
-                    <div className="justify-start items-center gap-[9px] inline-flex">
+                    <div className="justify-start items-center gap-[9px] inline-flex flex-wrap">
                       <div className="text-neutral-700 text-[10px] font-light  leading-3">
                         {company}
                       </div>
