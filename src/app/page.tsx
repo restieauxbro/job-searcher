@@ -1,18 +1,28 @@
 "use client";
 
 import DefaultCV from "@/components/DefaultCV";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Employment, baseTemplate } from "@/cv-templates/base-template";
+import {
+  CVTemplate,
+  Employment,
+  baseTemplate,
+} from "@/cv-templates/base-template";
 import { parseMessageWithJson } from "@/lib/streaming";
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 import { useChat } from "ai/react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import Balancer from "react-wrap-balancer";
 
 export default function Home() {
   const [cv, setCv] = useState(baseTemplate);
+  const [applicationDetails, setApplicationDetails] =
+    useState<ApplicationDetails>({});
+
+  const slug = createApplicationSlug(applicationDetails);
+
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     initialMessages: [
       {
@@ -20,19 +30,35 @@ export default function Home() {
         content: systemInstructions,
         id: "cv-customisation-ai-1",
       },
-      {
-        role: "assistant",
-        content: exampleSuggestions,
-        id: "cv-customisation-ai-2",
-      },
+      // {
+      //   role: "assistant",
+      //   content: exampleSuggestions,
+      //   id: "cv-customisation-ai-2",
+      // },
     ],
   });
 
-  const handleEditCv = (json: { [key: string]: any }) => {
+  const invokeCognition = async (e: any) => {
+    e.preventDefault();
+    if (!slug) {
+      // get application details to save to the database
+      const details = await getApplicationDetails(input);
+      if (details) {
+        setApplicationDetails({ ...details, jobDescription: input });
+      }
+    }
+    handleSubmit(e);
+  };
+
+  const handleEditCv = async (json: { [key: string]: any }) => {
     const intro: string | undefined = json.intro;
     const employment: Employment | undefined = json.employment;
+    let newCv = { ...cv };
     if (intro) {
-      setCv((prev) => ({ ...prev, ...{ intro } }));
+      setCv((prev) => {
+        newCv = { ...prev, ...{ intro } };
+        return { ...prev, ...{ intro } };
+      });
     }
     if (employment) {
       const newEmployment = { ...cv.employment };
@@ -44,14 +70,51 @@ export default function Home() {
           ...employment[key],
         };
       });
-      setCv((prev) => ({ ...prev, ...{ employment: newEmployment } }));
+      setCv((prev) => {
+        newCv = { ...prev, ...{ employment: newEmployment } };
+        return { ...prev, ...{ employment: newEmployment } };
+      });
     }
+    // upload to database
+    await uploadCv(newCv);
+  };
+
+  const uploadCv = async (cvData: CVTemplate) => {
+    try {
+      // upload to database by sending in body to /api/upload-cv
+      const res = await fetch("/api/upload-cv", {
+        method: "POST",
+        body: JSON.stringify({ cv: cvData, ...applicationDetails, slug }),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const printCV = () => {
+    // Open the CV page in a new window
+    if (!window) return;
+    const cvWindow = window.open(`/cv/${slug || ""}`, "_blank");
+    if (!cvWindow) return;
+
+    // Wait for the new window to load
+    cvWindow.onload = function () {
+      // Trigger the print dialog
+      cvWindow.print();
+
+      // Optional: Close the CV window after printing
+      cvWindow.onafterprint = function () {
+        cvWindow.close();
+      };
+    };
   };
 
   return (
     <main className="">
       <div className="grid min-h-screen xl:grid-cols-2 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
-        <div className="w-full max-w-xl xl:justify-self-end">
+        <div className="w-full max-w-xl xl:justify-self-end py-8">
           <h1 className="text-5xl lg:text-6xl font-extrabold max-w-lg leading-[0.8] text-neutral-800 mb-4 tracking-tight">
             <Balancer>Customise this CV</Balancer>
           </h1>
@@ -156,7 +219,7 @@ export default function Home() {
                 );
               })}
           </ul>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={invokeCognition}>
             <Textarea
               placeholder="Paste a job advert in here and have AI edit your CV"
               autoFocus
@@ -173,6 +236,25 @@ export default function Home() {
           <div className="grid place-items-center">
             <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border">
               <DefaultCV cvTemplate={cv} />
+            </div>
+            <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
+              <Link
+                href={`/cv/${slug || ""}`}
+                target="_blank"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                })}
+              >
+                <div className="flex gap-1 items-center">
+                  View <ArrowUpRight size={16} />
+                </div>
+              </Link>
+              <Button size="sm" onClick={printCV}>
+                <div className="flex gap-1 items-center">
+                  Download <ArrowDown size={16} />
+                </div>
+              </Button>
             </div>
           </div>
         </div>
@@ -225,9 +307,53 @@ And if the intro and a certain job experience description should change, target 
 intro: "edited text here",
 employment: {
       tp-ai-architect: {
-             description: "new edited description goes here, focusing expertly and creatively on the things it needs to"
+             description: "new edited description goes here, focusing expertly and creatively on the things it needs to."
              }
        }
-}`;
+}
 
-const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: \n\n1. AI research and development 2. Implementation and optimization of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimization of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
+Use Australian spelling, such as "organisation" instead of organization.`;
+
+const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: \n\n1. AI research and development 2. Implementation and optimisation of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimisation of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
+
+export type ApplicationDetails = {
+  jobTitle?: string;
+  employer?: string;
+  jobDescription?: string;
+};
+
+const getApplicationDetails = async (
+  jobDescription: string
+): Promise<ApplicationDetails | undefined> => {
+  // post to /api/chat with jobDescription in messages array
+  try {
+    const messages = [
+      {
+        role: "system",
+        content: `Your job is to output the job title and employer from the a job advertisment that the user will give you. Please output JSON in the following format:
+
+        { "jobTitle": "Example Job Title", "employer": "Example Employer" }`,
+      },
+      { role: "user", content: jobDescription },
+    ];
+    const res = await fetch("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({
+        messages,
+        model: "gpt-4-1106-preview",
+        response_format: { type: "json_object" },
+      }),
+    });
+    const data = (await res.json()) as ApplicationDetails;
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createApplicationSlug = (applicationDetails: ApplicationDetails) => {
+  return applicationDetails.jobTitle && applicationDetails.employer
+    ? slugify(applicationDetails.jobTitle + "-" + applicationDetails.employer)
+    : applicationDetails.jobTitle;
+};
