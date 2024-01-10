@@ -87,7 +87,8 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight flex items-center gap-2">
-              <Briefcase size={13} /> Employment
+              {/* <Briefcase size={13} />  */}
+              Employment
             </div>
           </div>
           {sortedEmploymentArray.map(
@@ -153,7 +154,8 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           {education && (
             <div className="min-w-fit max-w-sm">
               <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
-                <GraduationCap size={13} /> Education
+                {/* <GraduationCap size={13} />  */}
+                Education
               </div>
               {education?.map(
                 ({
@@ -187,7 +189,8 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           {skills && (
             <div className="flex-col justify-start items-start gap-0.5 inline-flex">
               <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
-                <Award size={13} /> Skills
+                {/* <Award size={13} /> */}
+                Skills
               </div>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
@@ -205,10 +208,11 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           )}
         </div>
       )}
-      <div className="w-full">
-            <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex gap-2 items-center">
-              <Rocket size={13} /> Recent projects
-            </div>
+      <div className="w-full mt-4">
+        <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex gap-2 items-center">
+          {/* <Rocket size={13} /> */}
+          Recent projects
+        </div>
         <div className="flex gap-8">
           {/* <div className="w-[226px]">
           </div> */}
@@ -228,9 +232,11 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               },
             ].map(({ title }) => (
               <div key={title} className="mt-4">
-                <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center justify-between pl-36">
+                <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center justify-between">
                   {title}
-                  <ArrowUpRight strokeWidth={1.2} />
+                  <div className="text-neutral-500">
+                    <ArrowUpRight strokeWidth={1.2} />
+                  </div>
                 </div>
                 <hr className="border-t border-neutral-300 w-full" />
               </div>
