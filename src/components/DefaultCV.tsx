@@ -1,18 +1,44 @@
 import { CVTemplate } from "@/cv-templates/base-template";
-import { Globe, Mail, Phone } from "lucide-react";
+import {
+  ArrowUpRight,
+  Award,
+  Briefcase,
+  Globe,
+  GraduationCap,
+  Mail,
+  Phone,
+  Rocket,
+} from "lucide-react";
 
 const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
-  const { title, intro, employment } = cvTemplate;
+  const { title, intro, employment, education, skills } = cvTemplate;
+  // Define the desired order
+  const order = [
+    "tp-ai-architect",
+    "cz-digital-experience-lead",
+    "cz-digital-marketing-lead",
+    "cz-digital-marketing-executive",
+    "uxbridge-arts-culture",
+  ];
+
+  // Convert the object into an array
   const employmentArray = Object.entries(employment);
+
+  // Sort the array based on the predefined order
+  const sortedEmploymentArray = employmentArray.sort((a, b) => {
+    const indexA = order.indexOf(a[0]);
+    const indexB = order.indexOf(b[0]);
+    return indexA - indexB;
+  });
   return (
-    <div className="w-full max-w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex">
-      <div className="self-stretch grow shrink basis-0 flex-col justify-start items-start gap-8 inline-flex">
+    <div className="w-full max-w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
+      <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1025px] h-auto">
         <div className="self-stretch justify-start items-end gap-7 inline-flex">
-          <div className="text-neutral-700 text-2xl font-extrabold leading-none">
+          <h1 className="text-neutral-700 text-2xl font-extrabold leading-none">
             Tim
             <br />
             Restieaux
-          </div>
+          </h1>
           <div
             className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px] inline focus-visible:outline-none"
             contentEditable
@@ -60,11 +86,11 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         </div>
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
-            <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight">
-              Employment
+            <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight flex items-center gap-2">
+              <Briefcase size={13} /> Employment
             </div>
           </div>
-          {employmentArray.map(
+          {sortedEmploymentArray.map(
             ([
               id,
               {
@@ -81,7 +107,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 key={id}
                 className="self-stretch justify-start items-start gap-[34px] inline-flex"
               >
-                <div className="w-[113px] flex-col justify-start items-start gap-0.5 inline-flex">
+                <div className="flex-col justify-start items-start gap-0.5 inline-flex">
                   <div className="w-[114px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
                     {startDate} – {endDate}
                   </div>
@@ -91,7 +117,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                   <div className="pb-2.5 flex-col justify-start items-start gap-0.5 flex">
-                    <div className="w-[165px] h-[18px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
+                    <div className="w-[165px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
                       {position}
                     </div>
                     <div className="justify-start items-center gap-[9px] inline-flex flex-wrap">
@@ -120,6 +146,96 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               </div>
             )
           )}
+        </div>
+      </div>
+      {(education || skills) && (
+        <div className="flex gap-8 w-full">
+          {education && (
+            <div className="min-w-fit max-w-sm">
+              <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+                <GraduationCap size={13} /> Education
+              </div>
+              {education?.map(
+                ({
+                  startDate,
+                  endDate,
+                  institution,
+                  details,
+                  qualification,
+                }) => (
+                  <div
+                    key={institution}
+                    className="flex-col justify-start items-start gap-0.5 inline-flex"
+                  >
+                    <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center">
+                      {institution}
+                    </div>
+                    <div className="italic text-neutral-800 text-[10px] font-light leading-3">
+                      {qualification}
+                    </div>
+                    <div className="italic text-neutral-700 text-[10px] font-light leading-3">
+                      {details}
+                    </div>
+                    <div className=" text-neutral-600 text-[10px] font-light leading-[18px] mt-1">
+                      {startDate} – {endDate}
+                    </div>
+                  </div>
+                )
+              )}
+            </div>
+          )}
+          {skills && (
+            <div className="flex-col justify-start items-start gap-0.5 inline-flex">
+              <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+                <Award size={13} /> Skills
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <div
+                    key={skill}
+                    className="px-3 py-2 bg-blue-100 rounded-[13px] justify-center items-center gap-[13px] flex"
+                  >
+                    <div className="text-blue-800 text-[8px] font-normal  leading-[4.50px]">
+                      {skill}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      <div className="w-full">
+            <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex gap-2 items-center">
+              <Rocket size={13} /> Recent projects
+            </div>
+        <div className="flex gap-8">
+          {/* <div className="w-[226px]">
+          </div> */}
+          <div className="grow grid gap-4">
+            {[
+              {
+                title: "CV Builder Web App",
+                employer: "Competenz",
+              },
+              {
+                title: "CV Builder Web App",
+                employer: "Competenz",
+              },
+              {
+                title: "CV Builder Web App",
+                employer: "Competenz",
+              },
+            ].map(({ title }) => (
+              <div key={title} className="mt-4">
+                <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center justify-between pl-36">
+                  {title}
+                  <ArrowUpRight strokeWidth={1.2} />
+                </div>
+                <hr className="border-t border-neutral-300 w-full" />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

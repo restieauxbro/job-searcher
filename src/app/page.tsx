@@ -27,7 +27,7 @@ export default function Home() {
     initialMessages: [
       {
         role: "system",
-        content: systemInstructions,
+        content: systemInstructions(cv),
         id: "cv-customisation-ai-1",
       },
       // {
@@ -40,6 +40,7 @@ export default function Home() {
 
   const invokeCognition = async (e: any) => {
     e.preventDefault();
+    handleSubmit(e);
     if (!slug) {
       // get application details to save to the database
       const details = await getApplicationDetails(input);
@@ -47,35 +48,45 @@ export default function Home() {
         setApplicationDetails({ ...details, jobDescription: input });
       }
     }
-    handleSubmit(e);
   };
 
-  const handleEditCv = async (json: { [key: string]: any }) => {
-    const intro: string | undefined = json.intro;
-    const employment: Employment | undefined = json.employment;
+  const handleEditCv = async (json: {
+    title?: string;
+    intro?: string;
+    employment?: Employment;
+    skills?: string[];
+  }) => {
+    // Create a new copy of the CV state for manipulation
     let newCv = { ...cv };
-    if (intro) {
-      setCv((prev) => {
-        newCv = { ...prev, ...{ intro } };
-        return { ...prev, ...{ intro } };
-      });
+
+    // Update newCv with provided values
+    if (json.intro) {
+      newCv.intro = json.intro;
     }
-    if (employment) {
-      const newEmployment = { ...cv.employment };
-      // for each key in employment, update the employment object
-      Object.keys(employment).forEach((key) => {
-        newEmployment[key] = {
-          ...newEmployment[key],
+    if (json.title) {
+      newCv.title = json.title;
+    }
+    if (json.skills) {
+      newCv.skills = json.skills;
+    }
+    if (json.employment) {
+      newCv.employment = { ...newCv.employment };
+      Object.keys(json.employment).forEach((key) => {
+        newCv.employment[key] = {
+          ...newCv.employment[key],
           // @ts-ignore
-          ...employment[key],
+          ...json.employment[key],
         };
       });
-      setCv((prev) => {
-        newCv = { ...prev, ...{ employment: newEmployment } };
-        return { ...prev, ...{ employment: newEmployment } };
-      });
     }
-    // upload to database
+
+    console.log("new cv", { newCv });
+    // Update the state once with the newCv
+    setCv(newCv);
+
+    // Since setState is asynchronous, use the updated state in a callback or useEffect
+    // Here, we're assuming uploadCv can be called independently
+    // without needing the updated state immediately
     await uploadCv(newCv);
   };
 
@@ -84,7 +95,7 @@ export default function Home() {
       // upload to database by sending in body to /api/upload-cv
       const res = await fetch("/api/upload-cv", {
         method: "POST",
-        body: JSON.stringify({ cv: cvData, ...applicationDetails, slug }),
+        body: JSON.stringify({ cv: cvData, ...applicationDetails, slug, messages }),
       });
       const data = await res.json();
       console.log(data);
@@ -114,127 +125,129 @@ export default function Home() {
   return (
     <main className="">
       <div className="grid min-h-screen xl:grid-cols-2 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
-        <div className="w-full max-w-xl xl:justify-self-end py-8">
-          <h1 className="text-5xl lg:text-6xl font-extrabold max-w-lg leading-[0.8] text-neutral-800 mb-4 tracking-tight">
-            <Balancer>Customise this CV</Balancer>
-          </h1>
-          <ul>
-            {messages
-              .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
-              .map(({ content, id, role }, i) => {
-                const mArray = parseMessageWithJson(content);
-                const jsonSuggestions = mArray.filter(
-                  ({ type }) => type === "json"
-                )[0]?.content;
-                return (
-                  <li
-                    key={id}
-                    className={cn(
-                      "my-8 p-6 rounded-md shadow-md bg-slate-100 border border-slate-200"
-                    )}
-                  >
-                    {role === "user" ? "User: " : "AI: "}
-                    {mArray.map(({ content, type }, i) => {
-                      const contentArray = Object.entries(content);
-                      return (
-                        <div key={i}>
-                          {type === "text" ? (
-                            <p
-                              className="mb-4"
-                              dangerouslySetInnerHTML={{
-                                __html: content
-                                  .replace("```json", "")
-                                  .replace("```", "")
-                                  .replace(/\n/g, "<br />"),
-                              }}
-                            />
-                          ) : (
-                            // Render JSON
-                            <div className="mb-4">
-                              {typeof content === "string" ? (
-                                <p className="p-4 shadow-lg">{content}</p>
-                              ) : (
-                                contentArray.map(([key, value], i) => {
-                                  return (
-                                    <div
-                                      key={i}
-                                      className="mt-4 p-4 text-sm shadow-lg w-[110%] bg-white rounded-md border"
-                                    >
-                                      <p className="font-bold">{key}</p>
-                                      {typeof value === "string" ? (
-                                        <p>{value}</p>
-                                      ) : (
-                                        <div>
-                                          {Object.entries(value).map(
-                                            ([key2, value2], i) => {
-                                              return (
-                                                <div key={i}>
-                                                  <p className="font-medium mt-2">
-                                                    {key2}
-                                                  </p>
-                                                  <p>
-                                                    {JSON.stringify(value2)}
-                                                  </p>
-                                                </div>
-                                              );
-                                            }
-                                          )}
+        <div className="w-full max-w-xl grid xl:items-center xl:justify-self-end py-8">
+          <div>
+            <h1 className="text-5xl lg:text-6xl font-extrabold max-w-lg leading-[0.8] text-neutral-800 mb-4 tracking-tight">
+              <Balancer>Customise this CV</Balancer>
+            </h1>
+            <ul>
+              {messages
+                .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
+                .map(({ content, id, role }, i) => {
+                  const mArray = parseMessageWithJson(content);
+                  const jsonSuggestions = mArray.filter(
+                    ({ type }) => type === "json"
+                  )[0]?.content;
+                  return (
+                    <li
+                      key={id}
+                      className={cn(
+                        "my-8 p-6 rounded-md shadow-md bg-slate-100 border border-slate-200"
+                      )}
+                    >
+                      {role === "user" ? "User: " : "AI: "}
+                      {mArray.map(({ content, type }, i) => {
+                        const contentArray = Object.entries(content);
+                        return (
+                          <div key={i}>
+                            {type === "text" ? (
+                              <p
+                                className="mb-4"
+                                dangerouslySetInnerHTML={{
+                                  __html: content
+                                    .replace("```json", "")
+                                    .replace("```", "")
+                                    .replace(/\n/g, "<br />"),
+                                }}
+                              />
+                            ) : (
+                              // Render JSON
+                              <div className="mb-4">
+                                {typeof content === "string" ? (
+                                  <p className="p-4 shadow-lg">{content}</p>
+                                ) : (
+                                  contentArray.map(([key, value], i) => {
+                                    return (
+                                      <div
+                                        key={i}
+                                        className="mt-4 p-4 text-sm shadow-lg w-[110%] bg-white rounded-md border"
+                                      >
+                                        <p className="font-bold">{key}</p>
+                                        {typeof value === "string" ? (
+                                          <p>{value}</p>
+                                        ) : (
+                                          <div>
+                                            {Object.entries(value).map(
+                                              ([key2, value2], i) => {
+                                                return (
+                                                  <div key={i}>
+                                                    <p className="font-medium mt-2">
+                                                      {key2}
+                                                    </p>
+                                                    <p>
+                                                      {JSON.stringify(value2)}
+                                                    </p>
+                                                  </div>
+                                                );
+                                              }
+                                            )}
+                                          </div>
+                                        )}
+                                        <div className="mt-4 flex justify-end">
+                                          <Button
+                                            size={"sm"}
+                                            variant="secondary"
+                                            className="text-xs"
+                                            onClick={() => {
+                                              handleEditCv({ [key]: value });
+                                            }}
+                                          >
+                                            Accept
+                                          </Button>
                                         </div>
-                                      )}
-                                      <div className="mt-4 flex justify-end">
-                                        <Button
-                                          size={"sm"}
-                                          variant="secondary"
-                                          className="text-xs"
-                                          onClick={() => {
-                                            handleEditCv({ [key]: value });
-                                          }}
-                                        >
-                                          Accept
-                                        </Button>
                                       </div>
-                                    </div>
-                                  );
-                                })
-                              )}
-                            </div>
-                          )}
+                                    );
+                                  })
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                      {jsonSuggestions && (
+                        <div className="mt-4 flex justify-end">
+                          <Button
+                            size={"sm"}
+                            onClick={() => {
+                              typeof jsonSuggestions !== "string" &&
+                                handleEditCv(jsonSuggestions);
+                            }}
+                          >
+                            Accept all
+                          </Button>
                         </div>
-                      );
-                    })}
-                    {jsonSuggestions && (
-                      <div className="mt-4 flex justify-end">
-                        <Button
-                          size={"sm"}
-                          onClick={() => {
-                            typeof jsonSuggestions !== "string" &&
-                              handleEditCv(jsonSuggestions);
-                          }}
-                        >
-                          Accept all
-                        </Button>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-          </ul>
-          <form onSubmit={invokeCognition}>
-            <Textarea
-              placeholder="Paste a job advert in here and have AI edit your CV"
-              autoFocus
-              className="shadow-md mt-8"
-              value={input}
-              onChange={handleInputChange}
-            />
-            <div className="mt-2 flex justify-end">
-              <Button type="submit">Get edits</Button>
-            </div>
-          </form>
+                      )}
+                    </li>
+                  );
+                })}
+            </ul>
+            <form onSubmit={invokeCognition}>
+              <Textarea
+                placeholder="Paste a job advert in here and have AI edit your CV"
+                autoFocus
+                className="shadow-md mt-8"
+                value={input}
+                onChange={handleInputChange}
+              />
+              <div className="mt-2 flex justify-end">
+                <Button type="submit">Get edits</Button>
+              </div>
+            </form>
+          </div>
         </div>
         <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
           <div className="grid place-items-center">
-            <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border">
+            <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[1000px] overflow-y-auto">
               <DefaultCV cvTemplate={cv} />
             </div>
             <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
@@ -263,31 +276,28 @@ export default function Home() {
   );
 }
 
-const systemInstructions = `Tim's CV:
+const systemInstructions = (cvTemplate: CVTemplate) => `Tim's CV:
 
 export type CVTemplate = {
-  title?: string;
-  intro?: string;
-  employment?: {
+  title: string;
+  intro: string;
+  employment: {
     [key: string]: Employment;
-  }
+  };
+  skills?: string[];
 };
 
 export type Employment = {
-  company?: string;
-  position?: string;
-  startDate?: string;
-  endDate?: string;
-  totalDuration?: string;
-  description?: string;
-  hightlights?: string[];
+  company: string;
+  position: string;
+  startDate: string;
+  endDate: string;
+  totalDuration: string;
+  description: string;
+  hightlights: string[];
 };
 
-export const baseTemplate: CVTemplate = ${JSON.stringify(
-  baseTemplate,
-  null,
-  2
-)};
+export const baseTemplate: CVTemplate = ${JSON.stringify(cvTemplate, null, 2)};
 
 END CV
 

@@ -14,9 +14,9 @@ const supabase = createClient<Database>(
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { cv, jobTitle, employer, jobDescription, slug } = body as {
+    const { cv, jobTitle, employer, jobDescription, slug, messages } = body as {
       cv: CVTemplate;
-    } & ApplicationDetails & { slug: string };
+    } & ApplicationDetails & { slug: string; messages: any };
     //  console.log(cv);
 
     const { data, error } = await supabase
@@ -29,18 +29,18 @@ export async function POST(request: Request) {
             job_title: jobTitle,
             employer,
             job_ad_description: jobDescription,
+            messages,
           },
         ],
         {
           onConflict: "slug",
         }
       )
-      .select("slug");
+      .select("slug, cv_data");
     if (error) {
       console.log(error);
       throw error;
     }
-    console.log(data);
     return Response.json(data);
   } catch (err) {
     return Response.json(err);

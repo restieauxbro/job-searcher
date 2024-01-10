@@ -4,6 +4,8 @@ export type CVTemplate = {
   employment: {
     [key: string]: Employment;
   };
+  education?: Education[];
+  skills?: string[];
 };
 
 export type Employment = {
@@ -14,6 +16,14 @@ export type Employment = {
   totalDuration: string;
   description: string;
   hightlights: string[];
+};
+
+export type Education = {
+  institution: string;
+  qualification: string;
+  details: string;
+  startDate: string;
+  endDate: string;
 };
 
 export const baseTemplate: CVTemplate = {
@@ -73,4 +83,25 @@ export const baseTemplate: CVTemplate = {
       hightlights: ["Operations"],
     },
   },
-};
+  education: [
+    {
+      institution: "Auckland University of Technology",
+      qualification: "Bachelor of Communications Studies",
+      details: "Major in Creative Industries, Minor in Advertising",
+      startDate: "2016",
+      endDate: "2018",
+    },
+  ],
+  skills: [
+    "React",
+    "Javascript",
+    "Figma",
+    "Adobe Creative Suite",
+    "HTML",
+    "CSS",
+    "Node",
+    "Express",
+    "MongoDB",
+    "SQL",
+  ],
+}
