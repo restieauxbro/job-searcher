@@ -4,22 +4,13 @@ import React from "react";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Metadata, ResolvingMetadata } from "next";
-
-type CvgCv = {
-  id: number; // bigint maps to number in TypeScript
-  created_at: Date; // timestamp with time zone maps to Date
-  slug: string | null; // text can be string, nullable since it's 'null' in SQL
-  cv_data: any | null; // jsonb can be any, nullable
-  employer: string | null; // text as string, nullable
-  job_ad_description: string | null; // text as string, nullable
-  job_title: string | null; // text as string, nullable
-};
+import { Database } from "@/types/supabase";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const cookieStore = cookies();
 
-  const supabase = createServerClient(
+  const supabase = createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -31,19 +22,23 @@ export default async function Page({ params }: { params: { slug: string } }) {
     }
   );
 
-  const { data: cvFromDb, error } = (await supabase
+  const { data: cvFromDb, error } = await supabase
     .from("cvg_cv")
-    .select("*")
+    .select("cv_data")
     .eq("slug", slug)
-    .single()) as { data: CvgCv | null; error: any };
+    .single();
 
   if (error) {
     console.error(error);
     return <div>Error loading CV</div>;
   }
+
   return (
     <>
-      <DefaultCV cvTemplate={cvFromDb?.cv_data || baseTemplate} />
+      <DefaultCV
+        // @ts-ignore
+        cvTemplate={cvFromDb?.cv_data || baseTemplate}
+      />
     </>
   );
 }
@@ -71,11 +66,11 @@ export async function generateMetadata(
     }
   );
 
-  const { data: cvFromDb, error } = (await supabase
+  const { data: cvFromDb, error } = await supabase
     .from("cvg_cv")
-    .select("*")
+    .select("employer, job_title")
     .eq("slug", slug)
-    .single()) as { data: CvgCv | null; error: any };
+    .single();
 
   return {
     title: "Tim Restieaux for " + cvFromDb?.employer || cvFromDb?.job_title,

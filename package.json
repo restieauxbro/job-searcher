@@ -22,6 +22,7 @@
     "puppeteer": "^21.6.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-rough-notation": "^1.0.5",
     "react-use": "^17.4.2",
     "react-wrap-balancer": "^1.1.0",
     "tailwind-merge": "^2.1.0",

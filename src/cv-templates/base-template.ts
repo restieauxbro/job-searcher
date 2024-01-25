@@ -27,7 +27,7 @@ export type Education = {
 };
 
 export const baseTemplate: CVTemplate = {
-  title: "Product Engineer",
+  title: "Product Designer and Engineer",
   intro:
     "As a Product Engineer with a unique blend of technical expertise and marketing acumen, I specialise in engineering innovative products that transform user experiences and drive business success. My background in mar-tech, combined with a deep understanding of market dynamics, equips me to design and develop products that not only meet but exceed user expectations. My experience in AI research, full-stack development, and process automation has been instrumental in pioneering solutions in the education and training sector. With a proven track record in leveraging technology for strategic product development and a commitment to continuous improvement, I excel in bridging the gap between technical possibilities and market needs, ensuring products are both technically sound and commercially viable.",
   employment: {
@@ -44,9 +44,9 @@ export const baseTemplate: CVTemplate = {
     "cz-digital-experience-lead": {
       company: "Competenz",
       position: "Digital Experience Lead",
-      startDate: "Sep 2021",
+      startDate: "Oct 2021",
       endDate: "Jun 2022",
-      totalDuration: "10 months",
+      totalDuration: "9 months",
       description:
         "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       hightlights: ["UX Management"],
@@ -96,12 +96,10 @@ export const baseTemplate: CVTemplate = {
     "React",
     "Javascript",
     "Figma",
-    "Adobe Creative Suite",
-    "HTML",
     "CSS",
     "Node",
-    "Express",
-    "MongoDB",
-    "SQL",
+    "PostgreSQL",
+    "AI Finetuning",
+    "User research"
   ],
 }

@@ -211,37 +211,56 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
       <div className="w-full mt-4">
         <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex gap-2 items-center">
           {/* <Rocket size={13} /> */}
-          Recent projects
+          Selected projects
         </div>
-        <div className="flex gap-8">
-          {/* <div className="w-[226px]">
-          </div> */}
-          <div className="grow grid gap-4">
-            {[
-              {
-                title: "CV Builder Web App",
-                employer: "Competenz",
-              },
-              {
-                title: "CV Builder Web App",
-                employer: "Competenz",
-              },
-              {
-                title: "CV Builder Web App",
-                employer: "Competenz",
-              },
-            ].map(({ title }) => (
-              <div key={title} className="mt-4">
-                <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center justify-between">
-                  {title}
-                  <div className="text-neutral-500">
-                    <ArrowUpRight strokeWidth={1.2} />
+
+        <div className="grow grid gap-4 mt-6">
+          {[
+            {
+              title: "Agency landing page",
+              employer: "Oscar Tango",
+              link: "https://oscartango.digital",
+              contributions: ["Design", "Build"],
+            },
+            {
+              title: "CV builder web app",
+              employer: "Competenz",
+              link: "https://competenz-cv-builder.netlify.app/",
+              contributions: ["Strategy", "Interraction Design", "Build"],
+            },
+            {
+              title: "Employer onboarding helper",
+              employer: "Te Pūkenga",
+              link: "https://www.xn--tepkenga-szb.ac.nz/on-job-learning",
+              contributions: ["User Research", "Design", "Build"],
+            },
+          ].map(({ title, employer, link, contributions }) => (
+            <div key={title} className="mt-0">
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                <div className="text-neutral-700 text-[10px] leading-3 mb-1 flex gap-2 items-center justify-between">
+                  <div className="flex gap-4">
+                    <div className="font-medium">{title}</div>
+                    <div className="text-neutral-400">{employer}</div>
+                  </div>
+                  <div className="flex gap-4 items-center">
+                    <div className="text-neutral-500">
+                      {contributions.map((contribution, i) => (
+                        <span key={contribution} className="text-[8px]">
+                          {contribution}
+                          {i !== contributions.length - 1 && <span className="mx-2 text-neutral-300">/</span>}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="text-neutral-500">
+                      <ArrowUpRight strokeWidth={1.2} />
+                    </div>
                   </div>
                 </div>
                 <hr className="border-t border-neutral-300 w-full" />
-              </div>
-            ))}
-          </div>
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </div>
