@@ -66,7 +66,7 @@ const Sidebar = ({
               animate={{ width: sidebarOpen ? 325 : 65 }}
             >
               {history?.map((cv) => (
-                <Link href={`/?j=${cv.id}`} className="w-[325px]">
+                <Link href={`/?j=${cv.id}`} className="w-[325px]" key={cv.id}>
                   <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-300">
                     <div className="flex flex-col">
                       <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
