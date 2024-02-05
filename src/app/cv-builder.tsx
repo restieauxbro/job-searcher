@@ -11,10 +11,11 @@ import {
 } from "@/cv-templates/base-template";
 import { parseMessageWithJson } from "@/lib/streaming";
 import { cn, slugify } from "@/lib/utils";
+import { CVEntryFromSupabase } from "@/types/supabase";
 import { useChat } from "ai/react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Balancer from "react-wrap-balancer";
 
 export default function CVBuilderApp({
@@ -30,29 +31,29 @@ export default function CVBuilderApp({
         created_at: string;
       }[]
     | null;
-  chosenCV?:
-    | {
-        employer: string | null;
-        id: number;
-        job_title: string | null;
-        slug: string | null;
-        created_at: string;
-      }[]
-    | null;
+  chosenCV?: CVEntryFromSupabase;
 }) {
   return (
     <div className="flex relative">
       <HistorySidebar {...{ history }} />
-      <CVBuilder />
+      <CVBuilder {...{ chosenCV: chosenCV }} />
     </div>
   );
 }
 
-function CVBuilder() {
-  const [uneditedCv, setUneditedCv] = useState<CVTemplate>(baseTemplate);
-  // only changes when the base template is replaced
+function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
+  useEffect(() => {
+    console.log("chosenCV", chosenCV);
+    if (chosenCV && chosenCV.cv_data) {
+      setCv(chosenCV.cv_data);
+      setUneditedCv(chosenCV.cv_data);
+    }
+  }, [chosenCV]);
 
-  const [cv, setCv] = useState(uneditedCv);
+  const [uneditedCv, setUneditedCv] = useState<CVTemplate>(
+    chosenCV?.cv_data || baseTemplate
+  );
+  const [cv, setCv] = useState<CVTemplate>(baseTemplate);
 
   const [applicationDetails, setApplicationDetails] =
     useState<ApplicationDetails>({});
@@ -63,7 +64,7 @@ function CVBuilder() {
     initialMessages: [
       {
         role: "system",
-        content: systemInstructions(cv),
+        content: systemInstructions(uneditedCv),
         id: "cv-customisation-ai-1",
       },
       // {
@@ -167,8 +168,10 @@ function CVBuilder() {
     <div className="grid min-h-screen xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
       <div className="w-full max-w-xl grid xl:items-center xl:justify-self-end py-8">
         <div>
-          <h1 className="text-5xl lg:text-6xl font-extrabold max-w-lg leading-[0.8] text-neutral-800 mb-4 tracking-tight">
-            <Balancer>Customise this CV</Balancer>
+          <h1 className="text-5xl font-extrabold max-w-lg leading-none text-neutral-700 mb-4 tracking-tight text-balance">
+            {chosenCV?.employer
+              ? chosenCV.job_title + " for " + chosenCV.employer
+              : "Edit this CV"}
           </h1>
           <ul>
             {messages

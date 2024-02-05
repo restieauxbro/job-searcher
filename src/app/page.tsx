@@ -1,9 +1,10 @@
 import Sidebar from "@/components/HistorySidebar";
-import { Database } from "@/types/supabase";
+import { CVEntryFromSupabase, Database } from "@/types/supabase";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import React from "react";
 import CVBuilderApp from "./cv-builder";
+import { CVTemplate } from "@/cv-templates/base-template";
 
 export default async function Page({
   params,
@@ -38,7 +39,8 @@ export default async function Page({
     const chosenCVPromise = supabase
       .from("cvg_cv")
       .select("cv_data, employer, id, job_title, slug, created_at")
-      .eq("id", j);
+      .eq("id", j)
+      .single();
 
     promises.push(chosenCVPromise);
   }
@@ -52,10 +54,11 @@ export default async function Page({
 
   return (
     <>
-      <pre>{JSON.stringify(chosenCV?.data, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(chosenCV?.data, null, 2)}</pre> */}
       <CVBuilderApp
         history={historyData.data}
-        {...{ chosenCV: chosenCV?.data }}
+        {...{
+          chosenCV: chosenCV?.data as CVEntryFromSupabase}}
       />
     </>
   );

@@ -38,8 +38,8 @@ export const baseTemplate: CVTemplate = {
       endDate: "Present",
       totalDuration: "2 years 3 months",
       description:
-        "Architecting, designing and developing intelligent ways for users to navigate the Te Pūkenga network. This involved everything from CX design to AI research and leading in-house front end development. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a CDP, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners. I led the workstream “Intelligent Navigation” which was guided by the principle of providing agile solutions that minimised tech debt during transition, easing the complexity of the network for our users.",
-      hightlights: ["Full Stack Development"],
+        "I was the Product Owner of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
+      hightlights: ["Product Owner", "Lead Developer"],
     },
     "cz-digital-experience-lead": {
       company: "Competenz",

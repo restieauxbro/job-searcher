@@ -40,7 +40,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             Restieaux
           </h1>
           <div
-            className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px] inline focus-visible:outline-none"
+            className="grow shrink basis-0 text-neutral-800 text-[10px] font-medium mb-[4px] leading-[7px] inline focus-visible:outline-none text-pretty"
             contentEditable
           >
             {title}

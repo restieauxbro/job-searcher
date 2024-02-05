@@ -1,4 +1,4 @@
-import { ApplicationDetails } from "@/app/page";
+import { ApplicationDetails } from "@/app/cv-builder";
 import { CVTemplate } from "@/cv-templates/base-template";
 import { slugify } from "@/lib/utils";
 import { Database } from "@/types/supabase";
