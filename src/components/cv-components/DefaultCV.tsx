@@ -1,14 +1,5 @@
 import { CVTemplate } from "@/cv-templates/base-template";
-import {
-  ArrowUpRight,
-  Award,
-  Briefcase,
-  Globe,
-  GraduationCap,
-  Mail,
-  Phone,
-  Rocket,
-} from "lucide-react";
+import { ArrowUpRight, Globe, Mail, Phone } from "lucide-react";
 
 const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment, education, skills } = cvTemplate;
@@ -247,7 +238,9 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       {contributions.map((contribution, i) => (
                         <span key={contribution} className="text-[8px]">
                           {contribution}
-                          {i !== contributions.length - 1 && <span className="mx-2 text-neutral-300">/</span>}
+                          {i !== contributions.length - 1 && (
+                            <span className="mx-2 text-neutral-300">/</span>
+                          )}
                         </span>
                       ))}
                     </div>

@@ -5,6 +5,7 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Metadata, ResolvingMetadata } from "next";
 import { Database } from "@/types/supabase";
+import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -35,7 +36,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <DefaultCV
+      <CvWithIntro
         // @ts-ignore
         cvTemplate={cvFromDb?.cv_data || baseTemplate}
       />

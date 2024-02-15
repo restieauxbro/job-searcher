@@ -1,4 +1,4 @@
-import DefaultCV from "@/components/DefaultCV";
+import DefaultCV from "@/components/cv-components/DefaultCV";
 import { technicalMarketingLead } from "@/cv-templates/technical-marketing-lead";
 import React from "react";
 

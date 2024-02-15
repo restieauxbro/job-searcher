@@ -1,6 +1,6 @@
 "use client";
 
-import DefaultCV from "@/components/DefaultCV";
+import DefaultCV from "@/components/cv-components/DefaultCV";
 import HistorySidebar from "@/components/HistorySidebar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -165,7 +165,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   };
 
   return (
-    <div className="grid min-h-screen xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
+    <div className="grid min-h-lvh xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
       <div className="w-full max-w-xl grid xl:items-center xl:justify-self-end py-8">
         <div>
           <h1 className="text-5xl font-extrabold max-w-lg leading-none text-neutral-700 mb-4 tracking-tight text-balance">
@@ -290,7 +290,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
       </div>
       <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
         <div className="grid place-items-center">
-          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[1000px] overflow-y-auto">
+          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[calc(100lvh-9rem)] overflow-y-auto">
             <DefaultCV cvTemplate={cv} />
           </div>
           <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">

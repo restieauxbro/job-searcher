@@ -1,4 +1,4 @@
-import DefaultCV from "@/components/DefaultCV";
+import DefaultCV from "@/components/cv-components/DefaultCV";
 import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 import React from "react";
 
