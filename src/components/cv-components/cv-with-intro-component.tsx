@@ -55,7 +55,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                   className=""
                 />
               </div> */}
-              <h1 className="text-neutral-600 text-[36px] font-extrabold leading-none">
+              <h1 className="text-slate-700 text-[36px] font-extrabold leading-none">
                 Tim
                 <br />
                 Restieaux
@@ -66,7 +66,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               {cvTemplate.title || "Web Engineer"}
             </div>
           </div>
-          <div className="text-neutral-600 font-light mt-6 text-[11px]">
+          <div className="text-slate-600 font-light mt-6 text-[11px]">
             Curriculum Vitae
           </div>
           <div className="mt-8 text-[9px] font-light leading-[1.7]">
@@ -83,7 +83,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           </div> */}
         </div>
         <div className="w-full mt-4 relative max-w-lg pb-32">
-          <div className="text-neutral-500 text-[10px] font-extralight tracking-tight flex gap-2 items-center">
+          <div className="text-slate-500 text-[10px] font-extralight tracking-tight flex gap-2 items-center">
             {/* <Rocket size={13} /> */}
             Selected projects
           </div>
@@ -117,13 +117,13 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             ].map(({ title, employer, link, contributions }) => (
               <div key={title} className="mt-0">
                 <a href={link} target="_blank" rel="noopener noreferrer">
-                  <div className="text-neutral-700 text-[10px] leading-3 mb-1 flex gap-2 items-center justify-between">
+                  <div className="text-slate-700 text-[10px] leading-3 mb-1 flex gap-2 items-center justify-between">
                     <div className="flex gap-4">
                       <div className="font-normal">{title}</div>
-                      <div className="text-neutral-500">{employer}</div>
+                      <div className="text-slate-500">{employer}</div>
                     </div>
                     <div className="flex gap-4 items-center">
-                      <div className="text-neutral-600">
+                      <div className="text-slate-600">
                         {contributions.map((contribution, i) => (
                           <span
                             key={contribution}
@@ -131,13 +131,13 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                           >
                             {contribution}
                             {i !== contributions.length - 1 && (
-                              <span className="mx-2 text-neutral-300">/</span>
+                              <span className="mx-2 text-slate-300">/</span>
                             )}
                           </span>
                         ))}
                       </div>
 
-                      <div className="text-neutral-500">
+                      <div className="text-slate-500">
                         <ArrowUpRight strokeWidth={0.8} />
                       </div>
                     </div>
@@ -150,56 +150,75 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         </div>
         <div className="absolute bottom-12 right-12">
           <div
-            className="absolute size-[200px] bg-pink-400/25 rounded-full border-4 border-white blur-xl"
-            style={{ bottom: -60, right: -20 }}
+            className="absolute size-[200px] bg-pink-400/25 rounded-full border-4 border-white blur-lg"
+            style={{ bottom: -50, right: -10 }}
           ></div>
 
+         
           <div
-            className="absolute size-[150px] rounded-full border-[8px] border-white/80 blur-[9px]"
-            style={{
-              top: -75,
-              right: -50,
-            }}
-          ></div>
+            className="shadow-md neumorphic-outline justify-self-end text-slate-700 text-[8px] rounded-md relative overflow-hidden"
+            // style={{
+            //   background:
+            //     "radial-gradient(circle at top, rgb(255 255 255 / 90%), rgb(255 255 255 / 30%))",
+            // }}
+          >
+            <div className="bg-gradient-to-b from-white to-slate-500/20 p-[2px]">
+              <div className="bg-gradient-to-br from-slate-100 to-70% to-white rounded-[3.5px] p-6 grid gap-2 pr-12">
+                <a href="tel:+61483848609">
+                  <div className="flex gap-3 items-center">
+                    <div className=" text-slate-500">
+                      <Phone size={10} />
+                    </div>
+                    <div className="">+61 4 8384 8609</div>
+                  </div>
+                </a>
+                <div className="flex gap-3 items-center">
+                  <div className=" text-slate-500">
+                    <Globe size={10} />
+                  </div>
+                  <div className="">Melbourne, VIC</div>
+                </div>
+                <a
+                  href="mailto:tim.h.rest@gmail.com"
+                  rel="noopener noreferrer"
+                  className="flex gap-3 items-center"
+                >
+                  <div className=" text-slate-500">
+                    <Mail size={10} />
+                  </div>
+                  <div className="">tim.h.rest@gmail.com</div>
+                </a>
+              </div>
+            </div>
+          </div>
           <div
-            className="absolute size-[50px] rounded-full bg-white/70 blur"
+            className="absolute size-[30px] rounded-full bg-white/80 blur"
             style={{
               top: -20,
-              right: -0,
+              right: 20,
             }}
           ></div>
           <div
-            className="p-6 pr-12 shadow-md rounded-md border justify-self-end text-neutral-700 backdrop-blur-sm text-[8px] grid gap-2 relative"
+            className="absolute w-[10px] h-[200px] -rotate-45 rounded-full bg-white/90 blur"
             style={{
-              background:
-                "radial-gradient(circle at top, rgb(255 255 255 / 90%), rgb(255 255 255 / 30%))",
+              top: -100,
+              right: 20,
             }}
-          >
-            <a href="tel:+61483848609">
-              <div className="flex gap-3 items-center">
-                <div className=" text-neutral-500">
-                  <Phone size={10} />
-                </div>
-                <div className="">+61 4 8384 8609</div>
-              </div>
-            </a>
-            <div className="flex gap-3 items-center">
-              <div className=" text-neutral-500">
-                <Globe size={10} />
-              </div>
-              <div className="">Melbourne, VIC</div>
-            </div>
-            <a
-              href="mailto:tim.h.rest@gmail.com"
-              rel="noopener noreferrer"
-              className="flex gap-3 items-center"
-            >
-              <div className=" text-neutral-500">
-                <Mail size={10} />
-              </div>
-              <div className="">tim.h.rest@gmail.com</div>
-            </a>
-          </div>
+          ></div>
+           <div
+            className="absolute size-[150px] rounded-full border-[8px] border-white/80 blur-[7px]"
+            style={{
+              top: -75,
+              right: -45,
+            }}
+          ></div>
+           <div
+            className="absolute size-[100px] rounded-full border-[2px] border-white/80 blur-[2px]"
+            style={{
+              top: -50,
+              right: -20,
+            }}
+          ></div>
         </div>
         <div className="place-holder"></div>
       </div>
@@ -207,7 +226,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
       <div className="flex-col justify-start items-start gap-8 inline-flex h-auto max-w-xl pt-12">
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
-            <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex items-center gap-2">
+            <div className="text-slate-700 text-[13px] font-bold tracking-tight flex items-center gap-2">
               {/* <Briefcase size={13} />  */}
               Employment
             </div>
@@ -230,20 +249,20 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 className="self-stretch justify-start items-start gap-[34px] inline-flex"
               >
                 <div className="flex-col justify-start items-start gap-0.5 inline-flex">
-                  <div className="w-[114px] text-neutral-800 text-[10px] font-normal">
+                  <div className="w-[114px] text-slate-800 text-[10px] font-normal">
                     {startDate} – {endDate}
                   </div>
-                  <div className="w-[114px] text-neutral-500 text-[10px] font-extralight">
+                  <div className="w-[114px] text-slate-500 text-[10px] font-extralight">
                     {totalDuration}
                   </div>
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                   <div className="pb-2.5 flex-col justify-start items-start gap-0.5 flex">
-                    <div className="w-[165px] text-neutral-800 text-[10px] font-normal mb-1">
+                    <div className="w-[165px] text-slate-800 text-[10px] font-normal mb-1">
                       {position}
                     </div>
                     <div className="justify-start items-center gap-[9px] inline-flex flex-wrap">
-                      <div className="text-neutral-700 text-[10px] font-extralight">
+                      <div className="text-slate-700 text-[10px] font-extralight">
                         {company}
                       </div>
                       {hightlights?.map((highlight) => (
@@ -259,7 +278,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                     </div>
                   </div>
                   <div
-                    className="self-stretch text-neutral-900 text-[8px] font-light  leading-[1.7] inline focus-visible:outline-none"
+                    className="self-stretch text-slate-900 text-[8px] font-light  leading-[1.7] inline focus-visible:outline-none"
                     contentEditable
                   >
                     {description}
@@ -273,7 +292,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           <div className="flex gap-8 w-full mt-8">
             {education && (
               <div className="min-w-fit max-w-sm">
-                <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+                <div className="w-[83.44px] text-slate-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
                   {/* <GraduationCap size={13} />  */}
                   Education
                 </div>
@@ -289,16 +308,16 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       key={institution}
                       className="flex-col justify-start items-start gap-0.5 inline-flex"
                     >
-                      <div className="text-neutral-700 text-[10px] font-normal leading-3 mb-1 flex gap-2 items-center">
+                      <div className="text-slate-700 text-[10px] font-normal leading-3 mb-1 flex gap-2 items-center">
                         {institution}
                       </div>
-                      <div className="italic text-neutral-800 text-[10px] font-extralight leading-3">
+                      <div className="italic text-slate-800 text-[10px] font-extralight leading-3">
                         {qualification}
                       </div>
-                      <div className="italic text-neutral-700 text-[10px] font-extralight leading-3">
+                      <div className="italic text-slate-700 text-[10px] font-extralight leading-3">
                         {details}
                       </div>
-                      <div className=" text-neutral-600 text-[10px] font-extralight leading-[18px] mt-1">
+                      <div className=" text-slate-600 text-[10px] font-extralight leading-[18px] mt-1">
                         {startDate} – {endDate}
                       </div>
                     </div>
@@ -308,7 +327,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             )}
             {skills && (
               <div className="flex-col justify-start items-start gap-0.5 inline-flex">
-                <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+                <div className="w-[83.44px] text-slate-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
                   {/* <Award size={13} /> */}
                   Skills
                 </div>
