@@ -295,7 +295,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
           </div>
           <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
             <Link
-              href={`/cv-with-/${slug || ""}`}
+              href={`/cv-with-intro/${slug || chosenCV?.slug || ""}`}
               target="_blank"
               className={buttonVariants({
                 variant: "outline",

@@ -31,7 +31,7 @@ export default async function Page({
     .from("cvg_cv")
     .select("employer, id, job_title, slug, created_at")
     .order("created_at", { ascending: false })
-    .limit(13);
+    .limit(25);
 
   let promises: any = [historyDataPromise];
 
@@ -58,7 +58,8 @@ export default async function Page({
       <CVBuilderApp
         history={historyData.data}
         {...{
-          chosenCV: chosenCV?.data as CVEntryFromSupabase}}
+          chosenCV: chosenCV?.data as CVEntryFromSupabase,
+        }}
       />
     </>
   );
