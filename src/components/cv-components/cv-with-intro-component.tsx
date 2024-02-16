@@ -3,6 +3,7 @@ import { ArrowUpRight, Globe, Mail, Phone } from "lucide-react";
 import colors from "tailwindcss/colors";
 import React from "react";
 import Divider from "../ui/divider";
+import Image from "next/image";
 
 const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment, education, skills } = cvTemplate;
@@ -25,17 +26,24 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
     return indexA - indexB;
   });
   return (
-    <div className="w-full max-w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
-      <div className="min-h-[1025px] w-full max-w-[500px] grid place-items-center pb-[100px]">
-        <div className="w-full">
-          <div className="gap-6 items-end w-full grid grid-cols-[auto,1fr,auto]">
-            <h1 className="text-neutral-600 text-[32px] font-extrabold leading-none">
+    <div className="w-full max-w-[800px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
+      <div className="min-h-[1080px] w-full max-w-[800px] grid place-items-center pb-[100px] relative ">
+        <Image
+          src={"/images/mask-group.png"}
+          alt="mask-group"
+          width={108}
+          height={108}
+          className="w-full absolute bottom-0 left-0 h-1/3"
+        />
+        <div className="w-full relative max-w-lg">
+          <div className="gap-4 items-end w-full grid grid-cols-[auto,1fr,auto]">
+            <h1 className="text-neutral-600 text-[40px] font-extrabold leading-none">
               Tim
               <br />
               Restieaux
             </h1>
-            <Divider className="mb-[3px]" />
-            <div className="leading-none mb-[3px] text-[11px] min-w-[76px]">
+            <Divider className="mb-[4px]" />
+            <div className="leading-none mb-[4px] text-[11px] min-w-[76px]">
               {cvTemplate.title || "Web Engineer"}
             </div>
           </div>
@@ -47,7 +55,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               `I’m a full-stack web development engineer with a background in optimizing user experiences. With a career that’s moved from digital marketing through to full-stack, I am experienced in managing digital assets as a whole product instead of as isolated components. In my last three roles in cross-functional teams I’ve taken ownership of digital strategy as well as been lead developer on its execution. This makes me the perfect addition to a team that needs to move fast and creatively.`}
           </div>
         </div>
-        <div className="w-full mt-4">
+        <div className="w-full mt-4 relative max-w-lg">
           <div className="text-neutral-500 text-[10px] font-extralight tracking-tight flex gap-2 items-center">
             {/* <Rocket size={13} /> */}
             Selected projects
@@ -113,39 +121,41 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             ))}
           </div>
         </div>
-        <div className="w-[108.04px] h-[60px] relative self-end justify-self-start">
-          <a href="tel:+61483848609">
-            <div className="w-[90.87px] h-[15.79px] left-0 top-[22.10px] absolute">
-              <div className=" left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex">
-                <Phone size={10} />
+        <div className="max-w-lg w-full mx-auto">
+          <div className="w-[108.04px] h-[60px] relative self-end justify-self-start opacity-80">
+            <a href="tel:+61483848609">
+              <div className="w-[90.87px] h-[15.79px] left-0 top-[22.10px] absolute">
+                <div className=" left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex text-neutral-600">
+                  <Phone size={10} />
+                </div>
+                <div className="w-[72.70px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
+                  +61 4 8384 8609
+                </div>
               </div>
-              <div className="w-[72.70px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-                +61 4 8384 8609
+            </a>
+            <div className="w-[81.79px] h-[15.79px] left-0 top-0 absolute">
+              <div className="w-[63.61px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
+                Melbourne, VIC
               </div>
-            </div>
-          </a>
-          <div className="w-[81.79px] h-[15.79px] left-0 top-0 absolute">
-            <div className="w-[63.61px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-              Melbourne, VIC
-            </div>
-            <div className=" left-0 top-[2.10px] absolute flex-col justify-start items-start inline-flex">
-              <Globe size={10} />
-            </div>
-          </div>
-          <a href="mailto:tim.h.rest@gmail.com" rel="noopener noreferrer">
-            <div className="w-[108.04px] h-[15.79px] left-0 top-[44.21px] absolute">
-              <div className="w-[88.85px] h-[15.79px] left-[19.18px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-                tim.h.rest@gmail.com
-              </div>
-              <div className="left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex">
-                <Mail size={10} />
+              <div className=" left-0 top-[2.10px] absolute flex-col justify-start items-start inline-flex text-neutral-600">
+                <Globe size={10} />
               </div>
             </div>
-          </a>
+            <a href="mailto:tim.h.rest@gmail.com" rel="noopener noreferrer">
+              <div className="w-[108.04px] h-[15.79px] left-0 top-[44.21px] absolute">
+                <div className="w-[88.85px] h-[15.79px] left-[19.18px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
+                  tim.h.rest@gmail.com
+                </div>
+                <div className="left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex text-neutral-600">
+                  <Mail size={10} />
+                </div>
+              </div>
+            </a>
+          </div>{" "}
         </div>
       </div>
 
-      <div className="flex-col justify-start items-start gap-8 inline-flex h-auto">
+      <div className="flex-col justify-start items-start gap-8 inline-flex h-auto max-w-xl pt-12">
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex items-center gap-2">
