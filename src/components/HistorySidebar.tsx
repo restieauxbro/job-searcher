@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const Sidebar = ({
   history,
@@ -21,6 +22,7 @@ const Sidebar = ({
     | null;
 }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
+  const searchParams = useSearchParams();
   return (
     <>
       <div className="sticky top-0 left-0 h-screen flex-none overflow-x-hidden">
@@ -65,23 +67,28 @@ const Sidebar = ({
               initial={false}
               animate={{ width: sidebarOpen ? 325 : 65 }}
             >
-              {history?.map((cv) => (
-                <Link href={`/?j=${cv.id}`} className="w-[325px]" key={cv.id}>
-                  <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-300">
-                    <div className="flex flex-col">
-                      <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                        {cv.job_title}
+              {history?.map((cv) => {
+                const editableSearchParams = new URLSearchParams(searchParams);
+                editableSearchParams.set("j", cv.id.toString());
+                const link = `/?${editableSearchParams.toString()}`;
+                return (
+                  <Link href={link} className="w-[325px]" key={cv.id}>
+                    <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-300">
+                      <div className="flex flex-col">
+                        <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                          {cv.job_title}
+                        </div>
+                        <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                          {cv.employer}
+                        </div>
                       </div>
                       <div className="text-xs text-neutral-600 dark:text-neutral-400">
-                        {cv.employer}
+                        {/* {new Date(cv.created_at).toLocaleDateString()} */}
                       </div>
                     </div>
-                    <div className="text-xs text-neutral-600 dark:text-neutral-400">
-                      {/* {new Date(cv.created_at).toLocaleDateString()} */}
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </motion.div>
           </div>
         </div>

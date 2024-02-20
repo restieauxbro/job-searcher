@@ -16,7 +16,22 @@ import { useChat } from "ai/react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Balancer from "react-wrap-balancer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
+
+type CVTheme = "basic" | "projects-cover-page";
+export type ApplicationDetails = {
+  jobTitle?: string;
+  employer?: string;
+  jobDescription?: string;
+};
 
 export default function CVBuilderApp({
   history,
@@ -42,6 +57,19 @@ export default function CVBuilderApp({
 }
 
 function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const cvTheme = searchParams.get("cv-theme") as CVTheme;
+
+  const [uneditedCv, setUneditedCv] = useState<CVTemplate>(
+    chosenCV?.cv_data || baseTemplate
+  );
+
+  const [applicationDetails, setApplicationDetails] =
+    useState<ApplicationDetails>({});
+  const [cv, setCv] = useState<CVTemplate>(baseTemplate);
+
   useEffect(() => {
     console.log("chosenCV", chosenCV);
     if (chosenCV && chosenCV.cv_data) {
@@ -50,15 +78,9 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
     }
   }, [chosenCV]);
 
-  const [uneditedCv, setUneditedCv] = useState<CVTemplate>(
-    chosenCV?.cv_data || baseTemplate
-  );
-  const [cv, setCv] = useState<CVTemplate>(baseTemplate);
-
-  const [applicationDetails, setApplicationDetails] =
-    useState<ApplicationDetails>({});
-
-  const slug = createApplicationSlug(applicationDetails);
+  const slug = createApplicationSlug(applicationDetails) || chosenCV?.slug;
+  const cvThemePathname =
+    cvTheme === "projects-cover-page" ? "/cv-with-intro" : "/cv";
 
   const { messages, input, handleInputChange, handleSubmit } = useChat({
     initialMessages: [
@@ -78,7 +100,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   const invokeCognition = async (e: any) => {
     e.preventDefault();
     handleSubmit(e);
-    if (!slug) {
+    if (!createApplicationSlug(applicationDetails)) {
       // get application details to save to the database
       const details = await getApplicationDetails(input);
       if (details) {
@@ -149,7 +171,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   const printCV = () => {
     // Open the CV page in a new window
     if (!window) return;
-    const cvWindow = window.open(`/cv/${slug || ""}`, "_blank");
+    const cvWindow = window.open(`${cvThemePathname}/${slug || ""}`, "_blank");
     if (!cvWindow) return;
 
     // Wait for the new window to load
@@ -173,6 +195,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
               ? chosenCV.job_title + " for " + chosenCV.employer
               : "Edit this CV"}
           </h1>
+          <div>{slug}</div>
           <ul>
             {messages
               .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
@@ -290,12 +313,36 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
       </div>
       <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
         <div className="grid place-items-center">
-          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[calc(100lvh-9rem)] overflow-y-auto">
-            <DefaultCV cvTemplate={cv} />
+          <div className="w-full flex justify-end mb-4">
+            <Select
+              onValueChange={(cvTheme: CVTheme) => {
+                const editableSearchParams = new URLSearchParams(searchParams);
+                editableSearchParams.set("cv-theme", cvTheme);
+                router.push(pathname + "?" + editableSearchParams.toString());
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Theme" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="basic">Basic</SelectItem>
+                <SelectItem value="projects-cover-page">
+                  With projects cover page
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[calc(100lvh-14rem)] overflow-y-auto">
+            {cvTheme === "projects-cover-page" ? (
+              <CvWithIntro cvTemplate={cv} />
+            ) : (
+              <DefaultCV cvTemplate={cv} />
+            )}
           </div>
           <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
             <Link
-              href={`/cv-with-intro/${slug || chosenCV?.slug || ""}`}
+              href={`${cvThemePathname}/${slug || chosenCV?.slug || ""}`}
               target="_blank"
               className={buttonVariants({
                 variant: "outline",
@@ -368,12 +415,6 @@ Use Australian spelling, such as "organisation" instead of organization.`;
 
 const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: \n\n1. AI research and development 2. Implementation and optimisation of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimisation of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
 
-export type ApplicationDetails = {
-  jobTitle?: string;
-  employer?: string;
-  jobDescription?: string;
-};
-
 const getApplicationDetails = async (
   jobDescription: string
 ): Promise<ApplicationDetails | undefined> => {
@@ -384,7 +425,9 @@ const getApplicationDetails = async (
         role: "system",
         content: `Your job is to output the job title and employer from the a job advertisment that the user will give you. Please output JSON in the following format:
 
-        { "jobTitle": "Example Job Title", "employer": "Example Employer" }`,
+        { "jobTitle": "Example Job Title", "employer": "Example Employer" }
+        
+        If the user's input is not a job advert, you should output the same object with null values for jobTitle and employer.`,
       },
       { role: "user", content: jobDescription },
     ];

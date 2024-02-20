@@ -5,6 +5,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment, education, skills } = cvTemplate;
   // Define the desired order
   const order = [
+    "lead-dev",
     "tp-ai-architect",
     "cz-digital-experience-lead",
     "cz-digital-marketing-lead",
@@ -217,7 +218,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               title: "CV builder web app",
               employer: "Competenz",
               link: "https://competenz-cv-builder.netlify.app/",
-              contributions: ["Strategy", "Interraction Design", "Build"],
+              contributions: ["Strategy", "Interaction Design", "Build"],
             },
             {
               title: "Employer onboarding helper",
