@@ -252,9 +252,11 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 endDate,
                 totalDuration,
                 company,
+                companyDescription,
                 position,
                 hightlights,
                 description,
+                achievements,
               },
             ]) => (
               <div
@@ -281,21 +283,45 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       {hightlights?.map((highlight) => (
                         <div
                           key={highlight}
-                          className="px-2 py-[2px] bg-emerald-100 rounded-[13px] justify-center items-center gap-[13px] flex"
+                          className="px-2 py-[4px] bg-emerald-100 rounded-[13px] justify-center items-center gap-[13px] flex"
                         >
-                          <div className="text-green-900 text-[6px] font-normal">
+                          <div className="text-green-900 text-[6px] leading-none font-normal">
                             {highlight}
                           </div>
                         </div>
                       ))}
                     </div>
+                    {companyDescription && (
+                      <div
+                        className="text-neutral-700 text-[8px] mt-2 leading-[1.7] text-pretty focus-visible:outline-none"
+                        contentEditable
+                      >
+                        {companyDescription}
+                      </div>
+                    )}
                   </div>
                   <div
-                    className="self-stretch text-neutral-900 text-[8px] font-light  leading-[1.7] inline focus-visible:outline-none"
+                    className="self-stretch text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none"
                     contentEditable
                   >
                     {description}
                   </div>
+                  {achievements && (
+                    <div className="grid gap-2 mt-4">
+                      {achievements &&
+                        achievements.map((achievement) => (
+                          <div
+                            key={achievement}
+                            className="grid grid-cols-[48px,1fr] gap-4"
+                          >
+                            <Divider className="mt-[7px] mb-0" />
+                            <div className="text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none">
+                              {achievement}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )

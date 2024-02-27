@@ -10,12 +10,14 @@ export type CVTemplate = {
 
 export type Employment = {
   company: string;
+  companyDescription?: string;
   position: string;
   startDate: string;
   endDate: string;
   totalDuration: string;
   description: string;
   hightlights: string[];
+  achievements?: string[];
 };
 
 export type Education = {
@@ -36,13 +38,20 @@ export const baseTemplate: CVTemplate = {
       position: "Artificial Intelligence Architect",
       startDate: "Oct 2021",
       endDate: "Present",
-      totalDuration: "2 years 3 months",
+      totalDuration: "2 years 4 months",
+      companyDescription:
+        "Te Pūkenga is New Zealand's premiere vocational education provider and was undergoing the biggest digital transformation ever seen in the public sector to unify 26 businesses into a single network. I worked in the Digital Marketing team.",
       description:
         "I was the Product Owner of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
       hightlights: ["Product Owner", "Lead Developer"],
+      achievements: [
+        "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
+        "Designed and implemented a custom CMS for the Intelligent Navigation workstream",
+      ],
     },
     "cz-digital-experience-lead": {
       company: "Competenz",
+      companyDescription: "Competenz is an Industry Training Organisation",
       position: "Digital Experience Lead",
       startDate: "Oct 2021",
       endDate: "Jun 2022",
@@ -50,6 +59,10 @@ export const baseTemplate: CVTemplate = {
       description:
         "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       hightlights: ["UX Management"],
+      achievements: [
+        "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
+        "Designed and implemented a custom CMS for the Intelligent Navigation workstream",
+      ],
     },
 
     "cz-digital-marketing-lead": {
@@ -100,6 +113,6 @@ export const baseTemplate: CVTemplate = {
     "Node",
     "PostgreSQL",
     "AI Finetuning",
-    "User research"
+    "User research",
   ],
-}
+};

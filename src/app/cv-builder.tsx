@@ -195,7 +195,6 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
               ? chosenCV.job_title + " for " + chosenCV.employer
               : "Edit this CV"}
           </h1>
-          <div>{slug}</div>
           <ul>
             {messages
               .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
