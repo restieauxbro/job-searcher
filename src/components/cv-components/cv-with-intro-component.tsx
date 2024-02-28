@@ -236,7 +236,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         <div className="place-holder"></div>
       </div>
 
-      <div className="flex-col justify-start items-start gap-8 inline-flex h-auto max-w-xl pt-12">
+      <div className="flex-col justify-start items-start gap-8 inline-flex h-auto max-w-[600px] pt-12">
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="text-neutral-700 text-[13px] font-bold tracking-tight flex items-center gap-2">
@@ -312,10 +312,13 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                         achievements.map((achievement) => (
                           <div
                             key={achievement}
-                            className="grid grid-cols-[48px,1fr] gap-4"
+                            className="grid grid-cols-[20px,1fr] gap-3"
                           >
                             <Divider className="mt-[7px] mb-0" />
-                            <div className="text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none">
+                            <div
+                              className="text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none text-pretty"
+                              contentEditable
+                            >
                               {achievement}
                             </div>
                           </div>

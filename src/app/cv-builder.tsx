@@ -25,8 +25,11 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
+import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 
 type CVTheme = "basic" | "projects-cover-page";
+type TemplateContentSlug = "software-engineer" | "marketing-technologist";
+
 export type ApplicationDetails = {
   jobTitle?: string;
   employer?: string;
@@ -61,14 +64,29 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const cvTheme = searchParams.get("cv-theme") as CVTheme;
+  const templateContent = searchParams.get(
+    "template-content"
+  ) as TemplateContentSlug;
+
+  const baseTemplateFromSlug = (slug: TemplateContentSlug): CVTemplate => {
+    console.log("slug", slug);
+    const map = {
+      "software-engineer": aIEngineeringTemplate,
+      "marketing-technologist": baseTemplate,
+    };
+    return map[slug] || baseTemplate;
+  };
 
   const [uneditedCv, setUneditedCv] = useState<CVTemplate>(
-    chosenCV?.cv_data || baseTemplate
+    chosenCV?.cv_data || baseTemplateFromSlug(templateContent)
   );
 
   const [applicationDetails, setApplicationDetails] =
     useState<ApplicationDetails>({});
-  const [cv, setCv] = useState<CVTemplate>(baseTemplate);
+
+  const [cv, setCv] = useState<CVTemplate>(
+    baseTemplateFromSlug(templateContent)
+  );
 
   useEffect(() => {
     console.log("chosenCV", chosenCV);
@@ -312,7 +330,29 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
       </div>
       <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
         <div className="grid place-items-center">
-          <div className="w-full flex justify-end mb-4">
+          <div className="w-full flex gap-4 justify-end mb-4">
+            <Select
+              onValueChange={(templateContentSlug: TemplateContentSlug) => {
+                const editableSearchParams = new URLSearchParams(searchParams);
+                editableSearchParams.set(
+                  "template-content",
+                  templateContentSlug
+                );
+                router.push(pathname + "?" + editableSearchParams.toString());
+              }}
+            >
+              <SelectTrigger className="w-[200px]">
+                <SelectValue placeholder="Base template" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="software-engineer">
+                  Software Engineer
+                </SelectItem>
+                <SelectItem value="marketing-technologist">
+                  Marketing technologist
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <Select
               onValueChange={(cvTheme: CVTheme) => {
                 const editableSearchParams = new URLSearchParams(searchParams);
@@ -377,12 +417,14 @@ export type CVTemplate = {
 
 export type Employment = {
   company: string;
+  companyDescription?: string;
   position: string;
   startDate: string;
   endDate: string;
   totalDuration: string;
   description: string;
   hightlights: string[];
+  achievements?: string[];
 };
 
 export const baseTemplate: CVTemplate = ${JSON.stringify(cvTemplate, null, 2)};
@@ -410,7 +452,9 @@ employment: {
        }
 }
 
-Use Australian spelling, such as "organisation" instead of organization.`;
+Use Australian spelling, such as "organisation" instead of organization. Do not fabricate any information, but if there is experience that you can imply Tim has that hasn't been explicitly mentioned. For example, if the job ad calls for html and CSS experience, and Tim has experience with web development, you can imply that he has html and CSS experience.
+
+The existing job descriptions in Tim;s CV are well-worded but may just need a slight change in emphasis or different skills mentioned. Try to use the existing content as much as possible, but with enhancements based on the job advert.`;
 
 const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: \n\n1. AI research and development 2. Implementation and optimisation of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimisation of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
 

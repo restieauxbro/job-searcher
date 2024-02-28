@@ -47,6 +47,7 @@ export const baseTemplate: CVTemplate = {
       achievements: [
         "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
         "Designed and implemented a custom CMS for the Intelligent Navigation workstream",
+        'Developed micro front-end apps for "Intelligent Navigation" that were embeddable in any of Te Pūkenga\'s 26 businesses.',
       ],
     },
     "cz-digital-experience-lead": {
@@ -60,8 +61,7 @@ export const baseTemplate: CVTemplate = {
         "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       hightlights: ["UX Management"],
       achievements: [
-        "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
-        "Designed and implemented a custom CMS for the Intelligent Navigation workstream",
+        "Designed the end-to-end customer journey for our automated nuture journey; taking user retention from 31% to 64%.",
       ],
     },
 
