@@ -1,5 +1,6 @@
 import { CVTemplate } from "@/cv-templates/base-template";
 import { ArrowUpRight, Globe, Mail, Phone } from "lucide-react";
+import Divider from "../ui/divider";
 
 const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment, education, skills } = cvTemplate;
@@ -91,9 +92,11 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 endDate,
                 totalDuration,
                 company,
+                companyDescription,
                 position,
                 hightlights,
                 description,
+                achievements,
               },
             ]) => (
               <div
@@ -101,40 +104,67 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 className="self-stretch justify-start items-start gap-[34px] inline-flex"
               >
                 <div className="flex-col justify-start items-start gap-0.5 inline-flex">
-                  <div className="w-[114px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
+                  <div className="w-[114px] text-neutral-800 text-[10px] font-normal">
                     {startDate} – {endDate}
                   </div>
-                  <div className="w-[114px] text-neutral-500 text-[10px] font-light  leading-3">
+                  <div className="w-[114px] text-neutral-500 text-[10px] font-extralight">
                     {totalDuration}
                   </div>
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                   <div className="pb-2.5 flex-col justify-start items-start gap-0.5 flex">
-                    <div className="w-[165px] text-neutral-800 text-[10px] font-medium  leading-[18px]">
+                    <div className="w-[165px] text-neutral-800 text-[10px] font-normal mb-1">
                       {position}
                     </div>
                     <div className="justify-start items-center gap-[9px] inline-flex flex-wrap">
-                      <div className="text-neutral-700 text-[10px] font-light  leading-3">
+                      <div className="text-neutral-700 text-[10px] font-extralight">
                         {company}
                       </div>
                       {hightlights?.map((highlight) => (
                         <div
                           key={highlight}
-                          className="px-2 pt-1 pb-[3px] bg-emerald-100 rounded-[13px] justify-center items-center gap-[13px] flex"
+                          className="px-2 py-[4px] bg-emerald-100 rounded-[13px] justify-center items-center gap-[13px] flex"
                         >
-                          <div className="text-green-900 text-[6px] font-normal  leading-[4.50px]">
+                          <div className="text-green-900 text-[6px] leading-none font-normal">
                             {highlight}
                           </div>
                         </div>
                       ))}
                     </div>
+                    {companyDescription && (
+                      <div
+                        className="text-neutral-700 text-[8px] mt-2 leading-[1.7] text-pretty focus-visible:outline-none"
+                        contentEditable
+                      >
+                        {companyDescription}
+                      </div>
+                    )}
                   </div>
                   <div
-                    className="self-stretch text-neutral-700 text-[8px] font-normal  leading-[13px] inline focus-visible:outline-none"
+                    className="self-stretch text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none"
                     contentEditable
                   >
                     {description}
                   </div>
+                  {achievements && (
+                    <div className="grid gap-2 mt-4">
+                      {achievements &&
+                        achievements.map((achievement) => (
+                          <div
+                            key={achievement}
+                            className="grid grid-cols-[20px,1fr] gap-3"
+                          >
+                            <Divider className="mt-[7px] mb-0" />
+                            <div
+                              className="text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none text-pretty"
+                              contentEditable
+                            >
+                              {achievement}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )

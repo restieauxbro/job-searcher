@@ -40,15 +40,15 @@ export const baseTemplate: CVTemplate = {
       endDate: "Present",
       totalDuration: "2 years 4 months",
       companyDescription:
-        "Te Pūkenga is New Zealand's premiere vocational education provider and was undergoing the biggest digital transformation ever seen in the public sector to unify 26 businesses into a single network. I worked in the Digital Marketing team.",
-      description:
-        "I was the Product Owner of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
-      hightlights: ["Product Owner", "Lead Developer"],
+      "Te Pūkenga was New Zealand's premiere vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
       achievements: [
+        'Developed micro front-end apps embeddable in any of Te Pūkenga\'s 24 businesses, delivering a cohesive network experience. qualitative research showed a 78% boost in the sentiment "I got exactly what I needed"',
         "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
-        "Designed and implemented a custom CMS for the Intelligent Navigation workstream",
-        'Developed micro front-end apps for "Intelligent Navigation" that were embeddable in any of Te Pūkenga\'s 26 businesses.',
+        "Designed and developed a custom CMS, an internal digital product that reduced the time to publish content from 1 week to 4 hours",
       ],
+      description:
+        "I was the Product Engineer of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
+      hightlights: ["Product Engineer", "Lead Developer"],
     },
     "cz-digital-experience-lead": {
       company: "Competenz",
@@ -58,10 +58,11 @@ export const baseTemplate: CVTemplate = {
       endDate: "Jun 2022",
       totalDuration: "9 months",
       description:
-        "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
+        "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       hightlights: ["UX Management"],
       achievements: [
-        "Designed the end-to-end customer journey for our automated nuture journey; taking user retention from 31% to 64%.",
+        "Designed the end-to-end customer journey for our automated nuture journey; taking user retention from 31% to 64%",
+        "Developed revisions to our customer tracking pipeline through the phone team."
       ],
     },
 

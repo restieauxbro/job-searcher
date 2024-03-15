@@ -75,7 +75,10 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             contentEditable
             dangerouslySetInnerHTML={{
               __html:
-                cvTemplate.intro.replace("\n\n", "<br><br>") ||
+                cvTemplate.intro
+                  .toString()
+                  .replace("\n\n", "<br><br>")
+                  .replace("\\n", "<br>") ||
                 `I’m a full-stack web development engineer with a background in optimizing user experiences. With a career that’s moved from digital marketing through to full-stack, I am experienced in managing digital assets as a whole product instead of as isolated components. In my last three roles in cross-functional teams I’ve taken ownership of digital strategy as well as been lead developer on its execution. This makes me the perfect addition to a team that needs to move fast and creatively.`,
             }}
           />
@@ -122,12 +125,12 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 link: "https://www.xn--tepkenga-szb.ac.nz/on-job-learning",
                 contributions: ["User Research", "Design", "Build"],
               },
-              {
-                title: "Universal search",
-                employer: "Te Pūkenga",
-                link: "https://www.xn--tepkenga-szb.ac.nz/?search=",
-                contributions: ["Architecture", "Algorithm Development"],
-              },
+              // {
+              //   title: "Universal search",
+              //   employer: "Te Pūkenga",
+              //   link: "https://www.xn--tepkenga-szb.ac.nz/?search=",
+              //   contributions: ["Architecture", "Algorithm Development"],
+              // },
             ].map(({ title, employer, link, contributions }) => (
               <div key={title} className="mt-0">
                 <a href={link} target="_blank" rel="noopener noreferrer">
@@ -293,7 +296,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                     </div>
                     {companyDescription && (
                       <div
-                        className="text-neutral-700 text-[8px] mt-2 leading-[1.7] text-pretty focus-visible:outline-none"
+                        className="text-neutral-900 text-[8px] mt-2 leading-[1.7] font-light text-pretty focus-visible:outline-none"
                         contentEditable
                       >
                         {companyDescription}
