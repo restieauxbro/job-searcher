@@ -253,7 +253,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             {
               title: "Employer onboarding helper",
               employer: "Te Pūkenga",
-              link: "https://www.xn--tepkenga-szb.ac.nz/on-job-learning",
+              link: "https://restio-projects.vercel.app/tp-onboarding-helper",
               contributions: ["User Research", "Design", "Build"],
             },
           ].map(({ title, employer, link, contributions }) => (

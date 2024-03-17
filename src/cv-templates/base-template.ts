@@ -52,17 +52,17 @@ export const baseTemplate: CVTemplate = {
     },
     "cz-digital-experience-lead": {
       company: "Competenz",
-      companyDescription: "Competenz is an Industry Training Organisation",
+      companyDescription: "Competenz is a B2B Industry Training Organisation in New Zealand serving 32 industry sectors and with over 11,000 business customers. As Digital Marketing Lead I had 1 direct report.",
       position: "Digital Experience Lead",
       startDate: "Oct 2021",
       endDate: "Jun 2022",
       totalDuration: "9 months",
       description:
-        "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
-      hightlights: ["UX Management"],
+        "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
+      hightlights: ["UX Management", "Full-stack Development"],
       achievements: [
         "Designed the end-to-end customer journey for our automated nuture journey; taking user retention from 31% to 64%",
-        "Developed revisions to our customer tracking pipeline through the phone team."
+        "Developed revisions to our customer tracking pipeline through the phone team, increasing the accuracy of our data and reducing the time to onboard a new customer by 2 weeks",
       ],
     },
 
@@ -73,7 +73,7 @@ export const baseTemplate: CVTemplate = {
       endDate: "Oct 2021",
       totalDuration: "9 months",
       description:
-        "All things digital marketing for New Zealand's largest Industry Training Organisation – using data to maximise ad spend across 32 discreet industry sectors. We used behavioural metadata to create distinct IDs and follow cross-channel engagement – the kind of thing a CDP does out-of-the-box I set up through semi-automated integrations with the technology we had available.",
+        "All things digital marketing for New Zealand's largest Industry Training Organisation – using data to maximise ad spend across 32 discreet industry sectors. We used behavioural metadata to create distinct IDs and follow cross-channel engagement – the kind of thing a Customer Data Platform does out-of-the-box I set up through automations and integrations with the technology we had available.",
       hightlights: ["Digital Channels"],
     },
     "cz-digital-marketing-executive": {
