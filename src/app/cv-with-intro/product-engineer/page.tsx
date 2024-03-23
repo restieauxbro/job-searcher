@@ -35,12 +35,19 @@ modifiedTemplate.employment = {
 };
 modifiedTemplate.skills = [
   ...(modifiedTemplate.skills || []),
-  "Full-stack Development", "AWS", "Identity", "Product Strategy"
+  "Full-stack Development",
+  "AWS",
+  "Identity",
+  "Product Strategy",
 ];
 delete modifiedTemplate.employment["uxbridge-arts-culture"];
 
 const Page = () => {
-  return <CvWithIntro cvTemplate={modifiedTemplate} />;
+  return (
+    <>
+      <CvWithIntro cvTemplate={modifiedTemplate} />
+    </>
+  );
 };
 
 export default Page;
