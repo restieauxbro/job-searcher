@@ -29,6 +29,7 @@ export default async function Page({
   const historyDataPromise = supabase
     .from("cvg_cv")
     .select("employer, id, job_title, slug, created_at")
+    .neq('job_title', null)
     .order("created_at", { ascending: false })
     .limit(25);
 

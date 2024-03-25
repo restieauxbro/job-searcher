@@ -133,4 +133,3 @@ const input2 =
 // const output2 = parseMessageWithJson(input2);
 
  console.log(output1);
-// console.log(output2);

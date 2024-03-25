@@ -3,7 +3,6 @@
 import DefaultCV from "@/components/cv-components/DefaultCV";
 import HistorySidebar from "@/components/HistorySidebar";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import {
   CVTemplate,
   Employment,
@@ -281,7 +280,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                                           >
                                             <div
                                               className={cn(
-                                                "absolute top-0 -left-16 size-8 bg-blue-600 rounded grid place-items-center text-white"
+                                                "absolute -top-1 -left-16 size-8 bg-blue-600 rounded grid place-items-center text-white"
                                               )}
                                             >
                                               <Edit
@@ -342,6 +341,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                             <div className="mt-4 flex justify-end">
                               <Button
                                 size={"sm"}
+                                className="bg-blue-600"
                                 onClick={() => {
                                   typeof jsonSuggestions !== "string" &&
                                     handleEditCv(jsonSuggestions);
@@ -358,7 +358,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
               </ul>
               <form onSubmit={invokeCognition}>
                 <Input
-                  placeholder="Paste a job advert in here and have AI edit your CV"
+                  placeholder={messages.length > 1 ? "Give feedback or ask for more" :"Paste a job advert in here and have AI edit your CV"}
                   autoFocus
                   className="shadow-md mt-8"
                   value={input}
@@ -458,6 +458,8 @@ const TextRender = ({
   truncate?: boolean;
 }) => {
   const cleanedText = text
+    .replace("```Javascript", "")
+    .replace("```javascript", "")
     .replace("```json", "")
     .replace("```", "")
     .replace(/\n/g, "<br />");

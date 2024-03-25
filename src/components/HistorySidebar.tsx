@@ -69,7 +69,7 @@ const Sidebar = ({
               animate={{ width: sidebarOpen ? 325 : 65 }}
             >
               <motion.div
-                className="grid overflow-y-auto"
+                className="grid overflow-y-scroll h-[90%] w-[325px]"
                 initial={false}
                 animate={{ opacity: sidebarOpen ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
@@ -81,31 +81,33 @@ const Sidebar = ({
                       <Search size={18} />
                     </div>
                   </div>
+                  <div className="px-1">
+                    {history?.map((cv) => {
+                      const editableSearchParams = new URLSearchParams(
+                        searchParams
+                      );
+                      editableSearchParams.set("j", cv.id.toString());
+                      const link = `/?${editableSearchParams.toString()}`;
+                      return (
+                        <Link href={link} className="w-[325px]" key={cv.id}>
+                          <div className="flex items-center justify-between py-4 border-b border-neutral-300">
+                            <div className="flex flex-col">
+                              <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                                {cv.job_title}
+                              </div>
+                              <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                                {cv.employer}
+                              </div>
+                            </div>
+                            <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                              {/* {new Date(cv.created_at).toLocaleDateString()} */}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}{" "}
+                  </div>
                 </div>
-                {history?.map((cv) => {
-                  const editableSearchParams = new URLSearchParams(
-                    searchParams
-                  );
-                  editableSearchParams.set("j", cv.id.toString());
-                  const link = `/?${editableSearchParams.toString()}`;
-                  return (
-                    <Link href={link} className="w-[325px]" key={cv.id}>
-                      <div className="flex items-center justify-between px-4 py-4 border-b border-neutral-300">
-                        <div className="flex flex-col">
-                          <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
-                            {cv.job_title}
-                          </div>
-                          <div className="text-xs text-neutral-600 dark:text-neutral-400">
-                            {cv.employer}
-                          </div>
-                        </div>
-                        <div className="text-xs text-neutral-600 dark:text-neutral-400">
-                          {/* {new Date(cv.created_at).toLocaleDateString()} */}
-                        </div>
-                      </div>
-                    </Link>
-                  );
-                })}
               </motion.div>
             </motion.div>
           </div>
