@@ -13,7 +13,7 @@ import { parseMessageWithJson } from "@/lib/streaming";
 import { cn, slugify } from "@/lib/utils";
 import { CVEntryFromSupabase } from "@/types/supabase";
 import { useChat } from "ai/react";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Edit, Sparkles, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -26,6 +26,9 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
 import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
+import { Input } from "@/components/ui/input";
+import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import ResizingContainer from "@/components/animations/resizing-container";
 
 type CVTheme = "basic" | "projects-cover-page";
 type TemplateContentSlug = "software-engineer" | "marketing-technologist";
@@ -52,7 +55,7 @@ export default function CVBuilderApp({
   chosenCV?: CVEntryFromSupabase;
 }) {
   return (
-    <div className="flex relative">
+    <div className="flex relative bg-[linear-gradient(to_right,_white_70%,_#f5f7fa_80%)]">
       <HistorySidebar {...{ history }} />
       <CVBuilder {...{ chosenCV: chosenCV }} />
     </div>
@@ -69,7 +72,6 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   ) as TemplateContentSlug;
 
   const baseTemplateFromSlug = (slug: TemplateContentSlug): CVTemplate => {
-    console.log("slug", slug);
     const map = {
       "software-engineer": aIEngineeringTemplate,
       "marketing-technologist": baseTemplate,
@@ -107,11 +109,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
         content: systemInstructions(uneditedCv),
         id: "cv-customisation-ai-1",
       },
-      // {
-      //   role: "assistant",
-      //   content: exampleSuggestions,
-      //   id: "cv-customisation-ai-2",
-      // },
+      ...(chosenCV?.messages ?? []),
     ],
   });
 
@@ -205,128 +203,174 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   };
 
   return (
-    <div className="grid min-h-lvh xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-12 max-w-[1700px] mx-auto">
+    <div className="grid min-h-lvh xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-20 max-w-[1700px] mx-auto">
       <div className="w-full max-w-xl grid xl:items-center xl:justify-self-end py-8">
-        <div>
-          <h1 className="text-5xl font-extrabold max-w-lg leading-none text-neutral-700 mb-4 tracking-tight text-balance">
-            {chosenCV?.employer
-              ? chosenCV.job_title + " for " + chosenCV.employer
-              : "Edit this CV"}
-          </h1>
-          <ul>
-            {messages
-              .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
-              .map(({ content, id, role }, i) => {
-                const mArray = parseMessageWithJson(content);
-                const jsonSuggestions = mArray.filter(
-                  ({ type }) => type === "json"
-                )[0]?.content;
-                return (
-                  <li
-                    key={id}
-                    className={cn(
-                      "my-8 p-6 rounded-md shadow-md bg-slate-100 border border-slate-200"
-                    )}
-                  >
-                    {role === "user" ? "User: " : "AI: "}
-                    {mArray.map(({ content, type }, i) => {
-                      const contentArray = Object.entries(content);
-                      return (
-                        <div key={i}>
-                          {type === "text" ? (
-                            <p
-                              className="mb-4"
-                              dangerouslySetInnerHTML={{
-                                __html: content
-                                  .replace("```json", "")
-                                  .replace("```", "")
-                                  .replace(/\n/g, "<br />"),
-                              }}
-                            />
-                          ) : (
-                            // Render JSON
-                            <div className="mb-4">
-                              {typeof content === "string" ? (
-                                <p className="p-4 shadow-lg">{content}</p>
-                              ) : (
-                                contentArray.map(([key, value], i) => {
-                                  return (
-                                    <div
-                                      key={i}
-                                      className="mt-4 p-4 text-sm shadow-lg w-[110%] bg-white rounded-md border"
-                                    >
-                                      <p className="font-bold">{key}</p>
-                                      {typeof value === "string" ? (
-                                        <p>{value}</p>
-                                      ) : (
-                                        <div>
-                                          {Object.entries(value).map(
-                                            ([key2, value2], i) => {
-                                              return (
-                                                <div key={i}>
-                                                  <p className="font-medium mt-2">
-                                                    {key2}
-                                                  </p>
-                                                  <p>
-                                                    {JSON.stringify(value2)}
-                                                  </p>
+        <LayoutGroup>
+          <AnimatePresence mode="popLayout">
+            <div className="relative z-10 mt-20">
+              <motion.h1
+                className="text-5xl font-extrabold max-w-lg leading-none text-neutral-700 mb-4 tracking-tight text-balance"
+                layout
+                key={
+                  chosenCV?.employer
+                    ? chosenCV.job_title + " for " + chosenCV.employer
+                    : "Edit this CV"
+                }
+              >
+                {chosenCV?.employer
+                  ? chosenCV.job_title + " for " + chosenCV.employer
+                  : "Edit this CV"}
+              </motion.h1>
+              <ul className="mt-8">
+                {messages
+                  .filter((m, i) => m.role !== "system") // Not the system prompt and not the first user message
+                  .map(({ content, id, role }, i) => {
+                    const mArray = parseMessageWithJson(content);
+                    const jsonSuggestions = mArray.filter(
+                      ({ type }) => type === "json"
+                    )[0]?.content;
+                    return (
+                      <motion.li
+                        key={id}
+                        exit={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        layout
+                        transition={{
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 30,
+                        }}
+                        className={cn(
+                          "py-6 relative border-t border-slate-200 min-h-[75px]"
+                        )}
+                      >
+                        <ResizingContainer className="w-full" heightOnly>
+                          <div
+                            className={cn(
+                              "absolute top-5 -left-16 size-8 bg-gray-600 border border-gray-600 rounded grid place-items-center text-white/80",
+                              role === "user" && "bg-white text-gray-700"
+                            )}
+                          >
+                            {role === "user" ? (
+                              <User strokeWidth={1.5} size={20} />
+                            ) : (
+                              <Sparkles strokeWidth={1.5} size={20} />
+                            )}
+                          </div>
+                          {mArray.map(({ content, type }, i) => {
+                            const contentArray = Object.entries(content);
+                            return (
+                              <div key={i}>
+                                {type === "text" ? (
+                                  <TextRender
+                                    text={content}
+                                    truncate={role === "user" && i === 0}
+                                  />
+                                ) : (
+                                  // Render JSON
+                                  <div className="mb-4">
+                                    {typeof content === "string" ? (
+                                      <p className="p-4 shadow-lg">{content}</p>
+                                    ) : (
+                                      contentArray.map(([key, value], i) => {
+                                        return (
+                                          <div
+                                            key={i}
+                                            className="mb-4 p-4 pl-0 text-sm shadow-lg shadow-blue-900/20 w-full bg-white rounded-md rounded-l-none border border-blue-800/30 relative flex gap-4"
+                                          >
+                                            <div
+                                              className={cn(
+                                                "absolute top-0 -left-16 size-8 bg-blue-600 rounded grid place-items-center text-white"
+                                              )}
+                                            >
+                                              <Edit
+                                                strokeWidth={1.5}
+                                                size={20}
+                                              />
+                                            </div>
+                                            <div className="h-full absolute left-0 top-0 border-r-2 border-blue-500"></div>
+                                            <div className="pl-6 grow">
+                                              <p className="font-bold">{key}</p>
+                                              {typeof value === "string" ? (
+                                                <p>{value}</p>
+                                              ) : (
+                                                <div>
+                                                  {Object.entries(value).map(
+                                                    ([key2, value2], i) => {
+                                                      return (
+                                                        <div key={i}>
+                                                          <p className="font-medium mt-2">
+                                                            {key2}
+                                                          </p>
+                                                          <p>
+                                                            {JSON.stringify(
+                                                              value2
+                                                            )}
+                                                          </p>
+                                                        </div>
+                                                      );
+                                                    }
+                                                  )}
                                                 </div>
-                                              );
-                                            }
-                                          )}
-                                        </div>
-                                      )}
-                                      <div className="mt-4 flex justify-end">
-                                        <Button
-                                          size={"sm"}
-                                          variant="secondary"
-                                          className="text-xs"
-                                          onClick={() => {
-                                            handleEditCv({ [key]: value });
-                                          }}
-                                        >
-                                          Accept
-                                        </Button>
-                                      </div>
-                                    </div>
-                                  );
-                                })
-                              )}
+                                              )}
+                                              <div className="mt-4 flex justify-end">
+                                                <Button
+                                                  size={"sm"}
+                                                  variant="secondary"
+                                                  className="text-xs"
+                                                  onClick={() => {
+                                                    handleEditCv({
+                                                      [key]: value,
+                                                    });
+                                                  }}
+                                                >
+                                                  Accept
+                                                </Button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        );
+                                      })
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                          {jsonSuggestions && (
+                            <div className="mt-4 flex justify-end">
+                              <Button
+                                size={"sm"}
+                                onClick={() => {
+                                  typeof jsonSuggestions !== "string" &&
+                                    handleEditCv(jsonSuggestions);
+                                }}
+                              >
+                                Accept all
+                              </Button>
                             </div>
                           )}
-                        </div>
-                      );
-                    })}
-                    {jsonSuggestions && (
-                      <div className="mt-4 flex justify-end">
-                        <Button
-                          size={"sm"}
-                          onClick={() => {
-                            typeof jsonSuggestions !== "string" &&
-                              handleEditCv(jsonSuggestions);
-                          }}
-                        >
-                          Accept all
-                        </Button>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-          </ul>
-          <form onSubmit={invokeCognition}>
-            <Textarea
-              placeholder="Paste a job advert in here and have AI edit your CV"
-              autoFocus
-              className="shadow-md mt-8"
-              value={input}
-              onChange={handleInputChange}
-            />
-            <div className="mt-2 flex justify-end">
-              <Button type="submit">Get edits</Button>
+                        </ResizingContainer>
+                      </motion.li>
+                    );
+                  })}
+              </ul>
+              <form onSubmit={invokeCognition}>
+                <Input
+                  placeholder="Paste a job advert in here and have AI edit your CV"
+                  autoFocus
+                  className="shadow-md mt-8"
+                  value={input}
+                  onChange={handleInputChange}
+                />
+                <div className="mt-2 flex justify-end">
+                  <Button type="submit">Get edits</Button>
+                </div>
+              </form>
             </div>
-          </form>
-        </div>
+          </AnimatePresence>
+        </LayoutGroup>
       </div>
       <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
         <div className="grid place-items-center">
@@ -372,11 +416,13 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
             </Select>
           </div>
 
-          <div className="shadow-md shadow-neutral-300 px-14 py-10 rounded-md border max-h-[calc(100lvh-14rem)] overflow-y-auto">
+          <div className="shadow-md shadow-neutral-300 bg-white py-10 w-screen max-w-screen-md rounded-md border border-neutral-300 max-h-[calc(100lvh-14rem)] overflow-y-auto">
             {cvTheme === "projects-cover-page" ? (
               <CvWithIntro cvTemplate={cv} />
             ) : (
-              <DefaultCV cvTemplate={cv} />
+              <div className="px-14 grid">
+                <DefaultCV cvTemplate={cv} />
+              </div>
             )}
           </div>
           <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
@@ -403,6 +449,38 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
     </div>
   );
 }
+
+const TextRender = ({
+  text,
+  truncate,
+}: {
+  text: string;
+  truncate?: boolean;
+}) => {
+  const cleanedText = text
+    .replace("```json", "")
+    .replace("```", "")
+    .replace(/\n/g, "<br />");
+  if (truncate) {
+    return (
+      <p
+        className="mb-4"
+        dangerouslySetInnerHTML={{
+          __html: cleanedText.trim().substring(0, 200) + "...",
+        }}
+      />
+    );
+  } else {
+    return (
+      <p
+        className="mb-4"
+        dangerouslySetInnerHTML={{
+          __html: cleanedText,
+        }}
+      />
+    );
+  }
+};
 
 const systemInstructions = (cvTemplate: CVTemplate) => `Tim's CV:
 

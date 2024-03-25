@@ -4,7 +4,6 @@ import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import React from "react";
 import CVBuilderApp from "./cv-builder";
-import { CVTemplate } from "@/cv-templates/base-template";
 
 export default async function Page({
   params,
@@ -38,7 +37,7 @@ export default async function Page({
   if (j) {
     const chosenCVPromise = supabase
       .from("cvg_cv")
-      .select("cv_data, employer, id, job_title, slug, created_at")
+      .select("cv_data, messages, employer, id, job_title, slug, created_at")
       .eq("id", j)
       .single();
 

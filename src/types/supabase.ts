@@ -1,4 +1,5 @@
 import type { CVTemplate } from "@/cv-templates/base-template";
+import { Message } from "ai/react";
 
 export type Json =
   | string
@@ -11,7 +12,7 @@ export type Json =
 export type CVEntryFromSupabase = Pick<
   Database["public"]["Tables"]["cvg_cv"],
   "Row"
->['Row']
+>["Row"];
 export interface Database {
   public: {
     Tables: {
@@ -228,6 +229,7 @@ export interface Database {
           created_at: string;
           cv_data: CVTemplate | null;
           employer: string | null;
+          messages: Message[];
           id: number;
           job_ad_description: string | null;
           job_title: string | null;
@@ -236,6 +238,7 @@ export interface Database {
         Insert: {
           created_at?: string;
           cv_data?: CVTemplate | null;
+          messages: Message[];
           employer?: string | null;
           id?: number;
           job_ad_description?: string | null;
@@ -245,6 +248,7 @@ export interface Database {
         Update: {
           created_at?: string;
           cv_data?: CVTemplate | null;
+          messages: Message[];
           employer?: string | null;
           id?: number;
           job_ad_description?: string | null;

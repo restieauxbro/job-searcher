@@ -7,16 +7,18 @@ function ResizingContainer({
   children,
   transition,
   className,
+  heightOnly,
 }: {
   children: React.ReactNode;
   transition?: object;
   className?: string;
+  heightOnly?: boolean;
 }) {
   const [ref, { width, height }] = useMeasure();
 
   return (
     <motion.div
-      animate={{ height, width }}
+      animate={{ height, width: heightOnly ? "100%" : width }}
       className={cn("", className)}
       {...(transition && { transition })}
     >
