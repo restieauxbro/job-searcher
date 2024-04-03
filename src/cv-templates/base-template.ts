@@ -40,7 +40,7 @@ export const baseTemplate: CVTemplate = {
       endDate: "Present",
       totalDuration: "2 years 4 months",
       companyDescription:
-      "Te Pūkenga was New Zealand's premiere vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
+      "Te Pūkenga was New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
       achievements: [
         'Developed micro front-end apps embeddable in any of Te Pūkenga\'s 24 businesses, delivering a cohesive network experience. qualitative research showed a 78% boost in the sentiment "I got exactly what I needed"',
         "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",

@@ -2,17 +2,14 @@ import { CVTemplate } from "@/cv-templates/base-template";
 import {
   ArrowUpRight,
   Github,
-  GithubIcon,
   Globe,
   Linkedin,
   Mail,
   Phone,
 } from "lucide-react";
-import colors from "tailwindcss/colors";
 import React from "react";
 import Divider from "../ui/divider";
 import Image from "next/image";
-import { Button } from "../ui/button";
 
 const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   const { title, intro, employment, education, skills } = cvTemplate;
@@ -173,19 +170,18 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             ))}
           </div>
         </div>
-        {/* <div className="absolute bottom-12 left-0 w-full text-[10px]">
-          <div className="max-w-[33rem] mx-auto grid gap-3">
-           
+        <div className="absolute bottom-12 left-0 w-full text-[8px]">
+          <div className="max-w-[33rem] mx-auto grid gap-3 text-neutral-600">
             <a
-              href="https://www.linkedin.com/in/timrestieaux/"
+              href="https://github.com/restieauxbro"
               target="_blank"
               rel="noopener noreferrer"
               className="flex gap-2 items-center"
             >
-              <div className="size-6 bg-neutral-400/10 rounded-full grid place-items-center">
-                <Github size={12} />
+              <div className="size-5 bg-neutral-400/10 rounded-full grid place-items-center">
+                <Github size={10} className="text-neutral-500" />
               </div>
-              Github
+              @restieauxbro
             </a>
             <a
               href="https://www.linkedin.com/in/timrestieaux/"
@@ -193,13 +189,13 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
               rel="noopener noreferrer"
               className="flex gap-2 items-center"
             >
-              <div className="size-6 bg-neutral-400/10 rounded-full grid place-items-center">
-                <Linkedin size={12} />
+              <div className="size-5 bg-neutral-400/10 rounded-full grid place-items-center">
+                <Linkedin size={10} className="text-neutral-500" />
               </div>
               LinkedIn
             </a>
           </div>
-        </div> */}
+        </div>
         <div className="absolute bottom-12 right-12">
           <div
             className="absolute size-[200px] bg-pink-400/25 rounded-full border-4 border-white blur-lg pointer-events-none"
@@ -239,7 +235,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                   </div>
                   <div className="">tim.h.rest@gmail.com</div>
                 </a>
-                <a
+                {/* <a
                   href="https://www.linkedin.com/in/timrestieaux/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -249,7 +245,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                     <Linkedin size={10} />
                   </div>
                   <div className="">@timrestieaux</div>
-                </a>
+                </a> */}
               </div>
             </div>
           </div>

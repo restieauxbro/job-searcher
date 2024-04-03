@@ -50,6 +50,92 @@ export function completeAndExtractJson(stream: string): string {
 
   return jsonSubstring;
 }
+export const finishJson5 = (unfinishedJson5: string) => {
+  let stack = [];
+  let inDoubleQuotes = false;
+  let inSingleQuotes = false;
+  let inSingleLineComment = false;
+
+  for (let i = 0; i < unfinishedJson5.length; i++) {
+    const currentChar = unfinishedJson5[i];
+    const nextChar = unfinishedJson5[i + 1];
+    let prevChar;
+    if (i > 0) {
+      prevChar = unfinishedJson5[i - 1];
+    }
+    if (
+      currentChar === "/" &&
+      nextChar === "/" &&
+      !inDoubleQuotes &&
+      !inSingleQuotes
+    ) {
+      inSingleLineComment = true;
+    }
+    if (
+      currentChar === '"' &&
+      !inSingleQuotes &&
+      !inSingleLineComment &&
+      prevChar !== "\\"
+    ) {
+      inDoubleQuotes = !inDoubleQuotes;
+    }
+    if (
+      currentChar === "'" &&
+      !inDoubleQuotes &&
+      !inSingleLineComment &&
+      prevChar !== "\\"
+    ) {
+      inSingleQuotes = !inSingleQuotes;
+    }
+    if (currentChar === "\n" && inSingleLineComment) {
+      inSingleLineComment = false;
+    }
+    if (
+      currentChar === "{" &&
+      !inDoubleQuotes &&
+      !inSingleQuotes &&
+      !inSingleLineComment
+    ) {
+      stack.unshift("}");
+    }
+    if (
+      currentChar === "[" &&
+      !inDoubleQuotes &&
+      !inSingleQuotes &&
+      !inSingleLineComment
+    ) {
+      stack.unshift("]");
+    }
+    if (
+      currentChar === "}" &&
+      !inDoubleQuotes &&
+      !inSingleQuotes &&
+      !inSingleLineComment
+    ) {
+      stack.shift();
+    }
+    if (
+      currentChar === "]" &&
+      !inDoubleQuotes &&
+      !inSingleQuotes &&
+      !inSingleLineComment
+    ) {
+      stack.shift();
+    }
+  }
+
+  if (inDoubleQuotes) {
+    stack.unshift('"');
+  }
+  if (inSingleQuotes) {
+    stack.unshift("'");
+  }
+  if (inSingleLineComment) {
+    return unfinishedJson5;
+  }
+
+  return unfinishedJson5 + stack.join("");
+};
 
 export function validParsedJson(jsonString: string):
   | {
@@ -112,7 +198,7 @@ export function parseMessageWithJson(inputStr: string): TextMessageWithJson[] {
       }
 
       const jsonStr = inputStr.substring(jsonStart, i);
-      const extractedJson = completeAndExtractJson(jsonStr);
+      const extractedJson = finishJson5(jsonStr);
       const content = validParsedJson(extractedJson) || extractedJson;
       messages.push({ type: "json", content });
     }
@@ -124,12 +210,12 @@ export function parseMessageWithJson(inputStr: string): TextMessageWithJson[] {
 // Example usage
 
 const input1 =
-  'The following CV would look like this: { "title": "Software Development Engineer", "intro": "As a software development engineer, I specialise in designing, coding, testing, and managing software applications", "employment": { "company": "b"';
+  '{ "title": "Software Development Engineer", "intro": "As a software development engineer, I specialise in designing, coding, testing, and managing software applications", "employment": { "company": "b"}, "haiku": [{"bonk":'
 
 const input2 =
   'The following CV would look like this: { "title": "Software Development Engineer" } How did I do?';
 
  const output1 = parseMessageWithJson(`{ "employment": { "tp-ai-architect": { "description": "In my role as an AI Architect at Te Pūkenga, I was responsible for architecting, designing, and developing sophisticated AI solutions that transformed the way users navigate the network. From conducting AI research, driving front end development, to creating scalable, modular applications, I focused on integrating real-time data in intelligent ways for ākonga and kaimahi. Leading the 'Intelligent Navigation' workstream, I developed agile solutions that minimized tech debt during transition, simplifying the user experience. In my experience, I have proven proficiency in large language models, their implementation, and optimization. I also served as a mentor to junior AI Engineers, nurturing a culture of continuous improvement within my team. I consistently engaged with stakeholders, presenting complex findings and progress clearly and effectively. My commitment to ethical AI practices and compliance standards was pivotal in every project I handled." } } }`);
-// const output2 = parseMessageWithJson(input2);
 
- console.log(output1);
+
+console.log(parseMessageWithJson(input1))

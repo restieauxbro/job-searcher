@@ -28,6 +28,8 @@ import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 import { Input } from "@/components/ui/input";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import ResizingContainer from "@/components/animations/resizing-container";
+import AnimateFromHidden from "@/components/animations/AnimateFromHidden";
+import { Textarea } from "@/components/ui/textarea";
 
 type CVTheme = "basic" | "projects-cover-page";
 type TemplateContentSlug = "software-engineer" | "marketing-technologist";
@@ -257,6 +259,11 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                               <Sparkles strokeWidth={1.5} size={20} />
                             )}
                           </div>
+                          <AnimateFromHidden show={i === 1}>
+                            <div className="text-blue-600 text-xs pb-3 pt-1">
+                              Looking over your projects
+                            </div>
+                          </AnimateFromHidden>
                           {mArray.map(({ content, type }, i) => {
                             const contentArray = Object.entries(content);
                             return (
@@ -293,6 +300,22 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                                               <p className="font-bold">{key}</p>
                                               {typeof value === "string" ? (
                                                 <p>{value}</p>
+                                              ) : // check if value is array
+                                              Object.prototype.toString.call(
+                                                  value
+                                                ) == "[object Array]" ? (
+                                                <div className="flex gap-2 flex-wrap mt-2">
+                                                  {value.map(
+                                                    (v: string, i: number) => (
+                                                      <p
+                                                        key={i}
+                                                        className="px-3 py-2 bg-blue-100 rounded-full justify-center items-center flex text-xs"
+                                                      >
+                                                        {v}
+                                                      </p>
+                                                    )
+                                                  )}
+                                                </div>
                                               ) : (
                                                 <div>
                                                   {Object.entries(value).map(
@@ -357,8 +380,12 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                   })}
               </ul>
               <form onSubmit={invokeCognition}>
-                <Input
-                  placeholder={messages.length > 1 ? "Give feedback or ask for more" :"Paste a job advert in here and have AI edit your CV"}
+                <Textarea
+                  placeholder={
+                    messages.length > 1
+                      ? "Give feedback or ask for more"
+                      : "Paste a job advert in here and have AI edit your CV"
+                  }
                   autoFocus
                   className="shadow-md mt-8"
                   value={input}
