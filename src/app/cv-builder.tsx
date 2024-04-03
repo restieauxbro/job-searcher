@@ -8,6 +8,8 @@ import {
   Employment,
   baseTemplate,
 } from "@/cv-templates/base-template";
+import { productEngineerTemplate } from "@/cv-templates/product-engineer";
+import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 import { parseMessageWithJson } from "@/lib/streaming";
 import { cn, slugify } from "@/lib/utils";
 import { CVEntryFromSupabase } from "@/types/supabase";
@@ -24,7 +26,6 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
-import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 import { Input } from "@/components/ui/input";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import ResizingContainer from "@/components/animations/resizing-container";
@@ -76,10 +77,14 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
     const map = {
       "software-engineer": aIEngineeringTemplate,
       "marketing-technologist": baseTemplate,
+      "product-engineer": productEngineerTemplate,
     };
     return map[slug] || baseTemplate;
   };
 
+  // unedited cv for the purpose of sending a different prompt to the AI, because it gets added into the system prompt
+  // we don't want the system prompt updating with the edited cv.
+  // But we do want to be able to change the system prompt based on the cv that's being edited
   const [uneditedCv, setUneditedCv] = useState<CVTemplate>(
     chosenCV?.cv_data || baseTemplateFromSlug(templateContent)
   );
@@ -410,6 +415,9 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                   templateContentSlug
                 );
                 router.push(pathname + "?" + editableSearchParams.toString());
+                const newCv = baseTemplateFromSlug(templateContentSlug);
+                setCv(newCv);
+                setUneditedCv(newCv); // for the purpose of sending a different prompt to the AI
               }}
             >
               <SelectTrigger className="w-[200px]">
@@ -421,6 +429,9 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                 </SelectItem>
                 <SelectItem value="marketing-technologist">
                   Marketing technologist
+                </SelectItem>
+                <SelectItem value="product-engineer">
+                  Product Engineer
                 </SelectItem>
               </SelectContent>
             </Select>
