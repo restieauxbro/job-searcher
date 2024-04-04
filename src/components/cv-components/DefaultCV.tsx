@@ -71,7 +71,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             </a>
           </div>
           <div
-            className="grow shrink basis-0 text-neutral-700 text-[8px] font-normal leading-[13px] inline focus-visible:outline-none"
+            className="grow shrink basis-0 text-neutral-700 text-[8px] font-light leading-[13px] inline focus-visible:outline-none"
             contentEditable
           >
             {intro}
@@ -133,7 +133,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                     </div>
                     {companyDescription && (
                       <div
-                        className="text-neutral-700 text-[8px] mt-2 leading-[1.7] text-pretty focus-visible:outline-none"
+                        className="text-neutral-700 text-[8px] mt-2 leading-[1.7] text-pretty focus-visible:outline-none font-light"
                         contentEditable
                       >
                         {companyDescription}

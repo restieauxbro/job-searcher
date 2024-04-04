@@ -38,9 +38,9 @@ export const baseTemplate: CVTemplate = {
       position: "Artificial Intelligence Architect",
       startDate: "Oct 2021",
       endDate: "Present",
-      totalDuration: "2 years 4 months",
+      totalDuration: "2 years 5 months",
       companyDescription:
-      "Te Pūkenga was New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
+        "Te Pūkenga was New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
       achievements: [
         'Developed micro front-end apps embeddable in any of Te Pūkenga\'s 24 businesses, delivering a cohesive network experience. qualitative research showed a 78% boost in the sentiment "I got exactly what I needed"',
         "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
@@ -52,7 +52,8 @@ export const baseTemplate: CVTemplate = {
     },
     "cz-digital-experience-lead": {
       company: "Competenz",
-      companyDescription: "Competenz is a B2B Industry Training Organisation in New Zealand serving 32 industry sectors and with over 11,000 business customers. As Digital Marketing Lead I had 1 direct report.",
+      companyDescription:
+        "Competenz is a B2B Industry Training Organisation in New Zealand serving 32 industry sectors and with over 11,000 business customers. As Digital Marketing Lead I had 1 direct report.",
       position: "Digital Experience Lead",
       startDate: "Oct 2021",
       endDate: "Jun 2022",
@@ -83,7 +84,7 @@ export const baseTemplate: CVTemplate = {
       endDate: "Feb 2021",
       totalDuration: "1 year 5 months",
       description:
-        "As a Digital Marketing Executive, I collaborated with agencies and internal teams to execute strategically aligned digital campaigns. I tracked key metrics to measure campaign success and derive insights for potential improvements. My duties included managing social media, optimizing SEO, and developing digital marketing content. This role honed my skills in digital marketing and paved the way for my transition to the Digital Marketing Lead role.",
+        "As a Digital Marketing Executive, I collaborated with agencies and internal teams to execute strategically aligned digital campaigns. I tracked key metrics to measure campaign success and derive insights for potential improvements. My duties included managing social media, optimising SEO, and developing digital marketing content. This role honed my skills in digital marketing and paved the way for my transition to the Digital Marketing Lead role.",
       hightlights: ["Marketing"],
     },
     "uxbridge-arts-culture": {

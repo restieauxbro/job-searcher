@@ -28,7 +28,7 @@ productEngineerTemplate.employment = {
       "Created a full-stack RAG AI application as a knowledge-base alternative that saved our client 100 hours of development time on an old-school solution",
       "Developed a chatbot that resists and reports adversarial attacks, staying on brand and on message",
     ],
-    totalDuration: "4 months",
+    totalDuration: "5 months",
   },
 };
 productEngineerTemplate.skills = [

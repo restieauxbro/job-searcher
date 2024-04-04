@@ -84,7 +84,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                   .toString()
                   .replace("\n\n", "<br><br>")
                   .replace("\\n", "<br>") ||
-                `I’m a full-stack web development engineer with a background in optimizing user experiences. With a career that’s moved from digital marketing through to full-stack, I am experienced in managing digital assets as a whole product instead of as isolated components. In my last three roles in cross-functional teams I’ve taken ownership of digital strategy as well as been lead developer on its execution. This makes me the perfect addition to a team that needs to move fast and creatively.`,
+                `I’m a full-stack web development engineer with a background in optimising user experiences. With a career that’s moved from digital marketing through to full-stack, I am experienced in managing digital assets as a whole product instead of as isolated components. In my last three roles in cross-functional teams I’ve taken ownership of digital strategy as well as been lead developer on its execution. This makes me the perfect addition to a team that needs to move fast and creatively.`,
             }}
           />
 
