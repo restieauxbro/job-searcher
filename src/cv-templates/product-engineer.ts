@@ -26,6 +26,7 @@ productEngineerTemplate.employment = {
     hightlights: ["Web Development"],
     achievements: [
       "Created a full-stack RAG AI application as a knowledge-base alternative that saved our client 100 hours of development time on an old-school solution",
+      "Developed a cost per conversion service that ensures a ROI on limits AI features when as they become more or less effective on each user. Our client had a controlled ",
       "Developed a chatbot that resists and reports adversarial attacks, staying on brand and on message",
     ],
     totalDuration: "5 months",

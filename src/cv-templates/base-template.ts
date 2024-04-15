@@ -40,15 +40,16 @@ export const baseTemplate: CVTemplate = {
       endDate: "Present",
       totalDuration: "2 years 5 months",
       companyDescription:
-        "Te Pūkenga was New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network. I worked in the Digital Marketing team as a solutions architect for artificial intelligence and full-stack developer.",
+        "Te Pūkenga is New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network.",
       achievements: [
-        'Developed micro front-end apps embeddable in any of Te Pūkenga\'s 24 businesses, delivering a cohesive network experience. qualitative research showed a 78% boost in the sentiment "I got exactly what I needed"',
-        "Developed a custom AI model for predicting learner success in our marketing funnel. Taking conversions from 1.5% to 3.5% in 6 months",
+        'Developed micro front-end apps embeddable in any of Te Pūkenga\'s 24 businesses, delivering a cohesive network experience. Qualitative research showed a 78% boost in the sentiment "I got exactly what I needed"',
+        "Architected our web 'Intelligence Layer' – a microservice for extracting and transforming data across products and users, enhancing with LLMs and passing back to the front-end to power personalisation. In the 6 months following its launch the website conversion rate increased from 1.5% to 3.5%.",
+        "Architected and developed a method for our front-end applications to generate components from a centralised design system and automate A/B testing. In our sample testing we were able to increase the click-through rate by 22%.",
         "Designed and developed a custom CMS, an internal digital product that reduced the time to publish content from 1 week to 4 hours",
       ],
       description:
         "I was the Product Engineer of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
-      hightlights: ["Product Engineer", "Lead Developer"],
+      hightlights: [ "Solutions Design","AI Engineering"],
     },
     "cz-digital-experience-lead": {
       company: "Competenz",
@@ -62,7 +63,7 @@ export const baseTemplate: CVTemplate = {
         "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       hightlights: ["UX Management", "Full-stack Development"],
       achievements: [
-        "Designed the end-to-end customer journey for our automated nuture journey; taking user retention from 31% to 64%",
+        "Designed the end-to-end customer experience for our automated nuture journey; taking user retention from 31% to 64%",
         "Developed revisions to our customer tracking pipeline through the phone team, increasing the accuracy of our data and reducing the time to onboard a new customer by 2 weeks",
       ],
     },
@@ -110,11 +111,12 @@ export const baseTemplate: CVTemplate = {
   skills: [
     "React",
     "Javascript",
-    "Figma",
-    "CSS",
+    "Typescript",
+    "HTML & CSS",
     "Node",
     "PostgreSQL",
-    "AI Finetuning",
+    "Figma",
+    "LLM Finetuning",
     "User research",
   ],
 };

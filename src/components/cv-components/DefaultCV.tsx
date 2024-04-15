@@ -112,7 +112,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                   </div>
                 </div>
                 <div className="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                  <div className="pb-2.5 flex-col justify-start items-start gap-0.5 flex">
+                  <div className="flex-col justify-start items-start gap-0.5 flex">
                     <div className="w-[165px] text-neutral-800 text-[10px] font-normal mb-1">
                       {position}
                     </div>
@@ -140,12 +140,15 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       </div>
                     )}
                   </div>
-                  <div
-                    className="self-stretch text-neutral-900 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none"
+                  {description && (
+
+                    <div
+                    className="self-stretch text-neutral-900 mt-2.5 text-[8px] font-light leading-[1.7] inline focus-visible:outline-none"
                     contentEditable
-                  >
+                    >
                     {description}
                   </div>
+                  )}
                   {achievements && (
                     <div className="grid gap-2 mt-4">
                       {achievements &&
