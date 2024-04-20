@@ -1,11 +1,15 @@
-'use client';
+"use client";
 import { Button, buttonVariants } from "@/components/ui/button";
-import NeumorphButton, { DarkNeumorphButton } from "@/components/ui/neumorphic-button";
+import NeumorphButton, {
+  DarkNeumorphButton,
+} from "@/components/ui/neumorphic-button";
 import Header from "@/components/web-ui/header";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Props = {};
 const Landing = ({}: Props) => {
+  const router = useRouter();
   return (
     <>
       <div className="px-4 lg:px-8">
@@ -14,8 +18,12 @@ const Landing = ({}: Props) => {
             Ask your CV to update itself
           </h1>
           <div className="flex justify-center mt-4 gap-4">
-            <DarkNeumorphButton >Get started</DarkNeumorphButton>
             <NeumorphButton>Say hi!</NeumorphButton>
+            <DarkNeumorphButton
+              onClick={() => router.push("/start", { scroll: false })}
+            >
+              Get started
+            </DarkNeumorphButton>
           </div>
         </div>
       </div>

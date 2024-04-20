@@ -34,17 +34,17 @@ export const DarkNeumorphButton: React.FunctionComponent<
   const color = baseColor || "purple";
   return (
     <div
-      className={`relative rounded-[0.3125rem] bg-gradient-to-b from-purple-800 to-purple-700 p-[1px]`}
+      className={`relative rounded-[0.3125rem] bg-gradient-to-b from-purple-800 to-purple-700 p-[1px] shadow`}
     >
       <button
-        className={`group relative rounded bg-gradient-to-b from-purple-700 to-purple-700 active:fromNeu px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-purple-800 after:to-purple-600/90 active:drop-shadow-sm active:after:inset-[3px] active:after:from-purple-900 active:after:to-purple-800 transition-all`}
+        className={`group relative rounded bg-gradient-to-b from-purple-600 to-purple-700 active:from-purple-600 px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-purple-800 after:to-purple-600/90 active:drop-shadow-sm active:after:inset-[3px] active:after:from-purple-900 active:after:to-purple-600 transition-all active:shadow active:shadow-neutral-900/50`}
         {...buttonProps}
       >
         <div
           className={`relative z-1 flex items-center gap-4 text-purple-900 group-active:text-purple-700`}
         >
           <span
-            className={`font-sans font-medium z-[2] relative text-sm text-white`}
+            className={`font-sans font-medium z-[2] relative text-sm text-white group-active:scale-[98%]`}
           >
             {props.children}
           </span>
