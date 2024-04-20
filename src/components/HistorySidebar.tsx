@@ -2,9 +2,9 @@
 
 import React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
 
-import { Button } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Input } from "./ui/input";
@@ -33,13 +33,13 @@ const Sidebar = ({
         <div className="h-full p-4">
           <div className="overflow-hidden rounded-lg border border-neutral-600/30 bg-neutral-50 bg-clip-padding pb-4 shadow-md shadow-neutral-300 dark:border-zinc-300/10 dark:bg-zinc-850/50 dark:shadow-black/30 h-[calc(100lvh-2rem)]">
             <div className="relative h-12 border-b border-neutral-300 bg-neutral-200 dark:border-zinc-700 dark:bg-zinc-850">
-              {/* <motion.div
-                className="absolute top-4 left-0 w-full whitespace-nowrap px-6 text-sm font-extrabold opacity-0"
+              <motion.div
+                className="absolute top-4 left-0 w-full whitespace-nowrap px-4 text-sm font-semibold text-neutral-700 opacity-0"
                 initial={false}
                 animate={{ opacity: sidebarOpen ? 1 : 0 }}
               >
                 History
-              </motion.div> */}
+              </motion.div>
               <motion.div
                 className="absolute top-0 right-0 m-2"
                 initial={false}
@@ -74,14 +74,20 @@ const Sidebar = ({
                 animate={{ opacity: sidebarOpen ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="px-2 mt-2 mb-2">
-                  <div className="relative">
+                <div className="px-2 mt-2">
+                  <div className="flex gap-2 mb-2">
+
+                  <Link href='/' className={buttonVariants({variant: 'outline', className: 'gap-1'})}>
+                    New <Plus size={18} />
+                  </Link>
+                  <div className="relative grow">
                     <Input placeholder="Search" />
                     <div className="absolute top-1/2 right-2 -translate-y-1/2">
                       <Search size={18} />
                     </div>
                   </div>
-                  <div className="px-1">
+                  </div>
+                  <div className="px-2">
                     {history?.map((cv) => {
                       const editableSearchParams = new URLSearchParams(
                         searchParams
@@ -90,12 +96,12 @@ const Sidebar = ({
                       const link = `/?${editableSearchParams.toString()}`;
                       return (
                         <Link href={link} className="w-[325px]" key={cv.id}>
-                          <div className="flex items-center justify-between py-4 border-b border-neutral-300">
+                          <div className="flex items-center justify-between py-4 border-b border-neutral-200">
                             <div className="flex flex-col">
-                              <div className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+                              <div className="text-sm font-medium text-neutral-700 dark:text-neutral-200">
                                 {cv.job_title}
                               </div>
-                              <div className="text-xs text-neutral-600 dark:text-neutral-400">
+                              <div className="text-xs text-neutral-500 dark:text-neutral-400">
                                 {cv.employer}
                               </div>
                             </div>

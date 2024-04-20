@@ -209,7 +209,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
   };
 
   return (
-    <div className="grid min-h-lvh xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-20 max-w-[1700px] mx-auto">
+    <div className="grid min-h-[calc(100lvh-1rem)] xl:grid-cols-2 px-4 xl:px-12 gap-4 lg:gap-8 xl:gap-20 max-w-[1700px] mx-auto">
       <div className="w-full max-w-xl grid xl:items-center xl:justify-self-end py-8">
         <LayoutGroup>
           <AnimatePresence mode="popLayout">
@@ -404,7 +404,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
           </AnimatePresence>
         </LayoutGroup>
       </div>
-      <div className="xl:max-h-screen sticky top-0 pt-16 xl:h-screen grid">
+      <div className="xl:max-h-screen sticky top-0 pt-4 xl:h-screen grid">
         <div className="grid place-items-center">
           <div className="w-full flex gap-4 justify-end mb-4">
             <Select
@@ -454,7 +454,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
             </Select>
           </div>
 
-          <div className="shadow-md shadow-neutral-300 bg-white py-10 w-screen max-w-screen-md rounded-md border border-neutral-300 max-h-[calc(100lvh-14rem)] overflow-y-auto">
+          <div className="shadow-md shadow-neutral-300 bg-white py-10 w-screen max-w-screen-md rounded-md border border-neutral-300 max-h-[calc(100lvh-18rem)] overflow-y-auto">
             {cvTheme === "projects-cover-page" ? (
               <CvWithIntro cvTemplate={cv} />
             ) : (
@@ -463,7 +463,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
               </div>
             )}
           </div>
-          <div className="m-8 flex justify-end w-full gap-4 px-4 p-4">
+          <div className="m-8 mt-0 flex justify-end w-full gap-4 px-4 p-4">
             <Link
               href={`${cvThemePathname}/${slug || chosenCV?.slug || ""}`}
               target="_blank"

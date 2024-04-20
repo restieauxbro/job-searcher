@@ -1,66 +1,27 @@
-import Sidebar from "@/components/HistorySidebar";
-import { CVEntryFromSupabase, Database } from "@/types/supabase";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
-import React from "react";
-import CVBuilderApp from "./cv-builder";
+import { Button, buttonVariants } from "@/components/ui/button";
+import NeumorphButton from "@/components/ui/neumorphic-button";
+import Header from "@/components/web-ui/header";
+import Link from "next/link";
 
-export default async function Page({
-  params,
-  searchParams,
-}: {
-  params: { slug: string };
-  searchParams: any;
-}) {
-  const { j } = searchParams;
-  const cookieStore = cookies();
-
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-      },
-    }
-  );
-  const historyDataPromise = supabase
-    .from("cvg_cv")
-    .select("employer, id, job_title, slug, created_at")
-    .neq('job_title', null)
-    .order("created_at", { ascending: false })
-    .limit(25);
-
-  let promises: any = [historyDataPromise];
-
-  if (j) {
-    const chosenCVPromise = supabase
-      .from("cvg_cv")
-      .select("cv_data, messages, employer, id, job_title, slug, created_at")
-      .eq("id", j)
-      .single();
-
-    promises.push(chosenCVPromise);
-  }
-
-  const [historyData, chosenCV] = await Promise.all(promises);
-
-  if (historyData.error || (j && chosenCV.error)) {
-    console.error(historyData.error || chosenCV.error);
-    return <div>Error loading CV</div>;
-  }
-
+type Props = {};
+const Landing = ({}: Props) => {
   return (
     <>
-      {/* <pre>{JSON.stringify(chosenCV?.data, null, 2)}</pre> */}
-      <CVBuilderApp
-        history={historyData.data}
-        {...{
-          chosenCV: chosenCV?.data as CVEntryFromSupabase,
-        }}
-      />
+      <div className="px-4 lg:px-8">
+        <div className="max-w-screen-sm grid gap-4 mx-auto pt-12 xl:pt-24">
+          <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-center text-balance text-gray-800">
+            Ask your CV to update itself
+          </h1>
+          <div className="flex justify-center mt-4 gap-4">
+            <Link href="/customizer" className={buttonVariants()}>
+              Get started
+            </Link>
+            <NeumorphButton>Hi!</NeumorphButton>
+          </div>
+        </div>
+      </div>
     </>
   );
-}
+};
+
+export default Landing;
