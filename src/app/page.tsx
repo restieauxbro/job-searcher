@@ -1,5 +1,6 @@
+'use client';
 import { Button, buttonVariants } from "@/components/ui/button";
-import NeumorphButton from "@/components/ui/neumorphic-button";
+import NeumorphButton, { DarkNeumorphButton } from "@/components/ui/neumorphic-button";
 import Header from "@/components/web-ui/header";
 import Link from "next/link";
 
@@ -13,10 +14,8 @@ const Landing = ({}: Props) => {
             Ask your CV to update itself
           </h1>
           <div className="flex justify-center mt-4 gap-4">
-            <Link href="/customizer" className={buttonVariants()}>
-              Get started
-            </Link>
-            <NeumorphButton>Hi!</NeumorphButton>
+            <DarkNeumorphButton >Get started</DarkNeumorphButton>
+            <NeumorphButton>Say hi!</NeumorphButton>
           </div>
         </div>
       </div>
