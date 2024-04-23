@@ -12,6 +12,7 @@ export default function Layout(props: ILayoutProps) {
         <div className="flex gap-8 flex-wrap">
           {["Style", "Import your CV", "Edit"].map((item, index) => (
             <Button
+              key={item}
               variant={"ghost"}
               size={"sm"}
               className="text-neutral-500 text-xs"
