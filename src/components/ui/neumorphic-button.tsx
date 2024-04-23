@@ -18,7 +18,7 @@ const NeumorphButton: React.FunctionComponent<NeumorphButtonProps> = (
         {...buttonProps}
       >
         <div className="relative z-1 flex items-center gap-4 text-neutral-900 group-active:text-neutral-700">
-          <span className="font-sans font-medium z-[2] relative text-sm">
+          <span className="font-sans font-medium z-[2] relative text-sm flex gap-2 items-center text-neutral-700">
             {props.children}
           </span>
         </div>

@@ -31,6 +31,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import ResizingContainer from "@/components/animations/resizing-container";
 import AnimateFromHidden from "@/components/animations/AnimateFromHidden";
 import { Textarea } from "@/components/ui/textarea";
+import NeumorphButton, { DarkNeumorphButton } from "@/components/ui/neumorphic-button";
 
 type CVTheme = "basic" | "projects-cover-page";
 type TemplateContentSlug = "software-engineer" | "marketing-technologist";
@@ -396,8 +397,8 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                   value={input}
                   onChange={handleInputChange}
                 />
-                <div className="mt-2 flex justify-end">
-                  <Button type="submit">Get edits</Button>
+                <div className="mt-4 flex justify-end">
+                  <DarkNeumorphButton type="submit">Get edits</DarkNeumorphButton>
                 </div>
               </form>
             </div>
@@ -476,11 +477,11 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                 View <ArrowUpRight size={16} />
               </div>
             </Link>
-            <Button size="sm" onClick={printCV}>
+            <NeumorphButton onClick={printCV}>
               <div className="flex gap-1 items-center">
                 Download <ArrowDown size={16} />
               </div>
-            </Button>
+            </NeumorphButton>
           </div>
         </div>
       </div>
