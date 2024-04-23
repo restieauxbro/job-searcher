@@ -1,7 +1,6 @@
 "use client";
 import FileUpload from "@/components/ui/file-upload";
 import NeumorphButton from "@/components/ui/neumorphic-button";
-import { Message, useAssistant } from "ai/react";
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -9,6 +8,7 @@ export interface IAppProps {}
 
 export default function App(props: IAppProps) {
   const router = useRouter();
+
   return (
     <div>
       <div className="text-center max-w-md">
@@ -19,7 +19,9 @@ export default function App(props: IAppProps) {
           We can customize your current CV or you can start from scratch.
         </p>
         <div className="mt-8">
-          <FileUpload />
+       
+            <FileUpload handleFileChange={(e) => console.log(e.target.files)} />
+
 
           <div className="my-8 flex gap-4 items-center text-sm">
             <hr className="grow" />
