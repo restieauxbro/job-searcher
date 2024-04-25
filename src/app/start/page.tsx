@@ -15,7 +15,7 @@ export default function App(props: IAppProps) {
   return (
     <>
       <div className="text-center mt-16">
-        <h1 className="font-bold text-4xl max-w-xl text-neutral-800">Let's start with a basic style</h1>
+        <h1 className="font-extrabold text-4xl max-w-xl text-neutral-800 leading-tight tracking-tight">Let's start with a basic style</h1>
         <p className="mt-8 max-w-md text-balance text-neutral-700">
           {"This is a simple layout to get you started. It'll look a little something like this."}
         </p>

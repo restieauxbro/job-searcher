@@ -12,7 +12,7 @@ export default function App(props: IAppProps) {
   return (
     <div>
       <div className="text-center max-w-md">
-        <h1 className="font-bold text-4xl max-w-xl text-neutral-800 text-balance">
+        <h1 className="font-extrabold text-4xl max-w-xl text-neutral-800 text-balance leading-tighter tracking-tight">
           Do you have a CV to customize?
         </h1>
         <p className="mt-8 mx-auto text-balance text-neutral-700">

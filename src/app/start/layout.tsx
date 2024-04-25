@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/server";
 import * as React from "react";
+import Template from "./template";
 
 export interface ILayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout(props: ILayoutProps) {
+export default async function Layout(props: ILayoutProps) {
+  const supabase = createClient();
+  // const { data, error } = await supabase.auth.signInAnonymously();
+  // if (error) console.error("error", error);
+  const { data: session } = await supabase.auth.getSession();
+  const { data: user } = await supabase.auth.getUser();
+
   return (
     <div>
       <div className="fixed top-0 left-0 w-full grid place-items-center border-b p-1">
@@ -21,10 +29,19 @@ export default function Layout(props: ILayoutProps) {
             </Button>
           ))}
         </div>
+        {/* <pre>
+          {JSON.stringify(
+            {
+              session,
+              user,
+            },
+            null,
+            2
+          )}
+        </pre> */}
       </div>
-      <div className="h-lvh grid place-items-center overflow-hidden pt-8">
-        {props.children}
-      </div>
+      
+      <Template>{props.children}</Template>
     </div>
   );
 }

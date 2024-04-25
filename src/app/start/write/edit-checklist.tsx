@@ -5,35 +5,35 @@
  */
 export default function EditChecklist() {
   return (
-    <div className="bg-neutral-50 rounded-lg p-6 w-64 shadow-inner">
-      <div className="font-semibold mb-4 flex items-center">
-        <MenuIcon className="mr-3 h-5 w-5" />
-        CV Sections
+    <div className="max-w-sm xl:w-screen">
+      <div className="font-semibold text-xs px-1 text-neutral-400 mb-4 flex items-center">
+        {/* <MenuIcon className="mr-3 h-5 w-5" /> */}
+        <div className="">CV Sections</div>
       </div>
-      <nav className="flex flex-col space-y-2">
+      <nav className="flex flex-col">
         <a
-          className="p-3 px-4 rounded-md border border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white shadow-sm"
+          className="p-3 px-4 border-b py-4 border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white"
           href="#"
         >
           <UserIcon className="mr-3 h-5 w-5" />
           About
         </a>
         <a
-          className="p-3 px-4 rounded-md border border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white shadow-sm"
+          className="p-3 px-4 border-b py-4 border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white"
           href="#"
         >
           <BriefcaseIcon className="mr-3 h-5 w-5" />
           Experience
         </a>
         <a
-          className="p-3 px-4 rounded-md border border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white shadow-sm"
+          className="p-3 px-4 border-b py-4 border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white"
           href="#"
         >
           <BookIcon className="mr-3 h-5 w-5" />
           Education
         </a>
         <a
-          className="p-3 px-4 rounded-md border border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white shadow-sm"
+          className="p-3 px-4 border-b py-4 border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white"
           href="#"
         >
           <ActivityIcon className="mr-3 h-5 w-5" />
