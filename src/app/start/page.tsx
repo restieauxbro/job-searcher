@@ -15,19 +15,27 @@ export default function App(props: IAppProps) {
   return (
     <>
       <div className="text-center mt-16">
-        <h1 className="font-extrabold text-4xl max-w-xl text-neutral-800 leading-tight tracking-tight">Let's start with a basic style</h1>
+        <h1 className="font-extrabold text-4xl max-w-xl text-neutral-800 leading-tight tracking-tight">
+          {"Let's start with a basic style"}
+        </h1>
         <p className="mt-8 max-w-md text-balance text-neutral-700">
-          {"This is a simple layout to get you started. It'll look a little something like this."}
+          {
+            "This is a simple layout to get you started. It'll look a little something like this."
+          }
         </p>
       </div>
       <div>
         <div className="max-w-[576px] flex justify-between my-8 mx-auto">
           {/* <NeumorphButton onClick={() => {}}>Back</NeumorphButton> */}
-          <div/>
+          <div />
 
-          <DarkNeumorphButton onClick={() => {
-            router.push(`${pathname}/import-cv`);
-          }}>Next</DarkNeumorphButton>
+          <DarkNeumorphButton
+            onClick={() => {
+              router.push(`${pathname}/import-cv`);
+            }}
+          >
+            Next
+          </DarkNeumorphButton>
         </div>
         <div className="shadow-md shadow-neutral-300 bg-white py-10 px-20 w-screen max-w-screen-md rounded-md border border-neutral-300 max-h-[60rem] overflow-y-auto scale-75 origin-top">
           <DefaultCV cvTemplate={aIEngineeringTemplate} />
