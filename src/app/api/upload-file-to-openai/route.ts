@@ -10,7 +10,7 @@ const openai = new OpenAI({
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const formData = await req.formData();
-    const file = formData.getAll("files")[0] as any;
+    const file = formData.getAll("files")[0] as File;
     console.log("File object:", file);
 
     // Create an OpenAI file
@@ -28,4 +28,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if (e instanceof Error) console.error("Failed to upload file", e.message);
     return NextResponse.error();
   }
+}
+
+export type PDFUploadResponse = {
+  openaiFile: OpenAI.Files.FileObject;
+  fileType: string
 }

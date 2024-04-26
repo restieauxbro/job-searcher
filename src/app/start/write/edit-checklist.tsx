@@ -5,11 +5,7 @@
  */
 export default function EditChecklist() {
   return (
-    <div className="max-w-sm xl:w-screen">
-      <div className="font-semibold text-xs px-1 text-neutral-400 mb-4 flex items-center">
-        {/* <MenuIcon className="mr-3 h-5 w-5" /> */}
-        <div className="">CV Sections</div>
-      </div>
+    <div className="max-w-sm lg:w-screen">
       <nav className="flex flex-col">
         <a
           className="p-3 px-4 border-b py-4 border-neutral-200 hover:bg-neutral-100 transition-colors flex items-center bg-white"

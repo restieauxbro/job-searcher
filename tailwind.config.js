@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -16,7 +16,61 @@ module.exports = {
       },
     },
     extend: {
+      // Brand colours are blue 900, blue 700, indigo 500, yellow 500, mango 400,
       colors: {
+        blue: {
+          50: "#f2f4fc",
+          100: "#e1e6f8",
+          200: "#cad2f3",
+          300: "#a6b6ea",
+          400: "#7b90df",
+          500: "#5650fd",
+          600: "#4852c8",
+          700: "#3c3fb1", // Brand
+          800: "#383895",
+          900: "#292d74", // Brand
+          950: "#222249",
+        },
+        mango: {
+          50: "#fefce8",
+          100: "#fef8c3",
+          200: "#feee8a",
+          300: "#fdde47",
+          400: "#fac70c",
+          500: "#eab008", // Brand
+          600: "#ca8704",
+          700: "#a16007",
+          800: "#854b0e",
+          900: "#713e12",
+          950: "#421f06",
+        },
+        yellow: {
+          50: "#feffe7",
+          100: "#faffc1",
+          200: "#faff86",
+          300: "#ffff41",
+          400: "#fff30d", // Brand
+          500: "#ffe500",
+          600: "#d1aa00",
+          700: "#a67a02",
+          800: "#895f0a",
+          900: "#744d0f",
+          950: "#442904",
+        },
+        indigo: {
+          50: "#edf0ff",
+          100: "#dde4ff",
+          200: "#c2ccff",
+          300: "#9eaaff",
+          400: "#777cff",
+          500: "#5650fd", // Brand
+          600: "#4d38f3",
+          700: "#412cd6",
+          800: "#3626ad",
+          900: "#2f2788",
+          950: "#1d174f",
+        },
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -65,12 +119,52 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        // background gradient movement
+        moveHorizontal: {
+          "0%": {
+            transform: "translateX(-50%) translateY(-10%)",
+          },
+          "50%": {
+            transform: "translateX(50%) translateY(10%)",
+          },
+          "100%": {
+            transform: "translateX(-50%) translateY(-10%)",
+          },
+        },
+        moveInCircle: {
+          "0%": {
+            transform: "rotate(0deg)",
+          },
+          "50%": {
+            transform: "rotate(180deg)",
+          },
+          "100%": {
+            transform: "rotate(360deg)",
+          },
+        },
+        moveVertical: {
+          "0%": {
+            transform: "translateY(-50%)",
+          },
+          "50%": {
+            transform: "translateY(50%)",
+          },
+          "100%": {
+            transform: "translateY(-50%)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // background gradient movement
+        first: "moveVertical 30s ease infinite",
+        second: "moveInCircle 20s reverse infinite",
+        third: "moveInCircle 40s linear infinite",
+        fourth: "moveHorizontal 40s ease infinite",
+        fifth: "moveInCircle 20s ease infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};

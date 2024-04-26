@@ -1,15 +1,17 @@
 "use client";
+import { cn } from "@/lib/utils";
 import * as React from "react";
 
 export interface NeumorphButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   baseColor?: string;
+  childrenProps?: React.HTMLProps<HTMLSpanElement>;
 }
 
 const NeumorphButton: React.FunctionComponent<NeumorphButtonProps> = (
   props
 ) => {
-  const { baseColor, ...buttonProps } = props;
+  const { baseColor, childrenProps, ...buttonProps } = props;
 
   return (
     <div className="relative rounded-[0.3125rem] bg-gradient-to-b from-neutral-300/60 to-neutral-100/50 p-[1px]">
@@ -18,7 +20,7 @@ const NeumorphButton: React.FunctionComponent<NeumorphButtonProps> = (
         {...buttonProps}
       >
         <div className="relative z-1 flex items-center gap-4 text-neutral-900 group-active:text-neutral-700">
-          <span className="font-sans font-medium z-[2] relative text-sm flex gap-2 items-center text-neutral-700">
+          <span className={cn("font-sans font-medium z-[2] relative text-sm flex gap-2 items-center text-neutral-700", childrenProps?.className)}>
             {props.children}
           </span>
         </div>
@@ -31,17 +33,17 @@ export const DarkNeumorphButton: React.FunctionComponent<
   NeumorphButtonProps
 > = (props) => {
   const { baseColor, ...buttonProps } = props;
-  const color = baseColor || "purple";
+  const color = baseColor || "indigo";
   return (
     <div
-      className={`relative rounded-[0.3125rem] bg-gradient-to-b from-purple-800 to-purple-700 p-[1px] shadow`}
+      className={`relative rounded-[0.3125rem] bg-gradient-to-b from-indigo-700 to-indigo-600 p-[1px] shadow`}
     >
       <button
-        className={`group relative rounded bg-gradient-to-b from-purple-600 to-purple-700 active:from-purple-600 px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-purple-800 after:to-purple-600/90 active:drop-shadow-sm active:after:inset-[3px] active:after:from-purple-900 active:after:to-purple-600 transition-all active:shadow active:shadow-neutral-900/50`}
+        className={`group relative rounded bg-gradient-to-b from-indigo-500 to-indigo-600 active:from-indigo-500 px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-indigo-700 after:to-indigo-500/90 active:drop-shadow-sm active:after:inset-[3px] active:after:from-indigo-800 active:after:to-indigo-500 transition-all active:shadow active:shadow-neutral-800/50`}
         {...buttonProps}
       >
         <div
-          className={`relative z-1 flex items-center gap-4 text-purple-900 group-active:text-purple-700`}
+          className={`relative z-1 flex items-center gap-4 text-indigo-800 group-active:text-indigo-600`}
         >
           <span
             className={`font-sans font-medium z-[2] relative text-sm text-white group-active:scale-[98%]`}
