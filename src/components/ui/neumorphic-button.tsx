@@ -14,7 +14,7 @@ const NeumorphButton: React.FunctionComponent<NeumorphButtonProps> = (
   const { baseColor, childrenProps, ...buttonProps } = props;
 
   return (
-    <div className="relative rounded-[0.3125rem] bg-gradient-to-b from-neutral-300/60 to-neutral-100/50 p-[1px]">
+    <div className="inline-block relative rounded-[0.3125rem] bg-gradient-to-b from-neutral-300/60 to-neutral-100/50 p-[1px]">
       <button
         className="group relative rounded bg-gradient-to-b from-white to-neutral-200 px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-neutral-100 after:to-neutral-50 active:drop-shadow-sm active:after:inset-[3px] active:after:from-neutral-200 active:after:to-neutral-100 transition-all"
         {...buttonProps}
@@ -36,7 +36,7 @@ export const DarkNeumorphButton: React.FunctionComponent<
   const color = baseColor || "indigo";
   return (
     <div
-      className={`relative rounded-[0.3125rem] bg-gradient-to-b from-indigo-700 to-indigo-600 p-[1px] shadow`}
+      className={`inline-block relative rounded-[0.3125rem] bg-gradient-to-b from-indigo-700 to-indigo-600 p-[1px] shadow`}
     >
       <button
         className={`group relative rounded bg-gradient-to-b from-indigo-500 to-indigo-600 active:from-indigo-500 px-4 py-2.5 drop-shadow-lg after:absolute after:inset-[2px] after:rounded after:bg-gradient-to-b after:from-indigo-700 after:to-indigo-500/90 active:drop-shadow-sm active:after:inset-[3px] active:after:from-indigo-800 active:after:to-indigo-500 transition-all active:shadow active:shadow-neutral-800/50`}
