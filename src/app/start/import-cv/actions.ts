@@ -27,6 +27,7 @@ export async function extractTextFromFileWithAssistant(formData: FormData) {
     state: "uploading",
     messages: [],
   };
+  let respond
   const streamAbleVal = createStreamableValue<StreamState>(currentStreamState);
   const updateStream = ({
     state,

@@ -33,7 +33,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
             // transition: { duration: 0.5, ease: [0.27, 0.94, 0.48, 1.0] },
           }}
           transition={{ duration: 0.5, ease: [0.27, 0.94, 0.48, 1.0] }}
-          className="min-h-lvh grid place-items-center overflow-hidden py-12 lg:pb-16"
+          className="min-h-[calc(100lvh-8rem)] grid place-items-center overflow-hidden py-12 lg:pb-16"
         >
           <FrozenRouter>{children}</FrozenRouter>
         </motion.div>
