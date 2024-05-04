@@ -1,25 +1,10 @@
 "use server";
 
+import { anthropic } from "@/utils/claude";
 import { openai } from "@/utils/openai";
 import { createStreamableValue } from "ai/rsc";
-
-export type ProcessingState =
-  | "idle"
-  | "uploading"
-  | "processing with ai"
-  | "error"
-  | "done";
-
-type Message = {
-  id: string;
-  type: "text" | "code input" | "code output";
-  content: string;
-};
-
-export type StreamState = {
-  state: ProcessingState;
-  messages: Message[];
-};
+import { ProcessingState, StreamState, Message } from "./types";
+import { TextMessageWithJson, parseMessageWithJson } from "@/lib/streaming";
 
 export async function extractTextFromFileWithAssistant(formData: FormData) {
   const file = formData.getAll("files")[0] as File;
@@ -27,18 +12,20 @@ export async function extractTextFromFileWithAssistant(formData: FormData) {
     state: "uploading",
     messages: [],
   };
-  let respond
   const streamAbleVal = createStreamableValue<StreamState>(currentStreamState);
   const updateStream = ({
     state,
     messages,
+    documentText,
   }: {
     state?: ProcessingState;
     messages?: Message[];
+    documentText?: string;
   }) => {
     const newStreamVal = {
       state: state || currentStreamState.state,
       messages: messages || currentStreamState.messages,
+      documentText: documentText || currentStreamState.documentText,
     };
     streamAbleVal.update(newStreamVal);
     currentStreamState = newStreamVal;
@@ -152,23 +139,69 @@ export async function extractTextFromFileWithAssistant(formData: FormData) {
           const fileID = message.attachments[0]?.file_id as string;
           const fileContent = await openai.files.content(fileID);
           const fileText = await fileContent.text();
+          updateStream({
+            documentText: fileText,
+          });
           console.log("\n\nFile text", fileText);
           if (fileContent) {
             // clean up
-            // try {
-            //   await Promise.all([
-            //     openai.files.del(fileID),
-            //     openai.files.del(uploadedFile.id),
-            //   ]);
-            // } catch (error) {
-            //   console.error("Error deleting files", error);
-            // }
+            try {
+              await Promise.all([
+                openai.files.del(fileID),
+                openai.files.del(uploadedFile.id),
+              ]);
+              streamAbleVal.done();
+            } catch (error) {
+              console.error("Error deleting files", error);
+            }
           }
         }
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching file content", error);
+        streamAbleVal.done();
+      }
     })
     .on("end", () => {
       console.log("Assistant run completed");
+    });
+  return streamAbleVal.value;
+}
+
+// Anthropic
+
+export async function parseTextToCVWithClaude(string: string) {
+  let streamedText = "";
+  const streamAbleVal = createStreamableValue<TextMessageWithJson[]>();
+
+  await anthropic.messages
+    .stream({
+      model: "claude-3-sonnet-20240229",
+      max_tokens: 4096,
+      temperature: 1,
+      system:
+        'You are a computer for turning the free text extracted from a document into a structured JSON output.\n\nIn Typescript, the types for the output are:\n\nexport type CVTemplate = {\ntitle: string;\nintro: string;\nemployment: {\n[key: string]: Employment;\n};\neducation?: Education[];\nskills?: string[];\n};\n\nexport type Employment = {\ncompany: string;\ncompanyDescription?: string;\nposition: string;\nstartDate: string;\nendDate: string;\ntotalDuration: string;\ndescription: string;\nclassifications: string[]; // One or two words like "UX Design" "Full Stack Engineering"\nachievements?: string[];\n};\n\nexport type Education = {\ninstitution: string;\nqualification: string;\ndetails: string;\nstartDate: string;\nendDate: string;\n};\n\nThe user will dump unformatted text into you and you must intelligently work out the CVTemplate object to output. \n\nFirst start by assessing if the input text relevant for parsing into a CV JSON object, if it\'s not you should output an error message.\n\nYour output should be the following type\n\nexport type CVJSONOutput =\n| {\nisCV: false;\ndocumentType: string;\nerrorMessage: string;\n}\n| {\nisCV: true;\ndocumentType: "cv";\ncv: CVTemplate;\n};\n\nYou must output JSON not JSON5! No double spaces.',
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: `// USER DOCUMENT TEXT
+              \n\n${string}            
+              \n\n// END USER DOCUMENT TEXT
+              \n\nParse into JSON in the type of CVJSONOutput`,
+            },
+          ],
+        },
+      ],
+    })
+    .on("text", (text) => {
+      streamedText += text.replaceAll("\n", "");
+      const jsonExtraction = parseMessageWithJson(streamedText);
+      console.log(jsonExtraction);
+      streamAbleVal.update(jsonExtraction);
+    })
+    .on("end", () => {
       streamAbleVal.done();
     });
   return streamAbleVal.value;

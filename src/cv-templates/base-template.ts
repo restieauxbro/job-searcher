@@ -1,3 +1,15 @@
+export type CVJSONOutput =
+  | {
+      isCV: false;
+      documentType: string;
+      errorMessage: string;
+    }
+  | {
+      isCV: true;
+      documentType: string;
+      cv: CVTemplate;
+    };
+
 export type CVTemplate = {
   title: string;
   intro: string;
@@ -49,7 +61,7 @@ export const baseTemplate: CVTemplate = {
       ],
       description:
         "I was the Product Engineer of “Intelligent Navigation”; a workstream of digital products for helping learners navigate the Te Pūkenga network. Here I architected, designed and was lead developer for our full-stack solutions. Creating modular applications that were scalable and embeddable. I centralised elements of Te Pūkenga’s data into a layer able to be leveraged by AI APIs, a Customer Data Platform, a CMS and a complete integration design pattern, all for the purpose of accessing and transforming real-time data in intelligent ways for learners.",
-      hightlights: [ "Solutions Design","AI Engineering"],
+      hightlights: ["Solutions Design", "AI Engineering"],
     },
     "cz-digital-experience-lead": {
       company: "Competenz",

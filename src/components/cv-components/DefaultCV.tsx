@@ -15,7 +15,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   ];
 
   // Convert the object into an array
-  const employmentArray = Object.entries(employment);
+  const employmentArray = employment ? Object.entries(employment) : []
 
   // Sort the array based on the predefined order
   const sortedEmploymentArray = employmentArray.sort((a, b) => {
@@ -24,7 +24,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
     return indexA - indexB;
   });
   return (
-    <div className="w-full max-w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
+    <div className="w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
       <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1025px] h-auto">
         <div className="self-stretch justify-start items-end gap-7 inline-flex">
           <h1 className="text-neutral-700 text-2xl font-extrabold leading-none">

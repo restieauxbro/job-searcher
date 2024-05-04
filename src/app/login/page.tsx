@@ -10,10 +10,6 @@ export default async function Login({
   searchParams: { message: string };
 }) {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.signInAnonymously();
-  if (error) {
-    console.error(error);
-  }
 
   const signIn = async (formData: FormData) => {
     "use server";
@@ -59,7 +55,7 @@ export default async function Login({
 
   return (
     <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
       <Link
         href="/"
         className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -101,20 +97,14 @@ export default async function Login({
           placeholder="••••••••"
           required
         />
-        <SubmitButton
-          formAction={signIn}
-          className="bg-green-700 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing In..."
-        >
-          Sign In
-        </SubmitButton>
-        <SubmitButton
-          formAction={signUp}
-          className="border border-foreground/20 rounded-md px-4 py-2 text-foreground mb-2"
-          pendingText="Signing Up..."
-        >
-          Sign Up
-        </SubmitButton>
+        <div>
+          <SubmitButton formAction={signIn} pendingText="Signing In...">
+            Sign In
+          </SubmitButton>
+          <SubmitButton formAction={signUp} pendingText="Signing Up...">
+            Sign Up
+          </SubmitButton>
+        </div>
         {searchParams?.message && (
           <p className="mt-4 p-4 bg-foreground/10 text-foreground text-center">
             {searchParams.message}

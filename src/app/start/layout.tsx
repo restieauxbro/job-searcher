@@ -1,18 +1,31 @@
+"use server";
 import { Button } from "@/components/ui/button";
-import { createClient } from "@/utils/supabase/server";
-import * as React from "react";
 import Template from "./template";
+import { headers } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import { parseTextToCVWithClaude } from "./import-cv/actions";
 
 export interface ILayoutProps {
   children: React.ReactNode;
 }
 
 export default async function Layout(props: ILayoutProps) {
-  const supabase = createClient();
-  // const { data, error } = await supabase.auth.signInAnonymously();
-  // if (error) console.error("error", error);
-  const { data: session } = await supabase.auth.getSession();
-  const { data: user } = await supabase.auth.getUser();
+  const ip = getIp();
+  const supabase = createClient(true);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // if (!user) {
+  //   const { data: anonIpUser, error } = await supabase
+  //     .from("users")
+  //     .upsert({ initial_ip_address: ip }, { onConflict: "initial_ip_address" })
+  //     .select("*");
+  //   console.log({ anonIpUser });
+  //   if (error) {
+  //     console.error(error);
+  //   }
+  // }
 
   return (
     <div>
@@ -28,20 +41,21 @@ export default async function Layout(props: ILayoutProps) {
               {item}
             </Button>
           ))}
+  
         </div>
-        {/* <pre>
-          {JSON.stringify(
-            {
-              session,
-              user,
-            },
-            null,
-            2
-          )}
-        </pre> */}
+        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
       </div>
-      
       <Template>{props.children}</Template>
     </div>
   );
+}
+
+function getIp() {
+  let forwardedFor = headers().get("x-forwarded-for");
+  let realIp = headers().get("x-real-ip");
+  if (forwardedFor) {
+    return forwardedFor.split(",")[0].trim();
+  }
+  if (realIp) return realIp.trim();
+  return null;
 }

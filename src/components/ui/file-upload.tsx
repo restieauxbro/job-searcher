@@ -22,7 +22,7 @@ const FileUpload: FC<IFileUploadProps> = (props) => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1, transition: { duration: 0.5 } }}
                   exit={{ opacity: 0 }}
-                  className="loading-spinner bg-purple-500 w-8"
+                  className="loading-spinner bg-purple-500 w-8 p-1"
                 />
               ) : (
                 <motion.svg

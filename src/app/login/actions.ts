@@ -44,3 +44,19 @@ export async function signup(formData: FormData) {
   revalidatePath('/', 'layout')
   redirect('/')
 }
+
+
+export async function authRedirect({
+  redirectTo,
+  allowUnauthenticated,
+}: {
+  redirectTo: string;
+  allowUnauthenticated?: boolean;
+}) {
+  const redirectUrl = redirectTo || '/login'
+  const supabase = createClient();
+  const { data: user } = await supabase.auth.getUser();
+  if (!user && !allowUnauthenticated) {
+    redirect(redirectUrl)
+  }
+}
