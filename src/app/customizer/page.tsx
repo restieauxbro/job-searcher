@@ -1,7 +1,4 @@
-import Sidebar from "@/components/HistorySidebar";
 import { CVEntryFromSupabase, Database } from "@/types/supabase";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
 import React from "react";
 import CVBuilderApp from "../cv-builder";
 import { createClient } from "@/utils/supabase/server";
@@ -14,7 +11,6 @@ export default async function Page({
   searchParams: any;
 }) {
   const { j } = searchParams;
-  const cookieStore = cookies();
 
   const supabase = createClient();
   const historyDataPromise = supabase

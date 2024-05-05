@@ -1,13 +1,10 @@
 "use client";
 import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
-import { Button, buttonVariants } from "@/components/ui/button";
 import NeumorphButton, {
   DarkNeumorphButton,
 } from "@/components/ui/neumorphic-button";
-import Header from "@/components/web-ui/header";
 import { User } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type Props = {};

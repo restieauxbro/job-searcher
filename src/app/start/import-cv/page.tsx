@@ -1,7 +1,5 @@
 "use client";
 import FileUpload from "@/components/ui/file-upload";
-import NeumorphButton from "@/components/ui/neumorphic-button";
-import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -12,8 +10,6 @@ import { readStreamableValue } from "ai/rsc";
 import AnimateFromHidden from "@/components/animations/AnimateFromHidden";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import { neutral } from "tailwindcss/colors";
-import DefaultCV from "@/components/cv-components/DefaultCV";
-import { aIEngineeringTemplate } from "@/cv-templates/ai-engineer";
 import ResizingContainer from "@/components/animations/resizing-container";
 import { StreamState } from "./types";
 import { JsonMessage } from "@/lib/streaming";

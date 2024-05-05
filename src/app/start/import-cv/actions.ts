@@ -175,7 +175,7 @@ export async function parseTextToCVWithClaude(string: string) {
 
   await anthropic.messages
     .stream({
-      model: "claude-3-sonnet-20240229",
+      model: "claude-3-haiku-20240307",
       max_tokens: 4096,
       temperature: 1,
       system:

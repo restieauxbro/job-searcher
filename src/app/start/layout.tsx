@@ -3,19 +3,18 @@ import { Button } from "@/components/ui/button";
 import Template from "./template";
 import { headers } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
-import { parseTextToCVWithClaude } from "./import-cv/actions";
+import {  parseTextToCVWithClaude } from "./import-cv/actions";
+import { redirect } from "next/dist/server/api-utils";
 
 export interface ILayoutProps {
   children: React.ReactNode;
 }
 
 export default async function Layout(props: ILayoutProps) {
-  const ip = getIp();
   const supabase = createClient(true);
   const {
     data: { user },
   } = await supabase.auth.getUser();
-
   // if (!user) {
   //   const { data: anonIpUser, error } = await supabase
   //     .from("users")
@@ -41,9 +40,7 @@ export default async function Layout(props: ILayoutProps) {
               {item}
             </Button>
           ))}
-  
         </div>
-        {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
       </div>
       <Template>{props.children}</Template>
     </div>
