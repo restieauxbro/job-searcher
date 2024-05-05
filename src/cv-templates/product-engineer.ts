@@ -23,7 +23,7 @@ productEngineerTemplate.employment = {
     startDate: "Nov 2023",
     description:
       "Oscar Tango is a boutique development agency I co-founded that sub-contracts from creative agencies when they need extra resource building AI applications. We specialise in building knowledge-bases, enhanced search and chat interfaces for agency clients to sell on to their clients. I am the principle developer and consult on digital strategy.",
-    hightlights: ["Web Development"],
+    highlights: ["Web Development"],
     achievements: [
       "Created a full-stack RAG AI application as a knowledge-base alternative that saved our client 100 hours of development time on an old-school solution",
       "Developed a cost per conversion service that ensures a ROI on limits AI features when as they become more or less effective on each user. Our client had a controlled ",

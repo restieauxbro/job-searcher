@@ -299,7 +299,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 company,
                 companyDescription,
                 position,
-                hightlights,
+                highlights,
                 description,
                 achievements,
               },
@@ -325,7 +325,7 @@ const CvWithIntro = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                       <div className="text-neutral-700 text-[10px] font-extralight">
                         {company}
                       </div>
-                      {hightlights?.map((highlight) => (
+                      {highlights?.map((highlight) => (
                         <div
                           key={highlight}
                           className="px-2 py-[4px] bg-emerald-100 rounded-[13px] justify-center items-center gap-[13px] flex"

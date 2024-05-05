@@ -26,12 +26,13 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import CvWithIntro from "@/components/cv-components/cv-with-intro-component";
-import { Input } from "@/components/ui/input";
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import ResizingContainer from "@/components/animations/resizing-container";
 import AnimateFromHidden from "@/components/animations/AnimateFromHidden";
 import { Textarea } from "@/components/ui/textarea";
-import NeumorphButton, { DarkNeumorphButton } from "@/components/ui/neumorphic-button";
+import NeumorphButton, {
+  DarkNeumorphButton,
+} from "@/components/ui/neumorphic-button";
 
 type CVTheme = "basic" | "projects-cover-page";
 type TemplateContentSlug = "software-engineer" | "marketing-technologist";
@@ -43,9 +44,11 @@ export type ApplicationDetails = {
 };
 
 export default function CVBuilderApp({
+  anonUserId,
   history,
   chosenCV,
 }: {
+  anonUserId: string;
   history:
     | {
         employer: string | null;
@@ -60,12 +63,18 @@ export default function CVBuilderApp({
   return (
     <div className="flex relative bg-[linear-gradient(to_right,_white_70%,_#f5f7fa_80%)]">
       <HistorySidebar {...{ history }} />
-      <CVBuilder {...{ chosenCV: chosenCV }} />
+      <CVBuilder {...{ chosenCV: chosenCV, anonUserId }} />
     </div>
   );
 }
 
-function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
+function CVBuilder({
+  chosenCV,
+  anonUserId,
+}: {
+  chosenCV?: CVEntryFromSupabase;
+  anonUserId: string;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -94,7 +103,7 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
     useState<ApplicationDetails>({});
 
   const [cv, setCv] = useState<CVTemplate>(
-    baseTemplateFromSlug(templateContent)
+    chosenCV?.cv_data || baseTemplateFromSlug(templateContent)
   );
 
   useEffect(() => {
@@ -398,7 +407,9 @@ function CVBuilder({ chosenCV }: { chosenCV?: CVEntryFromSupabase }) {
                   onChange={handleInputChange}
                 />
                 <div className="mt-4 flex justify-end">
-                  <DarkNeumorphButton type="submit">Get edits</DarkNeumorphButton>
+                  <DarkNeumorphButton type="submit">
+                    Get edits
+                  </DarkNeumorphButton>
                 </div>
               </form>
             </div>
@@ -523,9 +534,14 @@ const TextRender = ({
   }
 };
 
-const systemInstructions = (cvTemplate: CVTemplate) => `Tim's CV:
+const systemInstructions = (cvTemplate: CVTemplate) => `User's CV:
 
 export type CVTemplate = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  location: string;
   title: string;
   intro: string;
   employment: {
@@ -542,7 +558,7 @@ export type Employment = {
   endDate: string;
   totalDuration: string;
   description: string;
-  hightlights: string[];
+  highlights: string[];
   achievements?: string[];
 };
 
@@ -550,9 +566,9 @@ export const baseTemplate: CVTemplate = ${JSON.stringify(cvTemplate, null, 2)};
 
 END CV
 
-Tim's CV Customizer is designed to assist Tim in crafting and enhancing his curriculum vitae (CV). Its primary goal is to provide creative and effective edits for improving the content based on the job advert it's responding to.
+You are an assistant designed to assist the user in crafting and enhancing their curriculum vitae (CV). Its primary goal is to provide creative and effective edits for improving the content based on the job advert it's responding to.
 
-When the user (who will be Tim) sends a job advert, you respond first by analysing the job advert and drawing out its key themes. Name the things Tim's CV should focus on in applying for it. Then output JSON of the parts of the CV to be edited. For example if the intro is to be edited, respond with a JSON object with just the intro edits
+When the user sends a job advert, you respond first by analysing the job advert and drawing out its key themes. Name the things the user's CV should focus on in applying for it. Then output JSON of the parts of the CV to be edited. For example if the intro is to be edited, respond with a JSON object with just the intro edits
 
 eg.
 
@@ -571,11 +587,11 @@ employment: {
        }
 }
 
-Use Australian spelling, such as "organisation" instead of organization. Do not fabricate any information, but if there is experience that you can imply Tim has that hasn't been explicitly mentioned. For example, if the job ad calls for html and CSS experience, and Tim has experience with web development, you can imply that he has html and CSS experience.
+Use Australian spelling, such as "organisation" instead of organization. Do not fabricate any information, but if there is experience that you can imply they have that hasn't been explicitly mentioned. For example, if the job ad calls for html and CSS experience, and they has experience with web development, you can imply that he has html and CSS experience.
 
-The existing job descriptions in Tim;s CV are well-worded but may just need a slight change in emphasis or different skills mentioned. Try to use the existing content as much as possible, but with enhancements based on the job advert.`;
+The existing job descriptions in their CV are well-worded but may just need a slight change in emphasis or different skills mentioned. Try to use the existing content as much as possible, but with enhancements based on the job advert.`;
 
-const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for Tim's CV should include: \n\n1. AI research and development 2. Implementation and optimisation of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimisation of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
+const exampleSuggestions = `Based on the key themes from the job advert, the focus areas for the CV should include: \n\n1. AI research and development 2. Implementation and optimisation of large language models 3. Cross-functional collaboration 4. Designing and conducting experiments for models and algorithms 5. Mentoring junior AI engineers and data scientists 6. Presentation of findings and progress to stakeholders 7. Adherence to ethical AI practices and compliance standards Tim's CV JSON edits would be as follows: \`\`\` json { "intro": "As a seasoned Product Engineer and proficient AI researcher, I excel in driving transformations through intelligent automated solutions in the infrastructure, application, and data layer. I am adept in large language models, machine learning and data science techniques, and thrive in a collaborative environment where I can contribute towards the development and optimisation of these systems. With experience in conducting strategic AI experiments, mentoring junior engineers, and presenting complex findings to stakeholders, I champion innovative solutions that align with ethical standards and regulations.", "employment": { "tp-ai-architect": { "description": "In my role as the AI Arc`;
 
 const getApplicationDetails = async (
   jobDescription: string

@@ -12,10 +12,10 @@ modifiedTemplate.employment["tp-ai-architect"].achievements = [
   'Fine-tuned a model for parsing user queries into structured data and using it in our recommendation algorithm. Qualitative research showed a 78% boost in the sentiment "I got exactly what I needed".',
   'Fine-tuned an internal "Brand Voice" model for HR to generate job description drafts. The department chief estimated a 80% reduction in time spent on job descriptions.',
   "Architected a method for our front-end applications to generate components from a centralised design system and automate A/B testing. In our sample testing we were able to increase the click-through rate by 22%.",
-  "Developed a chatbot framework that resists and reports adversarial attacks, as well as redirecting conversation flows from natural language rules in a CMS."
+  "Developed a chatbot framework that resists and reports adversarial attacks, as well as redirecting conversation flows from natural language rules in a CMS.",
 ];
 modifiedTemplate.employment["cz-digital-experience-lead"].description =
-"Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.";
+  "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.";
 // modifiedTemplate.employment = {
 //   ...modifiedTemplate.employment,
 //   "lead-dev": {
@@ -25,7 +25,7 @@ modifiedTemplate.employment["cz-digital-experience-lead"].description =
 //     startDate: "Nov 2023",
 //     description:
 //       "Oscar Tango is a boutique development agency I co-founded that sub-contracts from creative agencies when they need extra resource building AI applications. We specialise in building knowledge-bases, enhanced search and chat interfaces for agency clients to sell on to their clients. I am the principle developer and consult on digital strategy.",
-//     hightlights: ["Web Development"],
+//     highlights: ["Web Development"],
 //     achievements: [
 //       "Created a full-stack RAG AI application as a knowledge-base alternative that saved our client 100 hours of development time on an old-school solution.",
 //       "Developed a chatbot that resists and reports adversarial attacks, staying on brand and on message.",
@@ -34,7 +34,14 @@ modifiedTemplate.employment["cz-digital-experience-lead"].description =
 //
 
 //};
-modifiedTemplate.skills = [ "AI Solution Design", "Full-stack Development",...(modifiedTemplate.skills || []), "Typescript","Customer Experience", "Agile"];
+modifiedTemplate.skills = [
+  "AI Solution Design",
+  "Full-stack Development",
+  ...(modifiedTemplate.skills || []),
+  "Typescript",
+  "Customer Experience",
+  "Agile",
+];
 delete modifiedTemplate.employment["uxbridge-arts-culture"];
 
 export const aIEngineeringTemplate: CVTemplate = modifiedTemplate;

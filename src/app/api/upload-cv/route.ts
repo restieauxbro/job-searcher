@@ -4,6 +4,7 @@ import { slugify } from "@/lib/utils";
 import { Database } from "@/types/supabase";
 
 import { createClient } from "@supabase/supabase-js";
+import { cookies } from "next/headers";
 
 // Create a single supabase client for interacting with your database
 const supabase = createClient<Database>(
@@ -19,6 +20,8 @@ export async function POST(request: Request) {
     } & ApplicationDetails & { slug: string; messages: any };
     //  console.log(cv);
 
+    const anonUserId = cookies().get("anonUserId")?.value || "";
+    console.log(anonUserId);
     const { data, error } = await supabase
       .from("cvg_cv")
       .upsert(
@@ -30,6 +33,7 @@ export async function POST(request: Request) {
             employer,
             job_ad_description: jobDescription,
             messages,
+            anon_user_id: anonUserId,
           },
         ],
         {

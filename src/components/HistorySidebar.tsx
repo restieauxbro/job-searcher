@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Plus, Search } from "lucide-react";
 
 import { Button, buttonVariants } from "./ui/button";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Input } from "./ui/input";
 
 const Sidebar = ({
@@ -24,6 +24,7 @@ const Sidebar = ({
 }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   return (
     <>
       <div className="sticky top-0 left-0 h-screen flex-none overflow-x-hidden">
@@ -76,16 +77,21 @@ const Sidebar = ({
               >
                 <div className="px-2 mt-2">
                   <div className="flex gap-2 mb-2">
-
-                  <Link href='/' className={buttonVariants({variant: 'outline', className: 'gap-1'})}>
-                    New <Plus size={18} />
-                  </Link>
-                  <div className="relative grow">
-                    <Input placeholder="Search" />
-                    <div className="absolute top-1/2 right-2 -translate-y-1/2">
-                      <Search size={18} />
+                    <Link
+                      href={pathname}
+                      className={buttonVariants({
+                        variant: "outline",
+                        className: "gap-1",
+                      })}
+                    >
+                      New <Plus size={18} />
+                    </Link>
+                    <div className="relative grow">
+                      <Input placeholder="Search" />
+                      <div className="absolute top-1/2 right-2 -translate-y-1/2">
+                        <Search size={18} />
+                      </div>
                     </div>
-                  </div>
                   </div>
                   <div className="px-2">
                     {history?.map((cv) => {
@@ -93,7 +99,7 @@ const Sidebar = ({
                         searchParams
                       );
                       editableSearchParams.set("j", cv.id.toString());
-                      const link = `/?${editableSearchParams.toString()}`;
+                      const link = `${pathname}?${editableSearchParams.toString()}`;
                       return (
                         <Link href={link} className="w-[325px]" key={cv.id}>
                           <div className="flex items-center justify-between py-4 border-b border-neutral-200">

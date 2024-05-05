@@ -5,6 +5,7 @@ import NeumorphButton, {
 } from "@/components/ui/neumorphic-button";
 import { User } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type Props = {};
@@ -17,7 +18,6 @@ const Landing = ({}: Props) => {
           className="absolute bottom-0 left-0 h-[80%]  w-full bg-blue-700"
           style={{ clipPath: "polygon(0 0, 100% 55%, 100% 100%, 0% 100%)" }}
         >
-
           <BackgroundGradientAnimation />
         </div>
         <div className="px-4 lg:px-8 relative">
@@ -29,12 +29,12 @@ const Landing = ({}: Props) => {
               <span className="text-mango-400">with AI</span>
             </h1>
             <div className="flex justify-center mt-4 gap-4">
-              <NeumorphButton childrenProps={{className: 'pl-0'}}><User size={16} /> Login</NeumorphButton>
-              <DarkNeumorphButton
-                onClick={() => router.push("/start", { scroll: false })}
-              >
-                Start free
-              </DarkNeumorphButton>
+              <NeumorphButton childrenProps={{ className: "pl-0" }}>
+                <User size={16} /> Login
+              </NeumorphButton>
+              <Link href="/start">
+                <DarkNeumorphButton>Start free</DarkNeumorphButton>
+              </Link>
             </div>
           </div>
         </div>
