@@ -15,8 +15,8 @@ import { StreamState } from "./types";
 import { JsonMessage } from "@/lib/streaming";
 import { CVTemplate } from "@/cv-templates/base-template";
 
-export const maxDuration = 300
-export const dynamic = 'force-dynamic'
+// export const maxDuration = 300
+// export const dynamic = 'force-dynamic'
 
 export default function App() {
   const router = useRouter();
