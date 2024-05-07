@@ -8,6 +8,7 @@ import { StartNavBar } from "./start-nav-bar";
 export interface ILayoutProps {
   children: React.ReactNode;
 }
+export const maxDuration = 250;
 
 export default async function Layout(props: ILayoutProps) {
   const supabase = createClient(true);
