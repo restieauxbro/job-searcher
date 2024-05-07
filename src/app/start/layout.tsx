@@ -1,4 +1,3 @@
-"use server";
 import Template from "./template";
 import { headers } from "next/headers";
 import { StartNavBar } from "./start-nav-bar";
