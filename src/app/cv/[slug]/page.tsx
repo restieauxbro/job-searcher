@@ -73,6 +73,7 @@ export async function generateMetadata(
     .single();
 
   return {
-    title: "Tim Restieaux for " + cvFromDb?.employer || cvFromDb?.job_title,
+    title: "CV",
+    //title: "Tim Restieaux for " + cvFromDb?.employer || cvFromDb?.job_title,
   };
 }

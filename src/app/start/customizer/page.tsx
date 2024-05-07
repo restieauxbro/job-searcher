@@ -38,6 +38,7 @@ export default async function Page({
   if (j) {
     chosenCVPromise = chosenCVPromise.eq("id", j);
   } else {
+    console.log({anonUserId})
     chosenCVPromise = chosenCVPromise.eq("anon_user_id", anonUserId);
   }
 

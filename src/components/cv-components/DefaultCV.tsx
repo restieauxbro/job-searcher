@@ -36,7 +36,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   });
   return (
     <div className="w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
-      <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1025px] h-auto">
+      <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1125px] h-auto">
         <div className="self-stretch justify-start items-end gap-7 inline-flex">
           <h1 className="text-neutral-700 text-2xl font-extrabold leading-none">
             {firstName}
@@ -50,7 +50,45 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             {title}
           </div>
         </div>
-        <div className="self-stretch justify-start items-start gap-[39px] inline-flex">
+        <div className="w-[108.04px] grid gap-2">
+          {[
+            {
+              value: location,
+              icon: <Globe size={10} />,
+            },
+            {
+              value: email,
+              icon: <Mail size={10} />,
+              link: `mailto:${email}`,
+            },
+            {
+              title: "phone",
+              value: phone,
+              icon: <Phone size={10} />,
+              link: `tel:${phone}`,
+            },
+          ].map(({ value, icon, link }) => {
+            if (link)
+              return (
+                <a
+                  href={link}
+                  key={value}
+                  className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px]"
+                >
+                  {icon}
+                  {value}
+                </a>
+              );
+            else
+              return (
+                <div className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px]">
+                  {icon}
+                  {value}
+                </div>
+              );
+          })}
+        </div>
+        {/* <div className="self-stretch justify-start items-start gap-[39px] inline-flex">
           <div className="w-[108.04px] h-[60px] relative">
             <a href={`tel:${phone}`}>
               <div className="w-[90.87px] h-[15.79px] left-0 top-[22.10px] absolute">
@@ -87,7 +125,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           >
             {intro}
           </div>
-        </div>
+        </div> */}
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight flex items-center gap-2">
@@ -186,10 +224,10 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         </div>
       </div>
       {(education || skills) && (
-        <div className="flex gap-8 w-full">
+        <div className="grid gap-8 w-full grid-cols-2">
           {education && (
-            <div className="min-w-fit max-w-sm">
-              <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+            <div className="">
+              <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
                 {/* <GraduationCap size={13} />  */}
                 Education
               </div>
@@ -203,7 +241,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                 }) => (
                   <div
                     key={institution}
-                    className="flex-col justify-start items-start gap-0.5 inline-flex"
+                    className="grid items-start gap-0.5"
                   >
                     <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center">
                       {institution}
@@ -224,7 +262,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           )}
           {skills && (
             <div className="flex-col justify-start items-start gap-0.5 inline-flex">
-              <div className="w-[83.44px] text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
+              <div className=" text-neutral-700 text-[13px] font-bold leading-[15px] tracking-tight mb-4 flex gap-2 items-center">
                 {/* <Award size={13} /> */}
                 Skills
               </div>

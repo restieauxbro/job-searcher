@@ -176,7 +176,7 @@ export default function App(props: IAppProps) {
         <AnimateFromHidden
           show={
             // true
-            state === "processing with ai"
+            ["processing with ai", "error"].some((s) => s === state)
           }
         >
           <div className="p-4 min-h-[20rem]">
