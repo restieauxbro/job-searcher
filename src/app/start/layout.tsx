@@ -2,8 +2,6 @@ import Template from "./template";
 import { headers } from "next/headers";
 import { StartNavBar } from "./start-nav-bar";
 
-export const maxDuration = 250;
-
 export default async function Layout(props: { children: React.ReactNode }) {
   // const supabase = createClient(true);
   // const {
