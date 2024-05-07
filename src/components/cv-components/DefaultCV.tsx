@@ -37,8 +37,8 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
   return (
     <div className="w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
       <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1125px] h-auto">
-        <div className="self-stretch justify-start items-end gap-7 inline-flex">
-          <h1 className="text-neutral-700 text-2xl font-extrabold leading-none">
+        <div className="flex gap-10 items-end">
+          <h1 className="text-neutral-700 text-2xl font-extrabold leading-none w-[108.04px]">
             {firstName}
             <br />
             {lastName}
@@ -50,74 +50,44 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
             {title}
           </div>
         </div>
-        <div className="w-[108.04px] grid gap-2">
-          {[
-            {
-              value: location,
-              icon: <Globe size={10} />,
-            },
-            {
-              value: email,
-              icon: <Mail size={10} />,
-              link: `mailto:${email}`,
-            },
-            {
-              title: "phone",
-              value: phone,
-              icon: <Phone size={10} />,
-              link: `tel:${phone}`,
-            },
-          ].map(({ value, icon, link }) => {
-            if (link)
-              return (
-                <a
-                  href={link}
-                  key={value}
-                  className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px]"
-                >
-                  {icon}
-                  {value}
-                </a>
-              );
-            else
-              return (
-                <div className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px]">
-                  {icon}
-                  {value}
-                </div>
-              );
-          })}
-        </div>
-        {/* <div className="self-stretch justify-start items-start gap-[39px] inline-flex">
-          <div className="w-[108.04px] h-[60px] relative">
-            <a href={`tel:${phone}`}>
-              <div className="w-[90.87px] h-[15.79px] left-0 top-[22.10px] absolute">
-                <div className=" left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex">
-                  <Phone size={10} />
-                </div>
-                <div className="w-[72.70px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-                  {phone}
-                </div>
-              </div>
-            </a>
-            <div className="w-[81.79px] h-[15.79px] left-0 top-0 absolute">
-              <div className="w-[63.61px] h-[15.79px] left-[18.17px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-                {location}
-              </div>
-              <div className=" left-0 top-[2.10px] absolute flex-col justify-start items-start inline-flex">
-                <Globe size={10} />
-              </div>
-            </div>
-            <a href={`mailto:${email}`} rel="noopener noreferrer">
-              <div className="w-[108.04px] h-[15.79px] left-0 top-[44.21px] absolute">
-                <div className="w-[88.85px] h-[15.79px] left-[19.18px] top-0 absolute text-neutral-800 text-[8px] font-normal  leading-[15px]">
-                  {email}
-                </div>
-                <div className="left-0 top-[2.11px] absolute flex-col justify-start items-start inline-flex">
-                  <Mail size={10} />
-                </div>
-              </div>
-            </a>
+        <div className="flex gap-10">
+          <div className="w-[108.04px] grid gap-2">
+            {[
+              {
+                value: location,
+                icon: <Globe size={10} />,
+              },
+              {
+                value: email,
+                icon: <Mail size={10} />,
+                link: `mailto:${email}`,
+              },
+              {
+                title: "phone",
+                value: phone,
+                icon: <Phone size={10} />,
+                link: `tel:${phone}`,
+              },
+            ].map(({ value, icon, link }) => {
+              if (link)
+                return (
+                  <a
+                    href={link}
+                    key={value}
+                    className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px] text-neutral-700"
+                  >
+                    <span className="opacity-80">{icon}</span>
+                    {value}
+                  </a>
+                );
+              else
+                return (
+                  <div className="grid grid-cols-[auto,1fr] leading-tight gap-2 items-center font-normal text-[8px] text-neutral-700">
+                    <span className="opacity-80">{icon}</span>
+                    {value}
+                  </div>
+                );
+            })}
           </div>
           <div
             className="grow shrink basis-0 text-neutral-700 text-[8px] font-light leading-[13px] inline focus-visible:outline-none"
@@ -125,7 +95,8 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
           >
             {intro}
           </div>
-        </div> */}
+        </div>
+
         <div className="self-stretch flex-col justify-start items-start gap-8 flex">
           <div className="self-stretch justify-start items-center gap-16 inline-flex">
             <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight flex items-center gap-2">
@@ -239,10 +210,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
                   details,
                   qualification,
                 }) => (
-                  <div
-                    key={institution}
-                    className="grid items-start gap-0.5"
-                  >
+                  <div key={institution} className="grid items-start gap-0.5">
                     <div className="text-neutral-700 text-[10px] font-medium leading-3 mb-1 flex gap-2 items-center">
                       {institution}
                     </div>
