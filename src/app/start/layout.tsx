@@ -1,20 +1,15 @@
 "use server";
-import { Button } from "@/components/ui/button";
 import Template from "./template";
 import { headers } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
 import { StartNavBar } from "./start-nav-bar";
 
-export interface ILayoutProps {
-  children: React.ReactNode;
-}
 export const maxDuration = 250;
 
-export default async function Layout(props: ILayoutProps) {
-  const supabase = createClient(true);
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default async function Layout(props: { children: React.ReactNode }) {
+  // const supabase = createClient(true);
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
   // if (!user) {
   //   const { data: anonIpUser, error } = await supabase
   //     .from("users")
