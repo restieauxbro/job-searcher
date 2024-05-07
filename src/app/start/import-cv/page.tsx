@@ -14,11 +14,10 @@ import ResizingContainer from "@/components/animations/resizing-container";
 import { StreamState } from "./types";
 import { JsonMessage } from "@/lib/streaming";
 import { CVTemplate } from "@/cv-templates/base-template";
-import { Button } from "@/components/ui/button";
 
-export interface IAppProps {}
+export const maxDuration = 300;
 
-export default function App(props: IAppProps) {
+export default function App() {
   const router = useRouter();
 
   const [claudeParseState, setClaudeParseState] = useState<JsonMessage[]>([]);
