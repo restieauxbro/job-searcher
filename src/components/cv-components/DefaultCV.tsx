@@ -35,8 +35,9 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
     return indexA - indexB;
   });
   return (
-    <div className="w-[600px] min-h-[900px] py-[43px] bg-white flex-col justify-center gap-8">
-      <div className="flex-col justify-start items-start gap-8 inline-flex h-auto">
+    <div className="w-[600px] py-[43px] bg-white flex-col justify-center items-center inline-flex gap-8">
+      <div className="flex-col justify-start items-start gap-8 inline-flex min-h-[1125px] h-auto">
+        {/* Must have inline-flex to avoid page breaks above */}
         <div className="flex gap-10 items-end">
           <h1 className="text-neutral-700 text-2xl font-extrabold leading-none w-[108.04px]">
             {firstName}
@@ -195,7 +196,7 @@ const DefaultCV = ({ cvTemplate }: { cvTemplate: CVTemplate }) => {
         </div>
       </div>
       {(education || skills) && (
-        <div className="grid gap-8 w-full pt-12 grid-cols-2">
+        <div className="grid gap-8 w-full grid-cols-2">
           {education && (
             <div className="">
               <div className="text-neutral-700 text-[13px] font-bold  leading-[15px] tracking-tight mb-4 flex gap-2 items-center">

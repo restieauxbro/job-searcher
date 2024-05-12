@@ -60,8 +60,8 @@ export const baseTemplate: CVTemplate = {
       company: "Te Pūkenga",
       position: "Artificial Intelligence Architect",
       startDate: "Oct 2021",
-      endDate: "Present",
-      totalDuration: "2 years 5 months",
+      endDate: "Apr 2024",
+      totalDuration: "2 years 6 months",
       companyDescription:
         "Te Pūkenga is New Zealand's premier vocational education provider undergoing the biggest digital transformation ever seen in the public sector to unify 24 businesses into a single network.",
       achievements: [
@@ -86,7 +86,7 @@ export const baseTemplate: CVTemplate = {
         "Ownership of the customer's digital experience from ad channels to the website, from lead nurture through to conversion, as well as the technology stack of our new platforms. My time at Competenz was focused on building a micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content delivery systems to suit the micro-campaign strategy of the organisation.",
       highlights: ["UX Management", "Full-stack Development"],
       achievements: [
-        "Designed the end-to-end customer experience for our automated nuture journey; taking user retention from 31% to 64%",
+        "Designed the end-to-end customer experience for our automated nurture journey; taking user retention from 31% to 64%",
         "Developed revisions to our customer tracking pipeline through the phone team, increasing the accuracy of our data and reducing the time to onboard a new customer by 2 weeks",
       ],
     },

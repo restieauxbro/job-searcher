@@ -5,22 +5,12 @@ import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Metadata, ResolvingMetadata } from "next";
 import { Database } from "@/types/supabase";
+import { createClient } from "@/utils/supabase/server";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
-  const cookieStore = cookies();
 
-  const supabase = createServerClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-      },
-    }
-  );
+  const supabase = createClient();
 
   const { data: cvFromDb, error } = await supabase
     .from("cvg_cv")
@@ -54,26 +44,16 @@ export async function generateMetadata(
   // read route params
   const slug = params.slug;
   const cookieStore = cookies();
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        get(name: string) {
-          return cookieStore.get(name)?.value;
-        },
-      },
-    }
-  );
+  const supabase = createClient()
 
   const { data: cvFromDb, error } = await supabase
     .from("cvg_cv")
-    .select("employer, job_title")
+    .select("employer, job_title, cv_data")
     .eq("slug", slug)
     .single();
 
   return {
-    title: "CV",
-    //title: "Tim Restieaux for " + cvFromDb?.employer || cvFromDb?.job_title,
+    //title: "CV",
+    title: `${cvFromDb?.cv_data.firstName} ${cvFromDb?.cv_data.lastName} CV`,
   };
 }

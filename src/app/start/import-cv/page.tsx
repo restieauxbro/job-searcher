@@ -332,7 +332,7 @@ conversion, as well as the technology stack of our new platforms. My time at Com
 micro-services architecture to scale personalised experiences driven by data. We automated nurture funnels that set
 unqualified learners up with recruitment coaching and that integrated with our digital systems. We rebuilt content
 delivery systems to suit the micro-campaign strategy of the organisation.
-Designed the end-to-end customer experience for our automated nuture journey; taking user retention from 31%
+Designed the end-to-end customer experience for our automated nurture journey; taking user retention from 31%
 to 64%
 Developed revisions to our customer tracking pipeline through the phone team, increasing the accuracy of our
 data and reducing the time to onboard a new customer by 2 weeks
