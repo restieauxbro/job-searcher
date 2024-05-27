@@ -215,7 +215,7 @@ export async function parseTextToCVWithClaude(string: string) {
 
   await anthropic.messages
     .stream({
-      model: "claude-3-haiku-20240307",
+      model: "claude-3-sonnet-20240229",
       max_tokens: 4096,
       temperature: 1,
       system: `You are a computer for turning the free text extracted from a document into a structured JSON output.\n\nIn Typescript, the types for the output are:\n\n
